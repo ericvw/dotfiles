@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# exports - environment variables configuration
+
+# Set paths to dotfiles and local override directories.
+DOTFILES=$HOME/.dotfiles
+DOTFILES_LOCAL=$DOTFILES/local
+
+# Set editor to `vim`.
+export EDITOR='vim'
+export VISUAL="$EDITOR"
+
+# Default options passed to `grep`:
+#  * --color=auto: Automatically markup  matched output.
+export GREP_OPTIONS='--color=auto'
+
+# Default options passed to `less`:
+#  * -X: Keep the contents on the screen after paging exits.
+#  * -F: Automatically exit if entire contents fits on screen.
+#  * -R: Allow ANSI color codes to show through.
+export LESS='-XFR'
+
+# Source local override file if one exists.
+[ -r "$DOTFILES_LOCAL"/exports ] && . "$DOTFILES_LOCAL"/exports

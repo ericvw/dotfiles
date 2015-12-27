@@ -1,0 +1,52 @@
+## .inputrc - readline configuration
+
+## editing mode
+set editing-mode vi
+
+## complete full matches of already typed text using arrow keys
+$if mode=vi
+    set keymap vi-command
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+    set keymap vi-insert
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+$endif
+
+## never ring the bell
+set bell-style none
+
+## match paired parentheses
+set blink-matching-paren on
+
+## cans-insensitive filename matching
+set completion-ignore-case on
+
+## ask to show more if >= to 150 matched items
+set completion-query-items 150
+
+## explicitly match hidden files by prefixing with dot
+set match-hidden-files off
+
+## expand ~ to the fully qualified path
+set expand-tilde on
+
+## don't use a more-like pager to display completions
+set page-completions off
+
+## list immediately ambiguous matches instead ringing the bell
+set show-all-if-ambiguous on
+
+## intellegint autocompletion by not duplicating text after the cursor
+set skip-completed-text on
+
+## use character denote suffix similar as reported by stat(2)
+set visible-stats on
+
+## utf-8 input/output
+set convert-meta on
+set input-meta on
+set output-meta on
+
+## source local override file if one exists
+$include ~/.dotfiles/local/inputrc
