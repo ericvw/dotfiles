@@ -13,10 +13,5 @@ export VISUAL="$EDITOR"
 #  * --color=auto: Automatically markup  matched output.
 export GREP_OPTIONS='--color=auto'
 
-# Default options passed to `less`:
-#  * -X: Keep the contents on the screen after paging exits.
-#  * -R: Allow ANSI color codes to show through.
-export LESS='-XR'
-
 # Source local override file if one exists.
 [ -r "$DOTFILES_LOCAL"/exports ] && . "$DOTFILES_LOCAL"/exports
