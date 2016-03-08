@@ -9,9 +9,5 @@ DOTFILES_LOCAL=$DOTFILES/local
 export EDITOR='vim'
 export VISUAL="$EDITOR"
 
-# Default options passed to `grep`:
-#  * --color=auto: Automatically markup  matched output.
-export GREP_OPTIONS='--color=auto'
-
 # Source local override file if one exists.
 [ -r "$DOTFILES_LOCAL"/exports ] && . "$DOTFILES_LOCAL"/exports
