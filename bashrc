@@ -28,6 +28,9 @@ HISTSIZE=$HISTFILESIZE
 # and remove duplicate commands.
 HISTCONTROL=ignoreboth:erasedups
 
+# Ignore these commands in history.
+HISTIGNORE="[bf]g:cd*:clear:exit:history*:jobs:l[adls]*:..:..[ ]*"
+
 # Always append history to history file after each command.
 PROMPT_COMMAND='history -a'
 
