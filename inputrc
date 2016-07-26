@@ -19,7 +19,7 @@ set bell-style none
 ## match paired parentheses
 set blink-matching-paren on
 
-## cans-insensitive filename matching
+## case-insensitive filename matching
 set completion-ignore-case on
 
 ## ask to show more if >= to 150 matched items
