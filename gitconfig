@@ -9,10 +9,6 @@
 	st = status -sb
 	## log shortcuts
 	lgd = log --oneline --graph --decorate
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
 [core]
 	## warn on unsafe or irreversable conversions
 	safecrlf = warn
