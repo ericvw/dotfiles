@@ -9,6 +9,8 @@
 	st = status -sb
 	## log shortcuts
 	lgd = log --oneline --graph --decorate
+[color "diff"]
+	meta = bold yellow
 [core]
 	## warn on unsafe or irreversable conversions
 	safecrlf = warn
