@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Use a version of `readlink` which supports '-e'.
+CMD_READLINK=readlink
+if command -v greadlink >/dev/null; then
+    CMD_READLINK=greadlink
+fi
+
+# Check if we are within a Debian source pacage.
+d=.
+while [[ ! -d "$d/debian" && "$("$CMD_READLINK" -e "$d")" != "/" ]]; do
+    d="$d/.."
+done
+unset CMD_READLINK
+
+# Setup Debian options if we are in a detected Debian source package.
+if [[ -d "$d/debian" ]] && [[ -z "$QUILT_PATCHES" ]]; then
+    QUILT_PATCHES="debian/patches"
+
+    QUILT_NO_DIFF_INDEX=1
+    QUILT_NO_DIFF_TIMESTAMPS=1
+
+    QUILT_NEW_ARGS="-p ab"
+    QUILT_REFRESH_ARGS="-p ab"
+
+    # Ensure the 'debian/patches' dictory exists.
+    [[ ! -d "$d/$QUILT_PATCHES" ]] && mkdir "$d/$QUILT_PATCHES"
+fi
+unset d
+
+# Enable colorized output for commands which have support for it.
+QUILT_DIFF_ARGS="--color=auto"
+QUILT_PUSH_ARGS="--color=auto"
+QUILT_SERIES_ARGS="--color=auto"
+QUILT_PATCHES_ARGS="--color=auto"

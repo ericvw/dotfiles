@@ -8,6 +8,7 @@ bashrc
 dir_colors
 gitconfig
 inputrc
+quiltrc
 tmux.conf
 )
 
