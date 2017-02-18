@@ -20,7 +20,9 @@ unset file
 
 # Keep up to 32^3 lines of history.
 HISTFILESIZE=32768
-HISTSIZE=$HISTFILESIZE
+
+# Save every command from the history list.
+HISTSIZE=-1
 
 # Ignore commands that:
 #   * begin with a space character
