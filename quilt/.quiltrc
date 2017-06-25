@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# .quiltrc - quilt configuration
 
 # Use a version of `readlink` which supports '-e'.
 CMD_READLINK=readlink

@@ -1,22 +1,52 @@
 #!/usr/bin/env bash
 # .bashrc - bash instance configuration
 
-# Set paths to dotfiles and local override directories.
-DOTFILES=$HOME/.dotfiles
-DOTFILES_LOCAL=$DOTFILES/local
-
-# Don't source rest of this file  if session is not interactive.
+# Don't source rest of this file if session is not interactive.
 [ -z "$PS1" ] && return
 
-# Load dotfiles specific for each bash instance.
-for file in "$DOTFILES"/{prompt,aliases,functions}; do
-    . "$file"
-done
-unset file
+##########
+# prompt #
+##########
 
-################################
-## bash environment variables ##
-################################
+# Gentoo/cygwin style prompt two-line prompt.
+export PS1='\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]\h\[\e[1;34m\] \w\[\e[0;32m\]\n\[\e[00m\]\$ '
+
+###########
+# aliases #
+###########
+
+# Navigation
+alias -- -='cd -'
+
+# `ls` color flag detection.
+if command ls --color &> /dev/null; then
+    ## GNU `ls`
+    COLORFLAG='--color=auto'
+else
+    ## OS X `ls`
+    COLORFLAG='-G'
+fi
+alias ls="command ls ${COLORFLAG}"
+
+#############
+# functions #
+#############
+
+# Navigate with `.. [#]`.
+function .. {
+    local n="$1"
+    if [[ -n "$n" && ! "$n" =~ ^[1-9][0-9]*$ ]]; then
+        echo "positive integer expected" >&2; return 1
+    fi
+    [[ "$n" -gt 0 ]] && ((n--))
+    local s
+    printf -v s "..%${n}s"
+    cd "${s// //..}"
+}
+
+##############################
+# bash environment variables #
+##############################
 
 # Keep up to 32^3 lines of history.
 HISTFILESIZE=32768
@@ -33,9 +63,9 @@ HISTCONTROL=ignoreboth:erasedups
 # Always append history to history file after each command.
 PROMPT_COMMAND='history -a'
 
-###############################
-## bash >= 3.x shell options ##
-###############################
+#############################
+# bash >= 3.x shell options #
+#############################
 
 # Auto-correct minor typos on `cd`.
 shopt -s cdspell
@@ -61,9 +91,9 @@ shopt -s histverify
 # Don't start auto-completion if there is nothing on the command line.
 shopt -s no_empty_cmd_completion
 
-###############################
-## bash >= 4.x shell options ##
-###############################
+#############################
+# bash >= 4.x shell options #
+#############################
 
 if [ 4 -eq "${BASH_VERSINFO[0]}" ]; then
     # List status of any jobs before shell exit.
@@ -82,4 +112,4 @@ if [ 4 -eq "${BASH_VERSINFO[0]}" ]; then
 fi
 
 # Source local override file if one exists.
-[ -r "$DOTFILES_LOCAL"/bashrc ] && . "$DOTFILES_LOCAL"/bashrc
+[ -r ~/.bashrc.local ] && . ~/.bashrc.local

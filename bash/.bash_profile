@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
-# path - various *PATH environment configuration
+# .bash_profile - bash login shell environment configuration
 
-# Set paths to dotfiles and local override directories.
-DOTFILES=$HOME/.dotfiles
-DOTFILES_LOCAL=$DOTFILES/local
+###########
+# exports #
+###########
+
+# Set editor to `vim`.
+export EDITOR='vim'
+export VISUAL="$EDITOR"
+
+########
+# path #
+#######
 
 # Remove the specified 'directory' from the optionally specified 'path'
 # variable.  If 'path' is not specified, PATH will be used.
@@ -56,7 +64,17 @@ build_path() {
 }
 
 # Source local override file if one exists.
-[ -r "$DOTFILES_LOCAL"/path ] && . "$DOTFILES_LOCAL"/path
+[ -r ~/.bash_profile.local ] && . ~/.bash_profile.local
+
+########
+# misc #
+########
+
+# Setup coloring scheme for `ls`.
+if command dircolors &> /dev/null; then
+    # Use colors as specified in ~/.dir_colors.
+    eval "$(dircolors -b ~/.dir_colors)"
+fi
 
 # Personal directories are always first in PATH.
 build_path PATH pathprepend << EOF
@@ -64,5 +82,8 @@ $HOME/.local/bin
 $HOME/bin
 EOF
 
-# Clean up.
+# Clean up temporary path helper functions.
 unset pathremove pathprepend pathappend build_path
+
+# For login shell, source .bashrc for good measure.
+. ~/.bashrc
