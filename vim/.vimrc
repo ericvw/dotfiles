@@ -98,6 +98,7 @@ set backupdir=~/.vim/tmp/backup
 set history=1000
 set wildmenu
 set wildmode=list:longest,full
+set wildignore+=*.pyc
 if has("persistent_undo")
     set undofile
     set undodir=~/.vim/tmp/undo
