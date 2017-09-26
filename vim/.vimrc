@@ -157,7 +157,6 @@ augroup resumeCursor
 augroup END
 
 " plugin mappings
-nnoremap <silent> <leader>tt :TagbarToggle<CR>
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 nnoremap <Leader>a= :Tabularize /=<CR>
 vnoremap <Leader>a= :Tabularize /=<CR>
@@ -172,9 +171,6 @@ let g:alternateExtensions_H="CPP,C,CXX,CC"
 
 " do not check on close
 let g:syntastic_check_on_wq=0
-
-" set the default tagbar
-let g:tagbar_width=25
 
 " jump focus into the undo tree
 let g:undotree_SetFocusWhenToggle=1

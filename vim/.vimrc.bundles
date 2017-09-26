@@ -21,9 +21,6 @@ Plugin 'mbbill/undotree'
 
 " programming
 Plugin 'a.vim'
-if executable('ctags')
-    Plugin 'majutsushi/tagbar'
-end
 Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-commentary'
 
