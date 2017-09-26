@@ -3,14 +3,14 @@
 
 " required lines for Vundle
 filetype off "required
-set runtimepath+=~/.vim/bundle/Vundle
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " have Vundle manage itself
-Plugin 'gmarik/Vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " general plugins
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
@@ -35,7 +35,7 @@ Plugin 'tpope/vim-git'
 Plugin 'pangloss/vim-javascript'
 Plugin 'elzr/vim-json'
 Plugin 'tpope/vim-markdown'
-Plugin 'wting/rust.vim'
+Plugin 'rust-lang/rust.vim'
 Plugin 'leafgarland/typescript-vim'
 
 call vundle#end() " required

@@ -8,7 +8,7 @@ Installation and bootstrapping of
 ```shell
 cd ~/.dotfiles
 stow vim
-git clone https://github.com/gmarik/Vundle.git ~/.vim/bundle/Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 ```
 
