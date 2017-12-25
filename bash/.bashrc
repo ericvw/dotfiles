@@ -8,7 +8,7 @@
 # prompt #
 ##########
 
-# Gentoo/cygwin style prompt two-line prompt.
+# Gentoo/cygwin style, two-line prompt.
 export PS1='\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]\h\[\e[1;34m\] \w\[\e[0;32m\]\n\[\e[00m\]\$ '
 
 ###########
@@ -20,10 +20,10 @@ alias -- -='cd -'
 
 # `ls` color flag detection.
 if command ls --color &> /dev/null; then
-    ## GNU `ls`
+    # GNU `ls`
     COLORFLAG='--color=auto'
 else
-    ## OS X `ls`
+    # OS X `ls`
     COLORFLAG='-G'
 fi
 alias ls="command ls ${COLORFLAG}"
@@ -85,7 +85,7 @@ shopt -s histappend
 # Allow re-edit of failed history substitution.
 shopt -s histreedit
 
-# Load history subsitution into editing buffer.
+# Load history substitution into editing buffer.
 shopt -s histverify
 
 # Don't start auto-completion if there is nothing on the command line.
