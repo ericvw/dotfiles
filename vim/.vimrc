@@ -65,6 +65,7 @@ if has("persistent_undo")
     set undodir=~/.vim/tmp/undo
 endif
 set backspace=indent,eol,start
+set formatoptions+=j
 set showmatch
 
 " 14 tabs and indenting
