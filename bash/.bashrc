@@ -63,9 +63,9 @@ HISTCONTROL=ignoreboth:erasedups
 # Always append history to history file after each command.
 PROMPT_COMMAND='history -a'
 
-#############################
-# bash >= 3.x shell options #
-#############################
+######################
+# bash shell options #
+######################
 
 # Auto-correct minor typos on `cd`.
 shopt -s cdspell
@@ -73,11 +73,23 @@ shopt -s cdspell
 # If hash lookup fails, default to $PATH.
 shopt -s checkhash
 
+# List status of any jobs before shell exit.
+shopt -s checkjobs
+
 # Update winsize after each command for better line-wrapping.
 shopt -s checkwinsize
 
 # Save muti-line command as one history entry.
 shopt -s cmdhist
+
+# Expand directory names (e.g., $HOME => /home/$(whoami)).
+shopt -s direxpand
+
+# Auto-correct minor typos on directory word completion.
+shopt -s dirspell
+
+# Recursive globbing (e.g., ls **/*.txt).
+shopt -s globstar
 
 # Append history rather than overwrite it.
 shopt -s histappend
@@ -90,26 +102,6 @@ shopt -s histverify
 
 # Don't start auto-completion if there is nothing on the command line.
 shopt -s no_empty_cmd_completion
-
-#############################
-# bash >= 4.x shell options #
-#############################
-
-if [ 4 -eq "${BASH_VERSINFO[0]}" ]; then
-    # List status of any jobs before shell exit.
-    shopt -s checkjobs
-
-    # Auto-correct minor typos on directory word completion.
-    shopt -s dirspell
-
-    # Recursive globbing (e.g., ls **/*.txt).
-    shopt -s globstar
-
-    if [[ 2 -eq "${BASH_VERSINFO[1]}" && 29 -le "${BASH_VERSINFO[2]}" ]]; then
-        # Expand directory names (e.g., $HOME => /home/$(whoami)).
-        shopt -s direxpand
-    fi
-fi
 
 # Source local override file if one exists.
 [ -r ~/.bashrc.local ] && . ~/.bashrc.local
