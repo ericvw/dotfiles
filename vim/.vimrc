@@ -5,19 +5,9 @@
 " better to be safe than sorry
 set nocompatible
 
-" pre-configuration (useful for settings needed for plugins)
-if filereadable(expand("~/.vimrc.before.local"))
-    source ~/.vimrc.before.local
-endif
-
 " bundle configuration (Vundle)
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
-endif
-
-" colorscheme settings
-if filereadable(expand("~/.vimrc.colorscheme"))
-    source ~/.vimrc.colorscheme
 endif
 
 "" 1 important
