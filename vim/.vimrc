@@ -60,6 +60,10 @@ set report=0
 set noerrorbells
 
 " 13 editing text
+if has("persistent_undo")
+    set undofile
+    set undodir=~/.vim/tmp/undo
+endif
 set backspace=indent,eol,start
 set showmatch
 
@@ -93,10 +97,6 @@ set history=1000
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.pyc
-if has("persistent_undo")
-    set undofile
-    set undodir=~/.vim/tmp/undo
-endif
 
 " 24 multi-byte characters
 set encoding=utf-8
