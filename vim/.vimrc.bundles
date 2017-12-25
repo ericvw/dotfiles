@@ -21,7 +21,6 @@ Plugin 'mbbill/undotree'
 
 " programming
 Plugin 'a.vim'
-Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-commentary'
 
 " completion
