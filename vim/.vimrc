@@ -157,13 +157,14 @@ augroup END
 " Plugin settings "
 """""""""""""""""""
 
-let g:syntastic_check_on_wq=0
-
 nnoremap <Leader>g :YcmCompleter GoTo<CR>
 
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle=1
 let g:undotree_WindowLayout=2
+
+nmap <silent> <leader>aj :ALENextWrap<cr>
+nmap <silent> <leader>ak :ALEPreviousWrap<cr>
 
 " Source local override file if one exists.
 if filereadable(expand("~/.vimrc.local"))
