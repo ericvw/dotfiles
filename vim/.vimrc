@@ -155,10 +155,6 @@ augroup END
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 nnoremap <Leader>g :YcmCompleter GoTo<CR>
 
-" Prefer C++ source files for a.vim.
-let g:alternateExtensions_h="cpp,c,cxx,cc,CC"
-let g:alternateExtensions_H="CPP,C,CXX,CC"
-
 " Do not check on close.
 let g:syntastic_check_on_wq=0
 
