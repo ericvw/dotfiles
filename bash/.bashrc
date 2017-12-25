@@ -63,6 +63,13 @@ HISTCONTROL=ignoreboth:erasedups
 # Always append history to history file after each command.
 PROMPT_COMMAND='history -a'
 
+#######################
+# POSIX shell options #
+#######################
+
+# Prevent existing files from being overwritten by redirection.
+set -o noclobber
+
 ######################
 # bash shell options #
 ######################
