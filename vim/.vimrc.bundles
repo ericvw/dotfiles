@@ -1,15 +1,15 @@
-"" .vimrc.bundles - vim plugin configuration
+"" .vimrc.bundles - Vim plugin configuration
 " vim: nowrap:sw=4:sts=4
 
-" required lines for Vundle
+" Required lines for Vundle.
 filetype off "required
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" have Vundle manage itself
+" Have Vundle manage itself.
 Plugin 'VundleVim/Vundle.vim'
 
-" general plugins
+" General plugins
 Plugin 'vim-airline/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
@@ -19,14 +19,14 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'mbbill/undotree'
 
-" programming
+" Programming
 Plugin 'a.vim'
 Plugin 'tpope/vim-commentary'
 
-" completion
+" Completion
 Plugin 'Valloric/YouCompleteMe'
 
-" file types
+" File types
 Plugin 'tpope/vim-git'
 Plugin 'pangloss/vim-javascript'
 Plugin 'elzr/vim-json'

@@ -1,7 +1,7 @@
-" pep 8
+" PEP8 settings.
 setlocal tabstop=4
 setlocal textwidth=79
 
-" use YCM to resolve documentation
+" Use YCM to resolve documentation instead.
 let g:pydoc_executable=0
 setlocal keywordprg=:YcmCompleter\ GetDoc
