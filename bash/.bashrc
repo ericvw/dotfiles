@@ -110,5 +110,12 @@ shopt -s histverify
 # Don't start auto-completion if there is nothing on the command line.
 shopt -s no_empty_cmd_completion
 
+################
+# stty options #
+################
+
+# Disable STARt/STOP output control (i.e., allow for Ctrl-s).
+stty -ixon
+
 # Source local override file if one exists.
 [ -r ~/.bashrc.local ] && . ~/.bashrc.local
