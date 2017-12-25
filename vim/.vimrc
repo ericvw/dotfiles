@@ -92,6 +92,7 @@ set nobomb
 set fileformats+=mac
 set backup
 set backupdir=~/.vim/tmp/backup
+set autoread
 
 " 20 command line editing
 set history=1000
