@@ -153,14 +153,15 @@ augroup resumeCursor
     autocmd BufWinEnter * call ResumeCursor()
 augroup END
 
-" Plugin mappings.
-nnoremap <silent> <leader>u :UndotreeToggle<CR>
-nnoremap <Leader>g :YcmCompleter GoTo<CR>
+"""""""""""""""""""
+" Plugin settings "
+"""""""""""""""""""
 
-" Do not check on close.
 let g:syntastic_check_on_wq=0
 
-" Jump focus into the undo tree.
+nnoremap <Leader>g :YcmCompleter GoTo<CR>
+
+nnoremap <silent> <leader>u :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle=1
 let g:undotree_WindowLayout=2
 
