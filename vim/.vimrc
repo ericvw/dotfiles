@@ -98,7 +98,8 @@ set autoread
 set history=1000
 set wildmenu
 set wildmode=list:longest,full
-set wildignore+=*.pyc
+set wildignore+=*.pyc " Python byte code.
+set wildignore+=*.o " Compiled object files.
 
 " 24 multi-byte characters
 set encoding=utf-8
