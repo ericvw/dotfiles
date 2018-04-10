@@ -13,6 +13,8 @@
 [diff]
 	# Don't show as modified if submodules have untracked files
 	ignoreSubmodules = untracked
+	# Color moved lines of code differently.
+	colorMoved = default
 [log]
 	follow = true
 [merge]
