@@ -1,34 +1,32 @@
 [alias]
-	# two-letter shortcuts
 	br = branch
 	ci = commit
 	co = checkout
 	dc = diff --cached
 	st = status -sb
-	# log shortcuts
 	lgd = log --oneline --graph --decorate
 [color "diff"]
 	meta = bold yellow
 [core]
-	# warn on unsafe or irreversable conversions
+	# Warn on unsafe or irreversable conversions.
 	safecrlf = warn
 [diff]
-	# don't show as modified if submodules have untracked files
+	# Don't show as modified if submodules have untracked files
 	ignoreSubmodules = untracked
 [log]
 	follow = true
 [merge]
-	# a wonderful default diffing tool
+	# A wonderful default diffing tool.
 	tool = vimdiff
-	# provide base context to aid in conflict resolution
+	# Provide base context to aid in conflict resolution.
 	conflictstyle = diff3
 [pager]
-	# use the pager for long status display
+	# Use the pager for long status display.
 	status = true
 [push]
 	default = simple
 [rerere]
 	enabled = true
 [include]
-	# source local override file if one exists
+	# Source local override file if one exists.
 	path = ~/.gitconfig.local
