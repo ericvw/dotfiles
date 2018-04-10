@@ -1,6 +1,4 @@
 [alias]
-	# overrides
-	grep = grep -I
 	# two-letter shortcuts
 	br = branch
 	ci = commit
