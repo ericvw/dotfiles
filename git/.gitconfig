@@ -1,3 +1,6 @@
+[advice]
+	# Reduce verbosity of help messages.
+	pushUpdateRejected = false
 [alias]
 	br = branch
 	ci = commit
