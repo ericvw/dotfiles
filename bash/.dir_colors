@@ -213,6 +213,7 @@ EXEC 01;31  # Unix
 
 # Source text
 .h 32
+.hpp 32
 .c 32
 .C 32
 .cc 32
@@ -264,6 +265,12 @@ EXEC 01;31  # Unix
 .tex 32
 .go 32
 .sql 32
+.csv 32
+.sv 32
+.svh 32
+.v 32
+.vh 32
+.vhd 32
 
 ### Multimedia formats
 
@@ -314,6 +321,7 @@ EXEC 01;31  # Unix
 .mpeg 33
 .mpg 33
 .ogg  33
+.opus 33
 .ra 33
 .wav 33
 
