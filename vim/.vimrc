@@ -5,9 +5,9 @@
 " Better to be safe than sorry.
 set nocompatible
 
-" Bundle configuration (Vundle).
-if filereadable(expand("~/.vimrc.bundles"))
-    source ~/.vimrc.bundles
+" vim-plug
+if filereadable(expand("~/.vimrc.plugins"))
+    source ~/.vimrc.plugins
 endif
 
 """""""""""""""""""""""""
