@@ -25,6 +25,9 @@ set completion-ignore-case on
 # ask to show more if >= to 150 matched items
 set completion-query-items 150
 
+# Add trailing slash appended to symbolic links to directories.
+set mark-symlinked-directories on
+
 # explicitly match hidden files by prefixing with dot
 set match-hidden-files off
 
