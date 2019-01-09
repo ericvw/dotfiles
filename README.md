@@ -14,12 +14,9 @@ modification](https://en.wikipedia.org/wiki/Open/closed_principle) for
 2. Symlink dotfiles to home directory.
 
     ```shell
-    # For installaing all dotfile packages.
-    ~/.dotfiles//install.sh
-
-    # Otherwise, use GNU stow to install particular packages
     stow bash
     stow tmux
+    # ...
     ```
 3. Setup environment [customizations](#customization).
 
