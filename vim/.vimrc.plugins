@@ -14,8 +14,6 @@ call plug#begin()
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'mbbill/undotree'
@@ -29,10 +27,7 @@ Plug 'Valloric/YouCompleteMe'
 
 " File types
 Plug 'tpope/vim-git'
-Plug 'pangloss/vim-javascript'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-markdown'
-Plug 'rust-lang/rust.vim'
-Plug 'leafgarland/typescript-vim'
 
 call plug#end()
