@@ -12,7 +12,7 @@ call plug#begin()
 
 " General plugins
 Plug 'w0rp/ale'
-Plug 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'easymotion/vim-easymotion'
