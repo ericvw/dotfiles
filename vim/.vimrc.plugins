@@ -10,24 +10,17 @@ endif
 
 call plug#begin()
 
-" General plugins
-Plug 'w0rp/ale'
-Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'elzr/vim-json'
+Plug 'itchyny/lightline.vim'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'mbbill/undotree'
-
-" Programming
-Plug 'vim-scripts/a.vim'
-Plug 'tpope/vim-commentary'
-
-" Completion
 Plug 'Valloric/YouCompleteMe'
-
-" File types
-Plug 'tpope/vim-git'
-Plug 'elzr/vim-json'
-Plug 'tpope/vim-markdown'
+Plug 'vim-scripts/a.vim'
+Plug 'w0rp/ale'
 
 call plug#end()
