@@ -19,6 +19,9 @@ set bell-style none
 # match paired parentheses
 set blink-matching-paren on
 
+# Display completions using colors to indicate their file type.
+set colored-stats on
+
 # case-insensitive filename matching
 set completion-ignore-case on
 
