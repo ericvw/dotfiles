@@ -10,6 +10,7 @@ endif
 
 call plug#begin()
 
+Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'itchyny/lightline.vim'
