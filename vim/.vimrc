@@ -5,11 +5,6 @@
 " Better to be safe than sorry.
 set nocompatible
 
-" vim-plug
-if filereadable(expand("~/.vimrc.plugins"))
-    source ~/.vimrc.plugins
-endif
-
 """""""""""""""""""""""""
 " Beginning of :options "
 """""""""""""""""""""""""
@@ -163,18 +158,10 @@ augroup resumeCursor
     autocmd BufWinEnter * call ResumeCursor()
 augroup END
 
-"""""""""""""""""""
-" Plugin settings "
-"""""""""""""""""""
-
-nnoremap <Leader>g :YcmCompleter GoTo<CR>
-
-nnoremap <silent> <leader>u :UndotreeToggle<CR>
-let g:undotree_SetFocusWhenToggle=1
-let g:undotree_WindowLayout=2
-
-nmap <silent> <leader>aj :ALENextWrap<cr>
-nmap <silent> <leader>ak :ALEPreviousWrap<cr>
+"  Source plugins.
+if filereadable(expand("~/.vimrc.plugins"))
+    source ~/.vimrc.plugins
+endif
 
 " Source local override file if one exists.
 if filereadable(expand("~/.vimrc.local"))
