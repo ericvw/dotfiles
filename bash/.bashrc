@@ -9,7 +9,7 @@
 ##########
 
 # Gentoo/cygwin style, two-line prompt.
-export PS1='\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]\h\[\e[1;34m\] \w\[\e[0;32m\]\n\[\e[00m\]\$ '
+export PS1='\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]\h\[\e[0;34m\] \w\[\e[0;32m\]\n\[\e[00m\]\$ '
 
 ###########
 # aliases #
