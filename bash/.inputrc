@@ -31,9 +31,6 @@ set mark-symlinked-directories on
 # explicitly match hidden files by prefixing with dot
 set match-hidden-files off
 
-# expand ~ to the fully qualified path
-set expand-tilde on
-
 # don't use a more-like pager to display completions
 set page-completions off
 
