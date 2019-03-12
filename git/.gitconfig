@@ -7,6 +7,7 @@
 	co = checkout
 	dc = diff --cached
 	lgd = log --oneline --graph --decorate
+	pushf = push --force-with-lease
 	st = status -sb
 [core]
 	# Warn on unsafe or irreversable conversions.
