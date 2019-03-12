@@ -6,8 +6,8 @@
 	ci = commit
 	co = checkout
 	dc = diff --cached
-	st = status -sb
 	lgd = log --oneline --graph --decorate
+	st = status -sb
 [core]
 	# Warn on unsafe or irreversable conversions.
 	safecrlf = warn
