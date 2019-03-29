@@ -158,12 +158,12 @@ augroup resumeCursor
     autocmd BufWinEnter * call ResumeCursor()
 augroup END
 
-"  Source plugins.
-if filereadable(expand("~/.vimrc.plugins"))
-    source ~/.vimrc.plugins
-endif
-
 " Source local override file if one exists.
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
+endif
+
+"  Source plugins.
+if filereadable(expand("~/.vimrc.plugins"))
+    source ~/.vimrc.plugins
 endif
