@@ -103,9 +103,6 @@ set encoding=utf-8
 " End of :options "
 """""""""""""""""""
 
-" Change mapleader.
-let mapleader=","
-
 " Move up and down by screen lines.
 nnoremap k gk
 nnoremap j gj
