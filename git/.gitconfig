@@ -21,7 +21,7 @@
 	# A wonderful default diffing tool.
 	tool = vimdiff
 	# Provide base context to aid in conflict resolution.
-	conflictstyle = diff3
+	conflictStyle = diff3
 [pager]
 	# Use the pager for long status display.
 	status = true
