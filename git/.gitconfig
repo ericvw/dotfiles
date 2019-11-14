@@ -9,6 +9,9 @@
 	lgd = log --oneline --graph --decorate
 	pushf = push --force-with-lease
 	st = status -sb
+[blame]
+	markIgnoredLines = true
+	markUnblamables = true
 [core]
 	# Warn on unsafe or irreversable conversions.
 	safecrlf = warn
