@@ -52,8 +52,3 @@ highlight SpecialKey              ctermfg=12
 highlight Statement               ctermfg=10
 highlight Type                    ctermfg=13
 highlight Underlined              ctermfg=12
-
-" gitgutter's original colors
-" highlight GitGutterAdd    ctermfg=2
-" highlight GitGutterChange ctermfg=3
-" highlight GitGutterDelete ctermfg=1
