@@ -25,7 +25,7 @@ highlight DiffText                    ctermfg=8  ctermbg=3
 highlight Directory                   ctermfg=14
 highlight FoldColumn                  ctermfg=14 ctermbg=8
 highlight Folded                      ctermfg=14 ctermbg=8
-highlight SignColumn                  ctermfg=14 ctermbg=8
+highlight SignColumn                  ctermfg=14 ctermbg=none
 highlight LineNr                      ctermfg=8
 highlight MoreMsg                     ctermfg=10
 highlight Pmenu                       ctermfg=15 ctermbg=8
