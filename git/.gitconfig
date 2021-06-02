@@ -18,6 +18,8 @@
 [diff]
 	# Don't show as modified if submodules have untracked files
 	ignoreSubmodules = untracked
+[init]
+	defaultBranch = main
 [log]
 	follow = true
 [merge]
