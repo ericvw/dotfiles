@@ -1,75 +1,49 @@
 " init.vim - Personal nvim configuration
 " vim: nowrap:sw=4:sts=4
+
+"""""""""""""""""""""""""""""""
+" Options Grouped by Function "
+"""""""""""""""""""""""""""""""
 " Run :options to understand grouping of settings.
-
-" Better to be safe than sorry.
-set nocompatible
-
-"""""""""""""""""""""""""
-" Beginning of :options "
-"""""""""""""""""""""""""
 
 " 1 important
 set pastetoggle=<F2>
 
 " 2 moving around, searching and patterns
-set incsearch
 set ignorecase
 set smartcase
 
 " 4 displaying text
 set scrolloff=1
-set display+=lastline
 set lazyredraw
 set list
 set listchars=tab:»\ ,trail:·,extends:>,precedes:<
 set number
 
 " 5 syntax, highlighting and spelling
-if has('autocmd')
-    filetype plugin indent on
-endif
-if has('syntax') && !exists('g:syntax_on')
-    syntax enable
-endif
-if exists("&colorcolumn")
-    set colorcolumn=+1
-endif
+set colorcolumn=+1
 
 " 6 multiple windows
-set laststatus=2
 set splitright
 set splitbelow
-
-" 8 terminal
-set ttyfast
 
 " 9 using the mouse
 set mouse=a
 
 " 11 message and info
-set shortmess=atToOI
-set showcmd
-set ruler
+set shortmess+=aI
 set report=0
 set noerrorbells
 
 " 13 editing text
-if has("persistent_undo")
-    set undofile
-    set undodir=~/.vim/tmp/undo
-endif
-set backspace=indent,eol,start
-set formatoptions+=j
+set undofile
 set showmatch
 
 " 14 tabs and indenting
 set shiftwidth=4
-set smarttab
 set softtabstop=4
 set shiftround
 set expandtab
-set autoindent
 set cinoptions=:0.5s,=0.5s,l1,g0.5s,h0.5s,N-s,t0,i0,(0,J1
 "              |     |     |  |     |     |   |  |  |  +-- don't confuse JS object decls with labels
 "              |     |     |  |     |     |   |  |  +-- indent from unclosed parens
@@ -86,22 +60,21 @@ set cinoptions=:0.5s,=0.5s,l1,g0.5s,h0.5s,N-s,t0,i0,(0,J1
 set nobomb
 set fileformats+=mac
 set backup
-set backupdir=~/.vim/tmp/backup
-set autoread
+set backupdir-=.
+for d in split(&backupdir, ',')
+    if !isdirectory(expand(d))
+        call mkdir(expand(d), 'p')
+    endif
+endfor
 
 " 20 command line editing
-set history=1000
-set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.pyc " Python byte code.
 set wildignore+=*.o " Compiled object files.
 
-" 24 multi-byte characters
-set encoding=utf-8
-
-"""""""""""""""""""
-" End of :options "
-"""""""""""""""""""
+""""""""""""""""
+" Key Mappings "
+""""""""""""""""
 
 " Move up and down by screen lines.
 nnoremap k gk
@@ -144,6 +117,10 @@ function! <SID>SynStack()
     echo map(synstack(line("."), col(".")), "synIDattr(v:val, 'name')")
 endfunc
 
+""""""""""""""""""""""
+" Automatic Commands "
+""""""""""""""""""""""
+
 " Jump to the last cursor position in file if possible.
 function! ResumeCursor()
     if line("'\"") <= line("$")
@@ -156,11 +133,11 @@ augroup resumeCursor
 augroup END
 
 " Source local override file if one exists.
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
+"if filereadable(expand("~/.vimrc.local"))
+"    source ~/.vimrc.local
+"endif
 
 "  Source plugins.
-if filereadable(expand("~/.vimrc.plugins"))
-    source ~/.vimrc.plugins
-endif
+"if filereadable(expand("~/.vimrc.plugins"))
+"    source ~/.vimrc.plugins
+"endif
