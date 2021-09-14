@@ -7,42 +7,18 @@
 " Core options
 lua require("config/options")
 
-""""""""""""""""
-" Key Mappings "
-""""""""""""""""
-
-" Move up and down by screen lines.
-nnoremap k gk
-nnoremap j gj
-
-" Easier window navigation/manipulation.
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-
-" Disable highlight after search.
-noremap <silent> <leader><space> :set hlsearch! <CR>
+" Key mappings
+lua require("config/key-mappings")
 
 " Strip whitespace.
+" XXX: Port this to config/key-mappings.lua once key mapping can call Lua
+"       functions.
 map <silent> <leader>ss :
     \ let save_cursor = getpos(".") <Bar>
     \ let old_query = getreg('/') <Bar>
     \ %s/\s\+$//e <Bar>
     \ call setpos('.', save_cursor) <Bar>
     \ call setpos('/', old_query) <CR>
-
-" Toggle spell check.
-nmap <silent> <leader>sc :set spell!<CR>
-
-" Show highlighting groups for current word.
-nmap <C-N> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line("."), col(".")), "synIDattr(v:val, 'name')")
-endfunc
 
 """"""""""""""""""""""
 " Automatic Commands "
