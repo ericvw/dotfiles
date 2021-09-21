@@ -32,14 +32,6 @@ map <silent> <leader>ss :
     \ call setpos('.', save_cursor) <Bar>
     \ call setpos('/', old_query) <CR>
 
-" Toggle syntax on/off.
-map <silent> <leader>sy :
-    \ if exists("g:syntax_on") <Bar>
-    \   syntax off <Bar>
-    \ else <Bar>
-    \   syntax enable <Bar>
-    \ endif <CR>
-
 " Toggle spell check.
 nmap <silent> <leader>sc :set spell!<CR>
 
