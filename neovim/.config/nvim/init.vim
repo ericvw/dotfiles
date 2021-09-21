@@ -25,6 +25,8 @@ map <silent> <leader>ss :
 """"""""""""""""""""""
 
 " Jump to the last cursor position in file if possible.
+" XXX: Port this to config/autocommands.lua once there is native Lua API
+"      support.
 autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
     \     exe "normal! g`\"" |
