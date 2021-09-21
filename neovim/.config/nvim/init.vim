@@ -25,15 +25,10 @@ map <silent> <leader>ss :
 """"""""""""""""""""""
 
 " Jump to the last cursor position in file if possible.
-function! ResumeCursor()
-    if line("'\"") <= line("$")
-        normal! g`"
-    endif
-endfunction
-augroup resumeCursor
-    autocmd!
-    autocmd BufWinEnter * call ResumeCursor()
-augroup END
+autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+    \     exe "normal! g`\"" |
+    \ endif
 
 """"""""""""""""""""""""
 " Local Customizations "
