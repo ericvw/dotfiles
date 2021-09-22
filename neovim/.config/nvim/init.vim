@@ -162,7 +162,6 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/a.vim'
 Plug 'dense-analysis/ale'
 
 call plug#end()
