@@ -74,3 +74,6 @@ nmap <silent> <leader>ak :ALEPreviousWrap<cr>
 " highlight GitGutterAdd    ctermfg=2
 " highlight GitGutterChange ctermfg=3
 " highlight GitGutterDelete ctermfg=1
+
+" Language Server Protocol
+lua require("config/lsp")
