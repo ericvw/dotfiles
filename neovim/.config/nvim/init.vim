@@ -35,6 +35,7 @@ autocmd BufReadPost *
 colorscheme dim-ansi
 
 " Plugins
+lua require("config/plugins")
 
 " Auto-bootstrap vim-plug.
 let vim_plug = stdpath('data') . "/site/autoload/plug.vim"
