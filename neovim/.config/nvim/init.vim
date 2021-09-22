@@ -20,9 +20,7 @@ map <silent> <leader>ss :
     \ call setpos('.', save_cursor) <Bar>
     \ call setpos('/', old_query) <CR>
 
-""""""""""""""""""""""
-" Automatic Commands "
-""""""""""""""""""""""
+" Autocmds
 
 " Jump to the last cursor position in file if possible.
 " XXX: Port this to config/autocommands.lua once there is native Lua API
@@ -32,15 +30,11 @@ autocmd BufReadPost *
     \     exe "normal! g`\"" |
     \ endif
 
-""""""""""""""""""""""""
-" Local Customizations "
-""""""""""""""""""""""""
+" Local customizations
 
 colorscheme dim-ansi
 
-"""""""""""
-" Plugins "
-"""""""""""
+" Plugins
 
 " Auto-bootstrap vim-plug.
 let vim_plug = stdpath('data') . "/site/autoload/plug.vim"
