@@ -37,3 +37,6 @@ lspconfig.clangd.setup {
 lspconfig.jedi_language_server.setup {
     on_attach = on_attach
 }
+
+-- Show function signatures when typing.
+require("lsp_signature").setup()

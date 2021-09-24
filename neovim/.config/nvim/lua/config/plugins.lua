@@ -13,6 +13,7 @@ return require('packer').startup(function()
 
     -- Completion related plugins.
     use "neovim/nvim-lspconfig"
+    use "ray-x/lsp_signature.nvim"
 
     -- XXX: Keep last to ensure configuration of above plugins.
     -- Automatically set up plugin configuration if bootstrapping packer.nvim.
