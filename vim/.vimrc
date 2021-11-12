@@ -1,13 +1,11 @@
 " .vimrc - Personal vim configuration
 " vim: nowrap:sw=4:sts=4
-" Run :options to understand grouping of settings.
 
 " Better to be safe than sorry.
 set nocompatible
 
-"""""""""""""""""""""""""
-" Beginning of :options "
-"""""""""""""""""""""""""
+" Core options
+" Run :options to understand grouping of settings.
 
 " 1 important
 set pastetoggle=<F2>
@@ -99,38 +97,10 @@ set wildignore+=*.o " Compiled object files.
 " 24 multi-byte characters
 set encoding=utf-8
 
-"""""""""""""""""""
-" End of :options "
-"""""""""""""""""""
-
-" Move up and down by screen lines.
-nnoremap k gk
-nnoremap j gj
-
-" Easier window navigation/manipulation.
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+" Key mapppings
 
 " Disable highlight after search.
 noremap <silent> <leader><space> :set hlsearch! <CR>
-
-" Strip whitespace.
-map <silent> <leader>ss :
-    \ let save_cursor = getpos(".") <Bar>
-    \ let old_query = getreg('/') <Bar>
-    \ %s/\s\+$//e <Bar>
-    \ call setpos('.', save_cursor) <Bar>
-    \ call setpos('/', old_query) <CR>
-
-" Toggle syntax on/off.
-map <silent> <leader>sy :
-    \ if exists("g:syntax_on") <Bar>
-    \   syntax off <Bar>
-    \ else <Bar>
-    \   syntax enable <Bar>
-    \ endif <CR>
 
 " Toggle spell check.
 nmap <silent> <leader>sc :set spell!<CR>
@@ -144,23 +114,72 @@ function! <SID>SynStack()
     echo map(synstack(line("."), col(".")), "synIDattr(v:val, 'name')")
 endfunc
 
+" Strip whitespace.
+map <silent> <leader>ss :
+    \ let save_cursor = getpos(".") <Bar>
+    \ let old_query = getreg('/') <Bar>
+    \ %s/\s\+$//e <Bar>
+    \ call setpos('.', save_cursor) <Bar>
+    \ call setpos('/', old_query) <CR>
+
 " Jump to the last cursor position in file if possible.
-function! ResumeCursor()
-    if line("'\"") <= line("$")
-        normal! g`"
-    endif
-endfunction
-augroup resumeCursor
-    autocmd!
-    autocmd BufWinEnter * call ResumeCursor()
-augroup END
+autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+    \     exe "normal! g`\"" |
+    \ endif
 
 " Source local override file if one exists.
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-"  Source plugins.
-if filereadable(expand("~/.vimrc.plugins"))
-    source ~/.vimrc.plugins
+" Local customizations
+
+colorscheme dim-ansi
+
+"  Plugins
+
+" Auto-bootstrap vim-plug.
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+call plug#begin()
+
+Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'elzr/vim-json'
+Plug 'itchyny/lightline.vim'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'Valloric/YouCompleteMe'
+Plug 'dense-analysis/ale'
+
+call plug#end()
+
+"""""""""""""""""""
+" Plugin settings "
+"""""""""""""""""""
+
+nnoremap <Leader>g :YcmCompleter GoTo<CR>
+
+nnoremap <silent> <leader>u :UndotreeToggle<CR>
+let g:undotree_SetFocusWhenToggle=1
+let g:undotree_WindowLayout=2
+
+nmap <silent> <leader>aj :ALENextWrap<cr>
+nmap <silent> <leader>ak :ALEPreviousWrap<cr>
+
+" XXX: Keep this around once the dim-ansi colorscheme settles for the Diff*
+"      higlight groups.
+" gitgutter's original colors
+" highlight GitGutterAdd    ctermfg=2
+" highlight GitGutterChange ctermfg=3
+" highlight GitGutterDelete ctermfg=1
