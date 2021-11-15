@@ -1,5 +1,14 @@
 -- Language Server Protocal configuration
 
+local lsp = require("vim.lsp")
+
+-- Use a single letter to indicate 'complete-items' 'kind' field.
+-- See :help complete-item-kind.
+lsp.util._get_completion_item_kind_name = function(completion_item_kind)
+    return lsp.protocol.CompletionItemKind[completion_item_kind]:sub(1,1):lower()
+end
+
+
 -- Provide a custom `on_attach` function to configure key mapppings after the
 -- language server attaches to the current buffer.
 local on_attach = function(client, buffer)
