@@ -35,7 +35,15 @@ lspconfig.clangd.setup {
 }
 
 lspconfig.jedi_language_server.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    init_options = {
+        completion = {
+            -- Return CompletionItem.detail in the initial completion request to get signatures in
+            -- the completion menu because Neovim doesn't support "completionItem/resolve" yet to
+            -- obtain this information.
+            resolveEagerly = true,
+        },
+    },
 }
 
 -- Show function signatures when typing.
