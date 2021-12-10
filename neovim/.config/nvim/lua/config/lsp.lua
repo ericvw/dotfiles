@@ -37,14 +37,20 @@ local on_attach = function(client, buffer)
     nmap("]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
 end
 
+
+
 local lspconfig = require("lspconfig")
 
-lspconfig.clangd.setup {
-    on_attach = on_attach
+-- Common configuration that applies to all LSP servers.
+local shared_lspconfig = {
+    on_attach = on_attach,
 }
 
-lspconfig.jedi_language_server.setup {
-    on_attach = on_attach,
+-- C/C++
+lspconfig.clangd.setup(shared_lspconfig)
+
+-- Python
+lspconfig.jedi_language_server.setup(vim.tbl_extend("error", shared_lspconfig, {
     init_options = {
         completion = {
             -- Return CompletionItem.detail in the initial completion request to get signatures in
@@ -53,7 +59,7 @@ lspconfig.jedi_language_server.setup {
             resolveEagerly = true,
         },
     },
-}
+}))
 
 -- Show function signatures when typing.
 require("lsp_signature").setup()
