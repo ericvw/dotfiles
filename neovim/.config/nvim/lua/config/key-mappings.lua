@@ -2,11 +2,7 @@
 local fn = vim.fn
 local opt = vim.opt
 
-function map(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts["silent"] = opts["silent"] or true
-    vim.keymap.set(mode, lhs, rhs, opts)
-end
+map = require("config.util").map
 
 -- Disable highlight after search.
 map("", "<leader><space>", function()
