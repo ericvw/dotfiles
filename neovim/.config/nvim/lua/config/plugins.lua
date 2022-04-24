@@ -2,6 +2,12 @@
 local fn = vim.fn
 local opt = vim.opt
 
+function map(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts["silent"] = opts["silent"] or true
+    vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 -- Bootstrap packer.
 local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -12,13 +18,31 @@ if fn.empty(fn.glob(install_path)) > 0 then
     opt.runtimepath:prepend("/site/pack/*/start/*")
 end
 
-return require('packer').startup(function()
+require('packer').startup(function()
     -- Manage packer with itself.
     use "wbthomason/packer.nvim"
 
-    -- Completion related plugins.
+    -- Completion/LSP plugins.
     use "neovim/nvim-lspconfig"
     use "ray-x/lsp_signature.nvim"
+
+    -- Behavior enhancing plugins.
+    use "editorconfig/editorconfig-vim"
+    use "tpope/vim-commentary"
+    use "tpope/vim-repeat"
+    use "tpope/vim-surround"
+
+    -- IDE/UI plugins.
+    use "airblade/vim-gitgutter"
+    use "ctrlpvim/ctrlp.vim"
+    use "dense-analysis/ale"
+    use "itchyny/lightline.vim"
+    use "mbbill/undotree"
+
+    -- Filetype plugins.
+    use "elzr/vim-json"
+    use "tpope/vim-git"
+    use "tpope/vim-markdown"
 
     -- XXX: Keep last to ensure configuration of above plugins.
     -- Automatically set up plugin configuration if bootstrapping packer.nvim.
@@ -26,3 +50,25 @@ return require('packer').startup(function()
         require('packer').sync()
     end
 end)
+
+-- UndoTree
+map("n", "<leader>u", function()
+    vim.cmd(":UndotreeToggle")
+end)
+vim.g.undotree_SetFocusWhenToggle = true
+vim.g.undotree_WindowLayout = 2
+
+-- ALE
+map("n", "<leader>aj", function()
+    vim.cmd(":ALENextWrap")
+end)
+map("n", "<leader>ak", function()
+    vim.cmd(":ALEPreviousWrap")
+end)
+
+-- XXX: Keep this around once the dim-ansi colorscheme settles for the Diff*
+--      highlight groups.
+-- gitgutter's original colors
+-- highlight GitGutterAdd    ctermfg=2
+-- highlight GitGutterChange ctermfg=3
+-- highlight GitGutterDelete ctermfg=1
