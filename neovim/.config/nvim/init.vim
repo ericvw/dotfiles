@@ -10,16 +10,6 @@ lua require("config/options")
 " Key mappings
 lua require("config/key-mappings")
 
-" Strip whitespace.
-" XXX: Port this to config/key-mappings.lua once key mapping can call Lua
-"       functions.
-map <silent> <leader>ss :
-    \ let save_cursor = getpos(".") <Bar>
-    \ let old_query = getreg('/') <Bar>
-    \ %s/\s\+$//e <Bar>
-    \ call setpos('.', save_cursor) <Bar>
-    \ call setpos('/', old_query) <CR>
-
 " Autocmds
 
 " Jump to the last cursor position in file if possible.
