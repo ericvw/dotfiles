@@ -30,10 +30,16 @@ require('packer').startup(function()
 
     -- IDE/UI plugins.
     use "airblade/vim-gitgutter"
-    use "ctrlpvim/ctrlp.vim"
     use "dense-analysis/ale"
     use "itchyny/lightline.vim"
     use "mbbill/undotree"
+    use {
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.0",
+        requires = {
+            "nvim-lua/plenary.nvim",
+        },
+    }
 
     -- Filetype plugins.
     use "elzr/vim-json"
@@ -61,6 +67,20 @@ end)
 map("n", "<leader>ak", function()
     vim.cmd(":ALEPreviousWrap")
 end)
+
+-- Telescope
+require("telescope").setup {
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-j>"] = "move_selection_next",
+                ["<C-k>"] = "move_selection_previous"
+            },
+        },
+    },
+}
+
+map({"n", "i"}, "<leader>ff", require("telescope.builtin").find_files)
 
 -- XXX: Keep this around once the dim-ansi colorscheme settles for the Diff*
 --      highlight groups.
