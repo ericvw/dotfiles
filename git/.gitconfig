@@ -9,6 +9,7 @@
 	lgd = log --oneline --graph --decorate
 	pushf = push --force-with-lease
 	st = status -sb
+	sw = switch
 [blame]
 	markIgnoredLines = true
 	markUnblamables = true
