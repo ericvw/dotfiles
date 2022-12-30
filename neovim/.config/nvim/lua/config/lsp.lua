@@ -61,5 +61,8 @@ lspconfig.jedi_language_server.setup(vim.tbl_extend("error", shared_lspconfig, {
     },
 }))
 
+-- Go
+lspconfig.gopls.setup(shared_lspconfig)
+
 -- Show function signatures when typing.
 require("lsp_signature").setup()
