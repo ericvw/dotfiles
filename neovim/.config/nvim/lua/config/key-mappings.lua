@@ -2,7 +2,7 @@
 local fn = vim.fn
 local opt = vim.opt
 
-map = require("config.util").map
+local map = require("config.util").map
 
 -- Disable highlight after search.
 map("", "<leader><space>", function()
