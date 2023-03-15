@@ -1,6 +1,7 @@
 -- Language Server Protocal configuration
+local lsp = vim.lsp
 
-local lsp = require("vim.lsp")
+local map = require("config.util").map
 
 -- Use a single letter to indicate 'complete-items' 'kind' field.
 -- See :help complete-item-kind.
@@ -9,34 +10,36 @@ lsp.util._get_completion_item_kind_name = function(completion_item_kind)
 end
 
 
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions.
+local function nnoremap(lhs, rhs)
+    map("n", lhs, rhs, { noremap = true })
+end
+nnoremap("<space>e", vim.diagnostic.open_float)
+nnoremap("[d", vim.diagnostic.goto_prev)
+nnoremap("]d", vim.diagnostic.goto_next)
+nnoremap("<space>q", vim.diagnostic.setloclist)
+
+
 -- Provide a custom `on_attach` function to configure key mapppings after the
 -- language server attaches to the current buffer.
 local on_attach = function(client, buffer)
-    local function nmap(lhs, rhs)
-        vim.api.nvim_buf_set_keymap(buffer, "n", lhs, rhs, {noremap = true, silent = true})
-    end
-    local function set_buf_opt(...) vim.api.nvim_buf_set_option(buffer, ...) end
-
     -- Enable completion triggered by <c-x><c-o>.
-    set_buf_opt("omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    nmap("gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-    nmap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-    nmap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-    nmap("gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-    nmap("K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-    nmap("<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-    nmap("<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-    nmap("<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-    nmap("<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-
-    nmap("<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
-    nmap("<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
-    nmap("[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-    nmap("]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
+    -- See `:help vim.lsp.*` for documentation on any of the below functions.
+    local function nnoremap_local(lhs, rhs)
+        map("n", lhs, rhs, { noremap = true, buffer = buffer })
+    end
+    nnoremap_local("gD", vim.lsp.buf.declaration)
+    nnoremap_local("gd", vim.lsp.buf.definition)
+    nnoremap_local("K", vim.lsp.buf.hover)
+    nnoremap_local("gi", vim.lsp.buf.implementation)
+    nnoremap_local("<C-k>", vim.lsp.buf.signature_help)
+    nnoremap_local("<space>D", vim.lsp.buf.type_definition)
+    nnoremap_local("<space>rn", vim.lsp.buf.rename)
+    nnoremap_local("<space>ca", vim.lsp.buf.code_action)
+    nnoremap_local("gr", vim.lsp.buf.references)
 end
-
 
 
 local lspconfig = require("lspconfig")
