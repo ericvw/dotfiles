@@ -159,7 +159,6 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'Valloric/YouCompleteMe'
 Plug 'dense-analysis/ale'
 
 call plug#end()
@@ -167,8 +166,6 @@ call plug#end()
 """""""""""""""""""
 " Plugin settings "
 """""""""""""""""""
-
-nnoremap <Leader>g :YcmCompleter GoTo<CR>
 
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle=1
