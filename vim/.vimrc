@@ -154,9 +154,7 @@ Plug 'dense-analysis/ale'
 
 call plug#end()
 
-"""""""""""""""""""
-" Plugin settings "
-"""""""""""""""""""
+" Plugin settings
 
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle=1
