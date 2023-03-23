@@ -128,11 +128,6 @@ autocmd BufReadPost *
     \     exe "normal! g`\"" |
     \ endif
 
-" Source local override file if one exists.
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
-
 "  Plugins
 
 " Auto-bootstrap vim-plug.
