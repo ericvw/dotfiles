@@ -133,10 +133,6 @@ if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-" Local customizations
-
-colorscheme dim-ansi
-
 "  Plugins
 
 " Auto-bootstrap vim-plug.
@@ -180,3 +176,7 @@ nmap <silent> <leader>ak :ALEPreviousWrap<cr>
 " highlight GitGutterAdd    ctermfg=2
 " highlight GitGutterChange ctermfg=3
 " highlight GitGutterDelete ctermfg=1
+
+" Local customizations
+
+colorscheme dim-ansi
