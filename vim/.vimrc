@@ -151,10 +151,16 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
+Plug 'nordtheme/vim', {'as': 'nordtheme'}
 
 call plug#end()
 
 " Plugin settings
+
+" Lightline
+let g:lightline = {
+    \ 'colorscheme': 'nord',
+    \ }
 
 " Undotree
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
@@ -165,13 +171,9 @@ let g:undotree_WindowLayout=2
 nmap <silent> <leader>aj :ALENextWrap<cr>
 nmap <silent> <leader>ak :ALEPreviousWrap<cr>
 
-" XXX: Keep this around once the dim-ansi colorscheme settles for the Diff*
-"      higlight groups.
-" gitgutter's original colors
-" highlight GitGutterAdd    ctermfg=2
-" highlight GitGutterChange ctermfg=3
-" highlight GitGutterDelete ctermfg=1
-
 " Local customizations
 
-colorscheme dim-ansi
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+let g:nord_underline = 1
+colorscheme nord
