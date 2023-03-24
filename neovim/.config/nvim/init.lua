@@ -17,4 +17,4 @@ require("config.auto-commands")
 require("config.lsp")
 
 -- Local customizations
-vim.cmd("colorscheme dim-ansi")
+require("config.color-scheme")

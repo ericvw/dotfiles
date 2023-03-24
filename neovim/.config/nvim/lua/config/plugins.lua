@@ -34,6 +34,10 @@ require('packer').startup(function()
     use "itchyny/lightline.vim"
     use "mbbill/undotree"
     use {
+        "nordtheme/vim",
+        as = "nordtheme",
+    }
+    use {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.0",
         requires = {
@@ -52,6 +56,11 @@ require('packer').startup(function()
         require('packer').sync()
     end
 end)
+
+-- Lightline
+vim.g.lightline = {
+    colorscheme = "nord",
+}
 
 -- UndoTree
 map("n", "<leader>u", function()
@@ -81,10 +90,3 @@ require("telescope").setup {
 }
 
 map({"n", "i"}, "<leader>ff", require("telescope.builtin").find_files)
-
--- XXX: Keep this around once the dim-ansi colorscheme settles for the Diff*
---      highlight groups.
--- gitgutter's original colors
--- highlight GitGutterAdd    ctermfg=2
--- highlight GitGutterChange ctermfg=3
--- highlight GitGutterDelete ctermfg=1
