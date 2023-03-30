@@ -89,4 +89,6 @@ require("telescope").setup {
     },
 }
 
-map({"n", "i"}, "<leader>ff", require("telescope.builtin").find_files)
+local telescope_builtin = require("telescope.builtin")
+map({"n", "i"}, "<leader>ff", telescope_builtin.find_files)
+map({"n", "i"}, "<leader>fg", telescope_builtin.git_files)
