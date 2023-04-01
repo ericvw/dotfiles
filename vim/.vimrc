@@ -152,6 +152,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 Plug 'nordtheme/vim', {'as': 'nordtheme'}
+Plug 'fladson/vim-kitty'
 
 call plug#end()
 
