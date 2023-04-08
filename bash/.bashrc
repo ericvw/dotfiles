@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 # .bashrc - bash instance configuration
+# vim: foldmethod=marker
 
 # Don't source rest of this file if session is not interactive.
 [ -z "$PS1" ] && return
 
-##########
-# prompt #
-##########
+#: Prompt {{{
 
 # Gentoo/cygwin style, two-line prompt.
 PS1='\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]\h\[\e[0;34m\] \w\[\e[0;32m\]\n\[\e[00m\]\$ '
 
-###########
-# aliases #
-###########
+#: }}}
+
+#: Aliases {{{
 
 # Navigation
 alias -- -='cd -'
@@ -28,9 +27,9 @@ else
 fi
 alias ls="command ls ${COLORFLAG}"
 
-#############
-# functions #
-#############
+#: }}}
+
+#: Functions {{{
 
 # Navigate with `.. [#]`.
 function .. {
@@ -44,9 +43,9 @@ function .. {
     cd "${s// //..}"
 }
 
-##############################
-# bash environment variables #
-##############################
+#: }}}
+
+#: bash environment variables {{{
 
 # Keep up to 32^3 lines of history.
 HISTFILESIZE=32768
@@ -63,16 +62,16 @@ HISTCONTROL=ignoreboth:erasedups
 # Always append history to history file after each command.
 PROMPT_COMMAND='history -a'
 
-#######################
-# POSIX shell options #
-#######################
+#: }}}
+
+#: POSIX shell options {{{
 
 # Prevent existing files from being overwritten by redirection.
 set -o noclobber
 
-######################
-# bash shell options #
-######################
+#: }}}
+
+#: bash shell options {{{
 
 # Auto-correct minor typos on `cd`.
 shopt -s cdspell
@@ -110,12 +109,14 @@ shopt -s histverify
 # Don't start auto-completion if there is nothing on the command line.
 shopt -s no_empty_cmd_completion
 
-################
-# stty options #
-################
+#: }}}
+
+#: stty options {{{
 
 # Disable STARt/STOP output control (i.e., allow for Ctrl-s).
 stty -ixon
+
+#: }}}
 
 # Source local override file if one exists.
 [ -r ~/.bashrc.local ] && . ~/.bashrc.local
