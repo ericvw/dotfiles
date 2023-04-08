@@ -3,9 +3,6 @@
 local fn = vim.fn
 local opt = vim.opt
 
--- 1 important
-opt.pastetoggle = "<F2>"
-
 -- 2 moving around, searching and patterns
 opt.ignorecase = true
 opt.smartcase = true

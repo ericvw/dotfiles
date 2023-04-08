@@ -23,7 +23,6 @@ require('packer').startup(function()
     use "ray-x/lsp_signature.nvim"
 
     -- Behavior enhancing plugins.
-    use "editorconfig/editorconfig-vim"
     use "tpope/vim-commentary"
     use "tpope/vim-repeat"
     use "tpope/vim-surround"
