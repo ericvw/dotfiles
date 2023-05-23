@@ -1,0 +1,5 @@
+# Align with my current CLI color scheme.
+--theme="Nord"
+
+# Kitty supports rendering italic text.
+--italic-text=always
