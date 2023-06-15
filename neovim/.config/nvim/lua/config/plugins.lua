@@ -46,6 +46,7 @@ require('packer').startup(function()
 
     -- Filetype plugins.
     use "elzr/vim-json"
+    use "ericvw/vim-nim"
     use "fladson/vim-kitty"
     use "tpope/vim-git"
     use "tpope/vim-markdown"
