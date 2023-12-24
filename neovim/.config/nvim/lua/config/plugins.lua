@@ -30,12 +30,12 @@ require('packer').startup(function()
     -- IDE/UI plugins.
     use "airblade/vim-gitgutter"
     use "dense-analysis/ale"
-    use "itchyny/lightline.vim"
     use "mbbill/undotree"
     use {
         "nordtheme/vim",
         as = "nordtheme",
     }
+    use "nvim-lualine/lualine.nvim"
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -58,9 +58,12 @@ require('packer').startup(function()
     end
 end)
 
--- Lightline
-vim.g.lightline = {
-    colorscheme = "nord",
+-- lualine
+require("lualine").setup {
+    options = {
+        icons_enabled = false,
+        theme = "nord",
+    },
 }
 
 -- UndoTree
