@@ -64,6 +64,9 @@ lspconfig.jedi_language_server.setup(vim.tbl_extend("error", shared_lspconfig, {
     },
 }))
 
+-- Rust
+lspconfig.rust_analyzer.setup(shared_lspconfig)
+
 -- Go
 lspconfig.gopls.setup(shared_lspconfig)
 
