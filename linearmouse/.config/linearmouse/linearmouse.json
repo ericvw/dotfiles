@@ -2,6 +2,19 @@
   "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5",
   "schemes" : [
     {
+      "pointer" : {
+        "acceleration" : 1,
+        "disableAcceleration" : true
+      },
+      "if" : {
+        "device" : {
+          "productID" : "0xc084",
+          "category" : "mouse",
+          "productName" : "G203 Prodigy Gaming Mouse",
+          "vendorID" : "0x46d",
+          "serialNumber" : "0A8438793833"
+        }
+      },
       "scrolling" : {
         "acceleration" : {
           "vertical" : 1
@@ -12,19 +25,32 @@
         "distance" : {
           "vertical" : 4
         }
-      },
+      }
+    },
+    {
       "if" : {
         "device" : {
-          "productID" : "0xc084",
-          "serialNumber" : "0A8438793833",
-          "productName" : "G203 Prodigy Gaming Mouse",
+          "serialNumber" : "206A31785242",
           "vendorID" : "0x46d",
-          "category" : "mouse"
+          "productName" : "G203 LIGHTSYNC Gaming Mouse",
+          "category" : "mouse",
+          "productID" : "0xc092"
         }
       },
       "pointer" : {
-        "acceleration" : 1,
-        "disableAcceleration" : true
+        "disableAcceleration" : true,
+        "acceleration" : 1
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "speed" : {
+          "vertical" : 0
+        },
+        "distance" : {
+          "vertical" : 4
+        }
       }
     }
   ]
