@@ -13,6 +13,8 @@
 [blame]
 	markIgnoredLines = true
 	markUnblamables = true
+[commit]
+	verbose = true
 [core]
 	# Warn on unsafe or irreversable conversions.
 	safecrlf = warn
