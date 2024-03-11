@@ -4,14 +4,14 @@
 -- Core options
 require("config.options")
 
--- Plugins
-require("config.plugins")
-
 -- Key mappings
 require("config.key-mappings")
 
 -- Auto commands
 require("config.auto-commands")
+
+-- Plugins
+require("config.plugins")
 
 -- Language Server Protocol
 require("config.lsp")
