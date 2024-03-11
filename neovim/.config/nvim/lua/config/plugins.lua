@@ -1,62 +1,72 @@
 -- Plugins
-local fn = vim.fn
-local opt = vim.opt
-
 local map = require("config.util").map
 
--- Bootstrap packer.
-local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
-    -- XXX: Manually add to the runtime path when bootstraping because the
-    --      directory structure doesn't exist at Neovim startup to be
-    --      automatically added.
-    opt.runtimepath:prepend("/site/pack/*/start/*")
+-- Bootstrap lazy.
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function()
-    -- Manage packer with itself.
-    use "wbthomason/packer.nvim"
-
+require("lazy").setup({
     -- Completion/LSP plugins.
-    use "neovim/nvim-lspconfig"
-    use "ray-x/lsp_signature.nvim"
+    "neovim/nvim-lspconfig",
+    "ray-x/lsp_signature.nvim",
 
     -- Behavior enhancing plugins.
-    use "tpope/vim-commentary"
-    use "tpope/vim-repeat"
-    use "tpope/vim-surround"
+    "tpope/vim-commentary",
+    "tpope/vim-repeat",
+    "tpope/vim-surround",
 
     -- IDE/UI plugins.
-    use "airblade/vim-gitgutter"
-    use "dense-analysis/ale"
-    use "mbbill/undotree"
-    use {
+    "airblade/vim-gitgutter",
+    "dense-analysis/ale",
+    "mbbill/undotree",
+    {
         "nordtheme/vim",
-        as = "nordtheme",
-    }
-    use "nvim-lualine/lualine.nvim"
-    use {
+        name = "nordtheme",
+    },
+    "nvim-lualine/lualine.nvim",
+    {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
         },
-    }
+    },
 
     -- Filetype plugins.
-    use "elzr/vim-json"
-    use "ericvw/vim-nim"
-    use "fladson/vim-kitty"
-    use "tpope/vim-git"
-    use "tpope/vim-markdown"
-
-    -- XXX: Keep last to ensure configuration of above plugins.
-    -- Automatically set up plugin configuration if bootstrapping packer.nvim.
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
+    "elzr/vim-json",
+    "ericvw/vim-nim",
+    "fladson/vim-kitty",
+    "tpope/vim-git",
+    "tpope/vim-markdown",
+}, {
+    ui = {
+        icons = {
+            cmd = "⌘",
+            config = "🛠",
+            event = "📅",
+            ft = "📂",
+            init = "⚙",
+            keys = "🗝",
+            plugin = "🔌",
+            runtime = "💻",
+            require = "🌙",
+            source = "📄",
+            start = "🚀",
+            task = "📌",
+            lazy = "💤 ",
+        },
+    },
+})
 
 -- lualine
 require("lualine").setup {
