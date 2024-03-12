@@ -66,6 +66,7 @@ TERM dvtm-256color
 TERM Eterm
 TERM eterm-color
 TERM fbterm
+TERM foot
 TERM gnome
 TERM gnome-256color
 TERM jfbterm
@@ -308,8 +309,10 @@ EXEC 01;31  # Unix
 .yuv 33
 .NEF 33 # Nikon RAW format
 .nef 33
+.webp 33
 .heic 33
 .HEIC 33
+.avif 33
 
 # Audio
 .aac 33
@@ -475,7 +478,6 @@ EXEC 01;31  # Unix
 
 # The brightmagenta (Solarized: purple) color is free for you to use for your
 # custom file type
-.gpg 34
 .gpg 34
 .pgp 34
 .asc 34
