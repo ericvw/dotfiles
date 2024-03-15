@@ -42,4 +42,4 @@
 	enabled = true
 [include]
 	# Source local override file if one exists.
-	path = ~/.gitconfig.local
+	path = ~/.config/git/local
