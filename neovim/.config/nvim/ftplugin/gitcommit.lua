@@ -1,4 +1,2 @@
-local opt = vim.opt_local
-
 -- Always spellcheck commit messages.
-opt.spell = true
+vim.opt_local.spell = true

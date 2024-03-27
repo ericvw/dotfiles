@@ -1,13 +1,11 @@
-local opt = vim.opt_local
-
 -- Use tabs instead of spaces.
-opt.expandtab = false
+vim.opt_local.expandtab = false
 
 -- Visualize tabs taking 4 spaces.
-opt.tabstop = 4
+vim.opt_local.tabstop = 4
 
 -- Disable showing tab characters and show leading spaces.
-opt.listchars = vim.tbl_extend("force", vim.opt.listchars:get(), {
+vim.opt_local.listchars = vim.tbl_extend("force", vim.opt.listchars:get(), {
     tab = "  ",
     lead = "·",
 })

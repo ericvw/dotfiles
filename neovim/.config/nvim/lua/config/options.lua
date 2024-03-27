@@ -1,52 +1,50 @@
 -- Initialization options grouped by function.
 -- Run :options to understand grouping of settings.
-local fn = vim.fn
-local opt = vim.opt
 
 -- 2 moving around, searching and patterns
-opt.ignorecase = true
-opt.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- 4 displaying text
-opt.scrolloff = 1
-opt.lazyredraw = true
-opt.list = true
-opt.listchars = {
+vim.opt.scrolloff = 1
+vim.opt.lazyredraw = true
+vim.opt.list = true
+vim.opt.listchars = {
     tab = "» ",
     trail = "·",
     extends = ">",
     precedes = "<",
 }
-opt.number = true
+vim.opt.number = true
 
 -- 5 syntax, highlighting and spelling
-opt.colorcolumn = "+1"
+vim.opt.colorcolumn = "+1"
 
 -- 6 multiple windows
-opt.splitright = true
-opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- 9 using the mouse
-opt.mouse = "a"
+vim.opt.mouse = "a"
 
 -- 11 message and info
-opt.shortmess:append({
+vim.opt.shortmess:append({
     a = true,
     I = true,
 })
-opt.report = 0
-opt.errorbells = false
+vim.opt.report = 0
+vim.opt.errorbells = false
 
 -- 13 editing text
-opt.undofile = true
-opt.showmatch = true
+vim.opt.undofile = true
+vim.opt.showmatch = true
 
 -- 14 tabs and indenting
-opt.shiftwidth = 4
-opt.softtabstop = 4
-opt.shiftround = true
-opt.expandtab = true
-opt.cinoptions = {
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftround = true
+vim.opt.expandtab = true
+vim.opt.cinoptions = {
     ":0.5s", -- placement of case after switch statement
     "=0.5s", -- place statements after case label
     "l1",    -- align with case label instead of statement
@@ -60,23 +58,23 @@ opt.cinoptions = {
 }
 
 -- 18 reading and writing files
-opt.bomb = false
-opt.fileformats:append("mac")
-opt.backup = true
-opt.backupdir:remove(".")
-for i,v in ipairs(opt.backupdir:get()) do
-    local d = fn.expand(v)
-    if fn.isdirectory(d) == 0 then
-        fn.mkdir(d, "p")
+vim.opt.bomb = false
+vim.opt.fileformats:append("mac")
+vim.opt.backup = true
+vim.opt.backupdir:remove(".")
+for i,v in ipairs(vim.opt.backupdir:get()) do
+    local d = vim.fn.expand(v)
+    if vim.fn.isdirectory(d) == 0 then
+        vim.fn.mkdir(d, "p")
     end
 end
 
 -- 20 command line editing
-opt.wildmode = {
+vim.opt.wildmode = {
     "list:longest",
     "full"
 }
-opt.wildignore:append({
+vim.opt.wildignore:append({
     "*.pyc", -- Python byte codes.
     "*.o", -- Compiled object files.
 })

@@ -1,12 +1,10 @@
 -- Language Server Protocal configuration
-local lsp = vim.lsp
-
 local map = require("config.util").map
 
 -- Use a single letter to indicate 'complete-items' 'kind' field.
 -- See :help complete-item-kind.
-lsp.util._get_completion_item_kind_name = function(completion_item_kind)
-    return lsp.protocol.CompletionItemKind[completion_item_kind]:sub(1,1):lower()
+vim.lsp.util._get_completion_item_kind_name = function(completion_item_kind)
+    return vim.lsp.protocol.CompletionItemKind[completion_item_kind]:sub(1,1):lower()
 end
 
 
