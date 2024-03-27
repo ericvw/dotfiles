@@ -1,5 +1,4 @@
 -- Plugins
-local map = require("config.util").map
 
 -- Bootstrap lazy.
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -77,17 +76,17 @@ require("lualine").setup {
 }
 
 -- UndoTree
-map("n", "<leader>u", function()
+vim.keymap.set("n", "<leader>u", function()
     vim.cmd(":UndotreeToggle")
 end)
 vim.g.undotree_SetFocusWhenToggle = true
 vim.g.undotree_WindowLayout = 2
 
 -- ALE
-map("n", "<leader>aj", function()
+vim.keymap.set("n", "<leader>aj", function()
     vim.cmd(":ALENextWrap")
 end)
-map("n", "<leader>ak", function()
+vim.keymap.set("n", "<leader>ak", function()
     vim.cmd(":ALEPreviousWrap")
 end)
 
@@ -104,5 +103,5 @@ require("telescope").setup {
 }
 
 local telescope_builtin = require("telescope.builtin")
-map({"n", "i"}, "<leader>ff", telescope_builtin.find_files)
-map({"n", "i"}, "<leader>fg", telescope_builtin.git_files)
+vim.keymap.set({"n", "i"}, "<leader>ff", telescope_builtin.find_files)
+vim.keymap.set({"n", "i"}, "<leader>fg", telescope_builtin.git_files)

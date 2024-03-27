@@ -1,5 +1,4 @@
 -- Language Server Protocal configuration
-local map = require("config.util").map
 
 -- Use a single letter to indicate 'complete-items' 'kind' field.
 -- See :help complete-item-kind.
@@ -9,13 +8,10 @@ end
 
 
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions.
-local function nnoremap(lhs, rhs)
-    map("n", lhs, rhs, { noremap = true })
-end
-nnoremap("<space>e", vim.diagnostic.open_float)
-nnoremap("[d", vim.diagnostic.goto_prev)
-nnoremap("]d", vim.diagnostic.goto_next)
-nnoremap("<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
 
 -- Provide a custom `on_attach` function to configure key mapppings after the
@@ -25,18 +21,15 @@ local on_attach = function(client, buffer)
     vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions.
-    local function nnoremap_local(lhs, rhs)
-        map("n", lhs, rhs, { noremap = true, buffer = buffer })
-    end
-    nnoremap_local("gD", vim.lsp.buf.declaration)
-    nnoremap_local("gd", vim.lsp.buf.definition)
-    nnoremap_local("K", vim.lsp.buf.hover)
-    nnoremap_local("gi", vim.lsp.buf.implementation)
-    nnoremap_local("<C-k>", vim.lsp.buf.signature_help)
-    nnoremap_local("<space>D", vim.lsp.buf.type_definition)
-    nnoremap_local("<space>rn", vim.lsp.buf.rename)
-    nnoremap_local("<space>ca", vim.lsp.buf.code_action)
-    nnoremap_local("gr", vim.lsp.buf.references)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {buffer = buffer})
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {buffer = buffer})
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, {buffer = buffer})
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {buffer = buffer})
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, {buffer = buffer})
+    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, {buffer = buffer})
+    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, {buffer = buffer})
+    vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, {buffer = buffer})
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, {buffer = buffer})
 end
 
 
