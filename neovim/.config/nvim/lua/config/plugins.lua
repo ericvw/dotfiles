@@ -20,7 +20,6 @@ require("lazy").setup({
     "ray-x/lsp_signature.nvim",
 
     -- Behavior enhancing plugins.
-    "tpope/vim-commentary",
     "tpope/vim-repeat",
     "tpope/vim-surround",
 
