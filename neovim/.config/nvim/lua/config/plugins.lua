@@ -76,17 +76,17 @@ require("lualine").setup {
 
 -- UndoTree
 vim.keymap.set("n", "<leader>u", function()
-    vim.cmd(":UndotreeToggle")
+    vim.cmd.UndotreeToggle()
 end)
 vim.g.undotree_SetFocusWhenToggle = true
 vim.g.undotree_WindowLayout = 2
 
 -- ALE
 vim.keymap.set("n", "<leader>aj", function()
-    vim.cmd(":ALENextWrap")
+    vim.cmd.ALENextWrap()
 end)
 vim.keymap.set("n", "<leader>ak", function()
-    vim.cmd(":ALEPreviousWrap")
+    vim.cmd.ALEPreviousWrap()
 end)
 
 -- Telescope
