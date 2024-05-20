@@ -19,6 +19,12 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     "ray-x/lsp_signature.nvim",
 
+    -- Tree-sitter plugins.
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+    },
+
     -- Behavior enhancing plugins.
     "tpope/vim-repeat",
     "tpope/vim-surround",
@@ -65,6 +71,26 @@ require("lazy").setup({
         },
     },
 })
+
+-- nvim-treesitter
+require("nvim-treesitter.configs").setup {
+    ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "fish",
+        "go",
+        "json",
+        "lua",
+        "make",
+        "nim",
+        "python",
+        "rust",
+        "toml",
+        "vim",
+        "vimdoc",
+    },
+}
 
 -- lualine
 require("lualine").setup {
