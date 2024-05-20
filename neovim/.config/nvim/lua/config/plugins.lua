@@ -30,6 +30,8 @@ require("lazy").setup({
     {
         "nordtheme/vim",
         name = "nordtheme",
+        url = "https://github.com/ericvw/nordtheme-vim.git",
+        branch = "pu",
     },
     "nvim-lualine/lualine.nvim",
     {
