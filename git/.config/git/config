@@ -36,6 +36,7 @@
 [push]
 	default = current
 [rebase]
+	abbreviateCommands = true
 	autoSquash = true
 	updateRefs = true
 [rerere]
