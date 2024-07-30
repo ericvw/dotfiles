@@ -4,6 +4,9 @@
 -- Core options
 require("config.options")
 
+-- Platform-specific configuration
+require("config.platform")
+
 -- Key mappings
 require("config.key-mappings")
 
