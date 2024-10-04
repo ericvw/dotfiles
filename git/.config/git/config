@@ -1,3 +1,12 @@
+[user]
+	name = Eric N. Vander Weele
+	email = ericvw@gmail.com
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = ericvw@gmail.com
+	smtpServerPort = 587
+
 [advice]
 	# Reduce verbosity of help messages.
 	pushUpdateRejected = false
@@ -42,6 +51,10 @@
 [rerere]
 	enabled = true
 	autoUpdate = true
+
 [include]
-	# Source local override file if one exists.
-	path = ~/.config/git/local
+	# Source platform-specific configuration if one exists.
+	path = platform
+[includeIf "gitdir:~/work/"]
+	# Source work-specific configuration if one exists.
+	path = work
