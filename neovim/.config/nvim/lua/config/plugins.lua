@@ -93,6 +93,7 @@ require("nvim-treesitter.configs").setup {
         "vim",
         "vimdoc",
     },
+    sync_install = #vim.api.nvim_list_uis() == 0,
 }
 
 -- lualine
