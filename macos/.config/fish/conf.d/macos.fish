@@ -16,6 +16,3 @@ fish_add_path -P -m $brew_prefix/opt/ccache/libexec
 fish_add_path -P -m $brew_prefix/opt/curl/bin
 fish_add_path -P -m $brew_prefix/opt/findutils/libexec/gnubin
 fish_add_path -P -m $brew_prefix/opt/coreutils/libexec/gnubin
-
-# Alternative search path for dotfiles tmux-generated tmux-256color terminfo.
-set -gx TERMINFO_DIRS $HOME/.local/share/terminfo
