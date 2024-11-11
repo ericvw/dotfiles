@@ -23,7 +23,6 @@ return {
         "nordtheme/vim",
         name = "nordtheme",
     },
-    "nvim-lualine/lualine.nvim",
     {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",

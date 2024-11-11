@@ -59,14 +59,6 @@ require("nvim-treesitter.configs").setup {
     sync_install = #vim.api.nvim_list_uis() == 0,
 }
 
--- lualine
-require("lualine").setup {
-    options = {
-        icons_enabled = false,
-        theme = "nord",
-    },
-}
-
 -- UndoTree
 vim.keymap.set("n", "<leader>u", function()
     vim.cmd.UndotreeToggle()
