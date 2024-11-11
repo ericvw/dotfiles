@@ -11,10 +11,6 @@ return {
         build = ":TSUpdate",
     },
 
-    -- Behavior enhancing plugins.
-    "tpope/vim-repeat",
-    "tpope/vim-surround",
-
     -- IDE/UI plugins.
     "airblade/vim-gitgutter",
     "dense-analysis/ale",
