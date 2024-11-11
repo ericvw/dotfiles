@@ -33,9 +33,6 @@ return {
     },
 
     -- Filetype plugins.
-    "elzr/vim-json",
     "ericvw/vim-nim",
     "fladson/vim-kitty",
-    "tpope/vim-git",
-    "tpope/vim-markdown",
 }
