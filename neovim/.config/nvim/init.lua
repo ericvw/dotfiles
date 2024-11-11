@@ -18,6 +18,3 @@ require("config.plugins")
 
 -- Language Server Protocol
 require("config.lsp")
-
--- Local customizations
-require("config.color-scheme")

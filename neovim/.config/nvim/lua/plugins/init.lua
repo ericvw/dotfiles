@@ -20,10 +20,6 @@ return {
     "dense-analysis/ale",
     "mbbill/undotree",
     {
-        "nordtheme/vim",
-        name = "nordtheme",
-    },
-    {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         dependencies = {
