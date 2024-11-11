@@ -31,8 +31,4 @@ return {
             "nvim-lua/plenary.nvim",
         },
     },
-
-    -- Filetype plugins.
-    "ericvw/vim-nim",
-    "fladson/vim-kitty",
 }
