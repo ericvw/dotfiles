@@ -17,45 +17,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-    -- Completion/LSP plugins.
-    "neovim/nvim-lspconfig",
-    "ray-x/lsp_signature.nvim",
-
-    -- Tree-sitter plugins.
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
-
-    -- Behavior enhancing plugins.
-    "tpope/vim-repeat",
-    "tpope/vim-surround",
-
-    -- IDE/UI plugins.
-    "airblade/vim-gitgutter",
-    "dense-analysis/ale",
-    "mbbill/undotree",
-    {
-        "nordtheme/vim",
-        name = "nordtheme",
-    },
-    "nvim-lualine/lualine.nvim",
-    {
-        "nvim-telescope/telescope.nvim",
-        branch = "0.1.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
-
-    -- Filetype plugins.
-    "elzr/vim-json",
-    "ericvw/vim-nim",
-    "fladson/vim-kitty",
-    "tpope/vim-git",
-    "tpope/vim-markdown",
-}, {
+require("lazy").setup("plugins", {
     ui = {
         icons = {
             cmd = "⌘",
