@@ -12,7 +12,6 @@ return {
     },
 
     -- IDE/UI plugins.
-    "airblade/vim-gitgutter",
     "dense-analysis/ale",
     "mbbill/undotree",
     {
