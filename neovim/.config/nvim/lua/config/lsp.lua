@@ -1,11 +1,5 @@
 -- Language Server Protocal configuration
 
--- Use a single letter to indicate "complete-items" "kind" field.
--- See :help complete-item-kind.
-vim.lsp.util._get_completion_item_kind_name = function(completion_item_kind)
-    return vim.lsp.protocol.CompletionItemKind[completion_item_kind]:sub(1,1):lower()
-end
-
 -- Use LspAttach autocommand to only map the following keys after the language
 -- server attaches to the current buffer.
 vim.api.nvim_create_autocmd("LspAttach", {
