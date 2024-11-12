@@ -13,5 +13,4 @@ return {
 
     -- IDE/UI plugins.
     "dense-analysis/ale",
-    "mbbill/undotree",
 }

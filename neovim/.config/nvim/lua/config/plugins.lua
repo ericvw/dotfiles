@@ -59,13 +59,6 @@ require("nvim-treesitter.configs").setup {
     sync_install = #vim.api.nvim_list_uis() == 0,
 }
 
--- UndoTree
-vim.keymap.set("n", "<leader>u", function()
-    vim.cmd.UndotreeToggle()
-end)
-vim.g.undotree_SetFocusWhenToggle = true
-vim.g.undotree_WindowLayout = 2
-
 -- ALE
 vim.keymap.set("n", "<leader>aj", function()
     vim.cmd.ALENextWrap()

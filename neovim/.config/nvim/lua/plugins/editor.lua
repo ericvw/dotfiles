@@ -6,6 +6,16 @@ return {
         config = true,
     },
     {
+        "mbbill/undotree",
+        init = function()
+            vim.keymap.set("n", "<leader>u", function()
+                vim.cmd.UndotreeToggle()
+            end)
+            vim.g.undotree_SetFocusWhenToggle = true
+            vim.g.undotree_WindowLayout = 2
+        end
+    },
+    {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         dependencies = {
