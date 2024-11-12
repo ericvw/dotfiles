@@ -28,6 +28,9 @@ return {
 
             -- Go
             lspconfig.gopls.setup {}
+
+            -- Shell
+            lspconfig.bashls.setup{}
         end,
     },
     {
