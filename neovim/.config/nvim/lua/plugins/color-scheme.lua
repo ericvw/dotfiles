@@ -3,6 +3,8 @@
 return {
     {
         "nordtheme/vim",
+        url = "https://github.com/ericvw/nordtheme-vim.git",
+        branch = "pu",
         name = "nordtheme",
         init = function()
             vim.g.nord_italic = 1
