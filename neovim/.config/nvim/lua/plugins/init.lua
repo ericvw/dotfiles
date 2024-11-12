@@ -14,11 +14,4 @@ return {
     -- IDE/UI plugins.
     "dense-analysis/ale",
     "mbbill/undotree",
-    {
-        "nvim-telescope/telescope.nvim",
-        branch = "0.1.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
 }

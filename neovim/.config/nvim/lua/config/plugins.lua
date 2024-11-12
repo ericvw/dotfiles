@@ -73,19 +73,3 @@ end)
 vim.keymap.set("n", "<leader>ak", function()
     vim.cmd.ALEPreviousWrap()
 end)
-
--- Telescope
-require("telescope").setup {
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-j>"] = "move_selection_next",
-                ["<C-k>"] = "move_selection_previous"
-            },
-        },
-    },
-}
-
-local telescope_builtin = require("telescope.builtin")
-vim.keymap.set({"n", "i"}, "<leader>ff", telescope_builtin.find_files)
-vim.keymap.set({"n", "i"}, "<leader>fg", telescope_builtin.git_files)
