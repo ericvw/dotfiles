@@ -36,11 +36,3 @@ require("lazy").setup("plugins", {
         },
     },
 })
-
--- ALE
-vim.keymap.set("n", "<leader>aj", function()
-    vim.cmd.ALENextWrap()
-end)
-vim.keymap.set("n", "<leader>ak", function()
-    vim.cmd.ALEPreviousWrap()
-end)
