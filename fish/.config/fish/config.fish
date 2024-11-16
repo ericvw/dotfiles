@@ -11,6 +11,7 @@ set -gx PIP_REQUIRE_VIRTUALENV true
 # Save the network I/O and responsiveness of using `pip`.
 set -gx PIP_DISABLE_PIP_VERSION_CHECK true
 
+fish_add_path -P -m ~/.local/bin
 fish_add_path -P -m ~/.nimble/bin
 fish_add_path -P -m ~/.cargo/bin
 
