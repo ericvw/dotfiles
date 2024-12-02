@@ -36,7 +36,7 @@
 	follow = true
 [merge]
 	# A wonderful default diffing tool.
-	tool = vimdiff
+	tool = nvimdiff
 	# Provide base context to aid in conflict resolution.
 	conflictStyle = zdiff3
 [pager]
