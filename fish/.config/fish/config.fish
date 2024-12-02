@@ -34,8 +34,15 @@ if command -q bat
 end
 
 # Initialize pyenv and related plugins, if available.
-if command -q pyenv
+if test -d $HOME/.pyenv
     set -gx PYENV_ROOT $HOME/.pyenv
+end
+
+if test -d $PYENV_ROOT
+    fish_add_path -P -m $PYENV_ROOT/bin
+end
+
+if command -q pyenv
     pyenv init - | source
 end
 
