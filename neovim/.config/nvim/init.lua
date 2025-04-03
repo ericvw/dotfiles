@@ -18,3 +18,6 @@ require("config.plugins")
 
 -- Language Server Protocol
 require("config.lsp")
+
+-- Diagnostic Framework
+require("config.diagnostic")
