@@ -1,5 +1,13 @@
 -- Language Server Protocal configuration
 
+vim.lsp.enable({
+    "bashls",
+    "clangd",
+    "gopls",
+    "jedi_language_server",
+    "rust_analyzer",
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
