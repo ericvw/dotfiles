@@ -1,22 +1,20 @@
 -- Language Server Protocal configuration
 
--- Use LspAttach autocommand to only map the following keys after the language
--- server attaches to the current buffer.
+vim.lsp.enable({
+    "bashls",
+    "clangd",
+    "gopls",
+    "jedi_language_server",
+    "rust_analyzer",
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
-        -- Buffer local mappings
-        -- See `:help vim.lsp.*` for documentation on any of the below functions.
-        local opts = { buffer = args.buf }
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-        vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-        vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<space>f", function()
-            vim.lsp.buf.format { async = true }
-        end, opts)
+        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+        -- Enable lsp_signature plugin only when there is LSP server support.
+        if client:supports_method("textDocument/signatureHelp") then
+            require("lsp_signature").on_attach({}, args.buf)
+        end
     end,
 })
