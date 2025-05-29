@@ -4,12 +4,12 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
-            "nordtheme",
+            "rebelot/kanagawa.nvim",
         },
         opts = {
             options = {
                 icons_enabled = false,
-                theme = "nord",
+                theme = "kanagawa",
             },
         }
     },
