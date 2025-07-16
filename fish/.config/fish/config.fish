@@ -30,7 +30,7 @@ end
 
 # Use `bat` as the man pager for colorized man pages, if available.
 if command -q bat
-    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+    set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 end
 
 # Initialize pyenv and related plugins, if available.
