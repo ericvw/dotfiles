@@ -34,3 +34,10 @@ vim.api.nvim_create_autocmd("BufRead", {
     end,
     desc = "Create one shot buffer-local autocommand to restore cursor",
 })
+
+-- Automatically close preview window after Insert mode completion is done.
+vim.api.nvim_create_autocmd("CompleteDone", {
+    callback = function(args)
+        vim.cmd.pclose()
+    end
+})

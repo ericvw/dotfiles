@@ -37,6 +37,13 @@ vim.opt.errorbells = false
 
 -- 13 editing text
 vim.opt.undofile = true
+vim.opt.completeopt = {
+    "fuzzy",
+    "menu",
+    "menuone",
+    "noselect",
+    "preview",
+}
 vim.opt.showmatch = true
 
 -- 14 tabs and indenting
