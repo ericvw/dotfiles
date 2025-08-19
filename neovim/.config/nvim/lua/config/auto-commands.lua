@@ -39,5 +39,5 @@ vim.api.nvim_create_autocmd("BufRead", {
 vim.api.nvim_create_autocmd("CompleteDone", {
     callback = function(args)
         vim.cmd.pclose()
-    end
+    end,
 })

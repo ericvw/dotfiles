@@ -26,7 +26,6 @@ return {
                 sync_install = #vim.api.nvim_list_uis() == 0,
                 highlight = {
                     enable = true,
-
                 },
             })
         end,
