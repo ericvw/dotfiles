@@ -1,0 +1,5 @@
+# Top-most EditorConfig file
+root = true
+
+[*]
+indent_size = 4
