@@ -4,7 +4,7 @@ vim.lsp.enable({
     "bashls",
     "clangd",
     "gopls",
-    "jedi_language_server",
+    "pyright",
     "rust_analyzer",
 })
 
