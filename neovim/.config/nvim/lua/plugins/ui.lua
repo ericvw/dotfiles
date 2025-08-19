@@ -11,6 +11,6 @@ return {
                 icons_enabled = false,
                 theme = "kanagawa",
             },
-        }
+        },
     },
 }

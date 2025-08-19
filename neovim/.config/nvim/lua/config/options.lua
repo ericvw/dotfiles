@@ -54,14 +54,14 @@ vim.opt.expandtab = true
 vim.opt.cinoptions = {
     ":0.5s", -- placement of case after switch statement
     "=0.5s", -- place statements after case label
-    "l1",    -- align with case label instead of statement
+    "l1", -- align with case label instead of statement
     "g0.5s", -- place C++ scope declarations
     "h0.5s", -- places statements after C++ scope decls
-    "N-s",   -- indent inside C++ namespace
-    "t0",    -- indent function return type at margin
-    "i0",    -- C++ base class decls and initializations
-    "(0",    -- indent from unclosed parens
-    "J1",    -- don't confuse JS object decls with labels
+    "N-s", -- indent inside C++ namespace
+    "t0", -- indent function return type at margin
+    "i0", -- C++ base class decls and initializations
+    "(0", -- indent from unclosed parens
+    "J1", -- don't confuse JS object decls with labels
 }
 
 -- 18 reading and writing files
@@ -69,7 +69,7 @@ vim.opt.bomb = false
 vim.opt.fileformats:append("mac")
 vim.opt.backup = true
 vim.opt.backupdir:remove(".")
-for i,v in ipairs(vim.opt.backupdir:get()) do
+for i, v in ipairs(vim.opt.backupdir:get()) do
     local d = vim.fn.expand(v)
     if vim.fn.isdirectory(d) == 0 then
         vim.fn.mkdir(d, "p")
@@ -79,7 +79,7 @@ end
 -- 20 command line editing
 vim.opt.wildmode = {
     "list:longest",
-    "full"
+    "full",
 }
 vim.opt.wildignore:append({
     "*.pyc", -- Python byte codes.

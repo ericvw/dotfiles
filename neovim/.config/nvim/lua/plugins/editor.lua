@@ -13,7 +13,7 @@ return {
             end)
             vim.g.undotree_SetFocusWhenToggle = true
             vim.g.undotree_WindowLayout = 2
-        end
+        end,
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -23,15 +23,15 @@ return {
         },
         init = function()
             local builtin = require("telescope.builtin")
-            vim.keymap.set({"n", "i"}, "<leader>ff", builtin.find_files)
-            vim.keymap.set({"n", "i"}, "<leader>fg", builtin.git_files)
+            vim.keymap.set({ "n", "i" }, "<leader>ff", builtin.find_files)
+            vim.keymap.set({ "n", "i" }, "<leader>fg", builtin.git_files)
         end,
         opts = {
             defaults = {
                 mappings = {
                     i = {
                         ["<C-j>"] = "move_selection_next",
-                        ["<C-k>"] = "move_selection_previous"
+                        ["<C-k>"] = "move_selection_previous",
                     },
                 },
             },
