@@ -1,10 +1,19 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.2",
   "schemes" : [
     {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0xc084",
+          "productName" : "G203 Prodigy Gaming Mouse",
+          "serialNumber" : "0A8438793833",
+          "vendorID" : "0x46d"
+        }
+      },
       "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 1
+        "acceleration" : 1,
+        "disableAcceleration" : true
       },
       "scrolling" : {
         "acceleration" : {
@@ -13,25 +22,20 @@
         "reverse" : {
           "vertical" : true
         }
-      },
-      "if" : {
-        "device" : {
-          "productName" : "G203 Prodigy Gaming Mouse",
-          "productID" : "0xc084",
-          "vendorID" : "0x46d",
-          "serialNumber" : "0A8438793833",
-          "category" : "mouse"
-        }
       }
     },
     {
       "if" : {
         "device" : {
-          "vendorID" : "0x46d",
           "category" : "mouse",
           "productID" : "0xc53f",
-          "productName" : "USB Receiver"
+          "productName" : "USB Receiver",
+          "vendorID" : "0x46d"
         }
+      },
+      "pointer" : {
+        "acceleration" : 1,
+        "disableAcceleration" : true
       },
       "scrolling" : {
         "acceleration" : {
@@ -40,55 +44,53 @@
         "reverse" : {
           "vertical" : true
         }
-      },
-      "pointer" : {
-        "acceleration" : 1,
-        "disableAcceleration" : true
       }
     },
     {
-      "scrolling" : {
-        "acceleration" : {
-          "vertical" : 1
-        },
-        "reverse" : {
-          "vertical" : true
-        }
-      },
-      "pointer" : {
-        "acceleration" : 1,
-        "disableAcceleration" : true
-      },
       "if" : {
         "device" : {
+          "category" : "mouse",
           "productID" : "0xc54d",
           "productName" : "USB Receiver",
-          "vendorID" : "0x46d",
-          "category" : "mouse",
-          "serialNumber" : "317B365B3433"
+          "serialNumber" : "317B365B3433",
+          "vendorID" : "0x46d"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 1,
+        "disableAcceleration" : true,
+        "redirectsToScroll" : false,
+        "speed" : "unset"
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
         }
       }
     },
     {
-      "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 1
-      },
-      "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
-        "acceleration" : {
-          "vertical" : 1
-        }
-      },
       "if" : {
         "device" : {
+          "category" : "mouse",
+          "productID" : "0xc09b",
           "productName" : "PRO X 2",
           "serialNumber" : "E1FCA215",
-          "vendorID" : "0x46d",
-          "productID" : "0xc09b",
-          "category" : "mouse"
+          "vendorID" : "0x46d"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 1,
+        "disableAcceleration" : true
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
         }
       }
     }
