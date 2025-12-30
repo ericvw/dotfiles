@@ -5,6 +5,19 @@ end
 # Disable the startup message.
 set -g fish_greeting
 
+# Set up Homebrew environment.
+for p in /opt/homebrew/bin /home/linuxbrew/.linuxbrew/bin
+    if test -d $p
+        # Configure $PATH, $MANPATH, and $INFOPATH.
+        $p/brew shellenv | source
+
+        # Don't automatically run `brew update` before running other commands.
+        set -gx HOMEBREW_NO_AUTO_UPDATE 1
+
+        break
+    end
+end
+
 # Only run `pip` in a virtual environment.
 set -gx PIP_REQUIRE_VIRTUALENV true
 
