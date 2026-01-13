@@ -11,3 +11,10 @@ format: format-lua
 .PHONY: format-lua
 format-lua:
 	stylua -a .
+
+.PHONY: lint
+lint: lint-shell
+
+.PHONY: lint-shell
+lint-shell:
+	shellcheck *.sh
