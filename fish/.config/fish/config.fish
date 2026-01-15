@@ -5,6 +5,9 @@ end
 # Disable the startup message.
 set -g fish_greeting
 
+# Set Vi mode keybindings.
+set --g fish_key_bindings fish_vi_key_bindings
+
 # Set up Homebrew environment.
 for p in /opt/homebrew/bin /home/linuxbrew/.linuxbrew/bin
     if test -d $p
