@@ -5,6 +5,9 @@ end
 # Disable the startup message.
 set -g fish_greeting
 
+# Set hybrid mode keybindings that use Vi-style with inherited emacs-style bindings.
+set --g fish_key_bindings fish_hybrid_key_bindings
+
 # Set up Homebrew environment.
 for p in /opt/homebrew/bin /home/linuxbrew/.linuxbrew/bin
     if test -d $p
