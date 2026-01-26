@@ -12,12 +12,10 @@ Feel free to look around and take what inspires you!
     git clone https://github.com/ericvw/dotfiles.git ~/.dotfiles
     ```
 
-2. Symlink dotfiles to home directory.
+2. Invoke helper script to `stow` dotfiles.
 
     ```shell
-    stow fish
-    stow neovim
-    # ...
+    bash ./install.sh
     ```
 
 3. Spawn new terminal session and enjoy!
