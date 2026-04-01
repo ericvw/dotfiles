@@ -92,3 +92,13 @@ if command -q pyenv-virtualenv-init
     pyenv virtualenv-init - | source
 end
 # }}}
+
+# fnm {{{
+if test -d $HOME/.local/share/fnm
+    fish_add_path -P -m $HOME/.local/share/fnm
+end
+
+if command -q fnm
+    fnm env | source
+end
+# }}}
