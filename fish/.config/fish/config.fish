@@ -21,6 +21,17 @@ for p in /opt/homebrew/bin /home/linuxbrew/.linuxbrew/bin
     end
 end
 
+# Add Homebrew tool paths.
+if command -q brew
+    set -l brew_prefix (brew --prefix)
+    fish_add_path -P -m $brew_prefix/opt/make/libexec/gnubin
+    fish_add_path -P -m $brew_prefix/opt/python/libexec/bin
+    fish_add_path -P -m $brew_prefix/opt/ccache/libexec
+    fish_add_path -P -m $brew_prefix/opt/curl/bin
+    fish_add_path -P -m $brew_prefix/opt/findutils/libexec/gnubin
+    fish_add_path -P -m $brew_prefix/opt/coreutils/libexec/gnubin
+end
+
 # Only run `pip` in a virtual environment.
 set -gx PIP_REQUIRE_VIRTUALENV true
 
