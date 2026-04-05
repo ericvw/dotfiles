@@ -9,8 +9,10 @@ local function is_within_document(line)
     return line >= 1 and line <= vim.fn.line("$")
 end
 
-local function is_git_filetype(ft)
-    return string.find(ft, "commit") or string.find(ft, "rebase")
+local function should_skip_restore(buf)
+    local ft = vim.bo[buf].filetype
+
+    return string.find(ft, "commit") or ft == "gitrebase" or ft == "xxd" or vim.wo.diff
 end
 
 local restore_cursor = vim.api.nvim_create_augroup("RestoreCursor", {})
@@ -19,13 +21,12 @@ vim.api.nvim_create_autocmd("BufRead", {
     pattern = "*",
     callback = function(args)
         vim.api.nvim_create_autocmd("FileType", {
-            buffer = args.buffer,
+            buffer = args.buf,
             once = true,
             callback = function(args)
-                local ft = vim.opt.filetype:get()
                 local line = vim.fn.line("'\"")
 
-                if is_within_document(line) and not is_git_filetype(ft) then
+                if is_within_document(line) and not should_skip_restore(args.buf) then
                     vim.fn.setpos(".", vim.fn.getpos("'\""))
                 end
             end,
