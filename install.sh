@@ -125,26 +125,23 @@ packages_for_platform() {
 
 # Stow argument builder {{{
 build_stow_args() {
-    local -a args=()
-    args+=(--dir "$DOTFILES_DIR" --target "$TARGET_DIR")
+    STOW_ARGS=(--dir "$DOTFILES_DIR" --target "$TARGET_DIR")
 
     # Prefer deterministic behavior.
-    args+=(--no-folding)
+    STOW_ARGS+=(--no-folding)
 
     if $VERBOSE; then
-        args+=(-v)
+        STOW_ARGS+=(-v)
     fi
 
     if $DRY_RUN; then
-        args+=(--simulate)
+        STOW_ARGS+=(--simulate)
     fi
 
     if $RESTOW; then
         # Restow re-applies links cleanly if you rename/move things.
-        args+=(--restow)
+        STOW_ARGS+=(--restow)
     fi
-
-    echo "${args[@]}"
 }
 # }}}
 
@@ -175,12 +172,13 @@ main() {
         echo "  - $p"
     done
 
-    local stow_args
-    stow_args="$(build_stow_args)"
+    local -a STOW_ARGS=()
+    local cmd
+    build_stow_args
 
-    log "Running: stow $stow_args ${PKGS[*]}"
-    # shellcheck disable=SC2086
-    stow $stow_args "${PKGS[@]}"
+    printf -v cmd '%q ' stow "${STOW_ARGS[@]}" "${PKGS[@]}"
+    log "Running: ${cmd% }"
+    stow "${STOW_ARGS[@]}" "${PKGS[@]}"
 
     log "Dotfiles installed via stow."
 }
