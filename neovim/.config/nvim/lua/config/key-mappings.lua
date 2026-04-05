@@ -17,7 +17,7 @@ vim.keymap.set("", "<leader>ss", function()
     -- TODO: Port this to Lua :substitute API if and when it exists.
     vim.cmd([[%s/\s\+$//e]])
     vim.fn.setpos(".", cursor_position)
-    vim.fn.setpos("/", old_query)
+    vim.fn.setreg("/", old_query)
 end)
 
 -- Show highlighting groups for current word.
