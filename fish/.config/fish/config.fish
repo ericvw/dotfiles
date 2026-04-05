@@ -67,6 +67,12 @@ fish_add_path -P -m ~/.nimble/bin
 fish_add_path -P -m ~/.cargo/bin
 # }}}
 
+# keychain {{{
+if command -q keychain
+    keychain --eval --quiet -Q | source
+end
+# }}}
+
 # pip {{{
 # Only run `pip` in a virtual environment.
 set -gx PIP_REQUIRE_VIRTUALENV true
