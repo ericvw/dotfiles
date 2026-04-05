@@ -159,7 +159,7 @@ main() {
 
     log "Will stow packages:"
     for p in "${PKGS[@]}"; do
-        echo "  - $p"
+        printf '  - %s\n' "$p"
     done
 
     local -a STOW_ARGS=()
