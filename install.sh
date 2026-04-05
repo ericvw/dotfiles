@@ -160,7 +160,10 @@ main() {
         exit 1
     fi
 
-    mapfile -t PKGS < <(packages_for_platform)
+    local -a PKGS=()
+    while IFS= read -r pkg; do
+        PKGS+=("$pkg")
+    done < <(packages_for_platform)
 
     if [[ "${#PKGS[@]}" -eq 0 ]]; then
         err "No stow packages selected (or none exist)."
