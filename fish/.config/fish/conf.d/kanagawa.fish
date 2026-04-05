@@ -20,7 +20,7 @@ set -l waveAqua1 6a9589
 set -l waveBlue1 223249
 set -l waveBlue2 2d4f67
 
-set -l foreground fujiWhite normal
+set -l foreground $fujiWhite normal
 
 set -g fish_color_normal $foreground
 set -g fish_color_command $springBlue
