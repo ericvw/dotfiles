@@ -9,7 +9,6 @@ TARGET_DIR="${TARGET_DIR:-$HOME}"
 # }}}
 
 # Command-line parsing {{{
-ASSUME_YES=false
 DRY_RUN=false
 VERBOSE=false
 RESTOW=true   # restow = re-link (recommended). Set false to only stow new.
@@ -19,7 +18,6 @@ usage() {
 Usage: ./install.sh [options]
 
 Options:
-  --yes            Non-interactive; assume yes for prompts
   --dry-run        Show stow actions without applying
   --verbose        Verbose stow output
   --no-restow      Use stow (not --restow)
@@ -32,7 +30,6 @@ EOF
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --yes) ASSUME_YES=true; shift ;;
         --dry-run) DRY_RUN=true; shift ;;
         --verbose) VERBOSE=true; shift ;;
         --no-restow) RESTOW=false; shift ;;
@@ -46,13 +43,6 @@ done
 log()  { printf "\033[1;34m==>\033[0m %s\n" "$*" >&2; }
 warn() { printf "\033[1;33m!!\033[0m %s\n" "$*" >&2; }
 err()  { printf "\033[1;31mxx\033[0m %s\n" "$*" >&2; }
-
-confirm() {
-    local prompt="${1:-Continue?}"
-    $ASSUME_YES && return 0
-    read -r -p "$prompt [y/N] " ans
-    [[ "${ans:-}" =~ ^[Yy]$ ]]
-}
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
