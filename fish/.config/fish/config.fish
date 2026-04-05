@@ -38,6 +38,12 @@ if command -q brew
 end
 # }}}
 
+# PATHs {{{
+fish_add_path -P -m ~/.local/bin
+fish_add_path -P -m ~/.nimble/bin
+fish_add_path -P -m ~/.cargo/bin
+# }}}
+
 # Editor {{{
 if command -q nvim
     set -gx EDITOR nvim
@@ -59,12 +65,6 @@ end
 if command -q bat
     set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 end
-# }}}
-
-# PATHs {{{
-fish_add_path -P -m ~/.local/bin
-fish_add_path -P -m ~/.nimble/bin
-fish_add_path -P -m ~/.cargo/bin
 # }}}
 
 # keychain {{{
