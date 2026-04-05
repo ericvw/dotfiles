@@ -1,7 +1,7 @@
 # vim: foldmethod=marker
 
 if not status is-interactive
-    exit
+    return
 end
 
 # Fish shell {{{
