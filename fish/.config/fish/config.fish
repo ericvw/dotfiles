@@ -86,7 +86,7 @@ if test -d $HOME/.pyenv
     set -gx PYENV_ROOT $HOME/.pyenv
 end
 
-if test -d $PYENV_ROOT
+if test -d "$PYENV_ROOT"
     fish_add_path -P -m $PYENV_ROOT/bin
 end
 
