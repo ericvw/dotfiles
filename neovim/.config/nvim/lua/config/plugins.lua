@@ -63,9 +63,18 @@ vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 -- }}}
 
 -- LSP {{{
-vim.pack.add({
-    "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/ray-x/lsp_signature.nvim",
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+
+vim.pack.add({ "https://github.com/ray-x/lsp_signature.nvim" })
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+        -- Enable lsp_signature plugin only when there is LSP server support.
+        if client:supports_method("textDocument/signatureHelp") then
+            require("lsp_signature").on_attach({}, args.buf)
+        end
+    end,
 })
 -- }}}
 
