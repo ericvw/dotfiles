@@ -1,20 +1,22 @@
--- Language Server Protocal configuration
+-- Language Server Protocol configuration
 
-vim.lsp.enable({
-    "bashls",
-    "clangd",
-    "gopls",
-    "pyright",
-    "rust_analyzer",
-})
+-- Map of LSP server names to their executable commands.
+local lsp_servers = {
+    bashls = "bash-language-server",
+    clangd = "clangd",
+    gopls = "gopls",
+    pyright = "pyright",
+    rust_analyzer = "rust-analyzer",
+}
 
-vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+-- Only enable servers that are available.
+local available_servers = {}
+for server, cmd in pairs(lsp_servers) do
+    if vim.fn.executable(cmd) == 1 then
+        table.insert(available_servers, server)
+    end
+end
 
-        -- Enable lsp_signature plugin only when there is LSP server support.
-        if client:supports_method("textDocument/signatureHelp") then
-            require("lsp_signature").on_attach({}, args.buf)
-        end
-    end,
-})
+if #available_servers > 0 then
+    vim.lsp.enable(available_servers)
+end
