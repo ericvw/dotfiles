@@ -1,6 +1,20 @@
 -- Plugins
 -- vim: foldmethod=marker
 
+-- Hooks {{{
+vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
+            if not ev.data.active then
+                vim.cmd.packadd("nvim-treesitter")
+            end
+            vim.cmd("TSUpdate")
+        end
+    end,
+})
+-- }}}
+
 -- UI {{{
 vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" })
 vim.cmd.colorscheme("kanagawa")
@@ -55,7 +69,6 @@ vim.pack.add({
 
 -- Tree-sitter {{{
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
--- Note: Run :TSUpdate manually after first installation
 -- }}}
 
 -- LSP {{{
