@@ -5,7 +5,7 @@ Global instructions for AI coding agents across all projects and providers.
 ## Commit Guidelines
 
 **Principles**:
-- **Atomic commits**: One logical change per commit
+- **Atomic commits**: One logical change per commit. Don't mix unrelated changes even if made in the same session (e.g., don't combine Vim and Neovim updates, or backend and frontend changes)
 - **Separate features**: Don't bundle unrelated changes
 - **Follow project norms**: Infer commit message style from `git log` history
 - **User review**: Always propose commit messages for review before committing
@@ -28,6 +28,30 @@ Global instructions for AI coding agents across all projects and providers.
 - **Prefixes**: Only use if the project history shows a consistent pattern (infer from `git log`)
   - Don't add generic conventional commit prefixes unless the project already uses them
 - **No AI trailers**: Do not add Co-Authored-By or similar trailers crediting AI agents
+
+**What to include in commit messages**:
+- Focus on the **why** and **context**, not the what - the diff shows the what
+- Avoid redundant bullet lists of file changes - git shows this
+- When changes touch multiple areas, explain the relationship, not just list them
+- Include reasons for decisions (e.g., "Nord is no longer maintained")
+
+**Anti-pattern** (redundant bullets):
+```
+Update configuration
+
+Changes:
+- Modified file A
+- Updated file B
+- Removed file C
+```
+
+**Better** (explains why):
+```
+Update configuration to use maintained dependencies
+
+Replace Nord theme with dim-ansi since Nord is no longer maintained.
+Remove deprecated YCM configurations in favor of built-in LSP.
+```
 
 **Before committing**:
 1. Run `git log --oneline -20` to understand the project's commit message conventions
@@ -63,8 +87,9 @@ Includes middleware for protected routes.
 ## AI Assistant Collaboration
 
 **Communication**:
-- Be concise and direct
-- Provide context for decisions when needed
+- Be thorough when analyzing problems, concise when executing simple tasks
+- Proactively explain context for decisions and trade-offs
+- When multiple approaches exist, present options with trade-offs before executing
 - Ask clarifying questions when requirements are unclear
 - Reference code with file paths and line numbers
 
@@ -76,11 +101,22 @@ Includes middleware for protected routes.
   - Run discovered formatters/linters before commits (e.g., `make format`, `make lint`)
 - Verify changes don't break existing functionality
 
+**Configuration Files**:
+- Prefer EditorConfig (`.editorconfig`) for cross-editor/cross-tool settings like indentation, charset, and whitespace
+- Use tool-specific config files only for settings EditorConfig cannot handle
+- Check for existing EditorConfig before adding language-specific editor configurations
+
 **Decision Making**:
-- Prefer existing patterns over new abstractions
+- When multiple valid approaches exist, present options with trade-offs and recommend the best approach
+- Prefer existing patterns over new abstractions, but discuss when existing patterns should evolve
 - Don't add features beyond the requested scope
-- Ask for guidance when multiple valid approaches exist
-- Respect existing project conventions and architecture
+- Explain architectural decisions and their implications
+- Respect existing project conventions while suggesting improvements when valuable
+
+**Dependencies and Tools**:
+- Prefer actively maintained projects over abandoned ones
+- Document reasons for dependency changes in commit messages (e.g., "X is no longer maintained")
+- Consider fallback options for critical tools (e.g., simpler alternatives when primary tools are unavailable)
 
 **Error Handling**:
 - Diagnose root causes before retrying failed operations
