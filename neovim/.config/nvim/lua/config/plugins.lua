@@ -18,12 +18,8 @@ require("lualine").setup({
 vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
 require("gitsigns").setup({})
 
-vim.pack.add({ "https://github.com/mbbill/undotree" })
-vim.keymap.set("n", "<leader>u", function()
-    vim.cmd.UndotreeToggle()
-end)
-vim.g.undotree_SetFocusWhenToggle = true
-vim.g.undotree_WindowLayout = 2
+vim.cmd.packadd("nvim.undotree")
+vim.keymap.set("n", "<leader>u", vim.cmd.Undotree)
 
 vim.pack.add({
     "https://github.com/nvim-lua/plenary.nvim",
