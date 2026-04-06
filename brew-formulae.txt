@@ -8,6 +8,8 @@ fish
 git
 gh
 gnu-sed
+keychain
+make
 neovim
 pyenv
 pyenv-virtualenv
