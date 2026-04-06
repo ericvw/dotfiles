@@ -60,6 +60,7 @@ endif
 set backspace=indent,eol,start
 set formatoptions+=j
 set showmatch
+set completeopt=fuzzy,menu,menuone,noselect,preview
 
 " 14 tabs and indenting
 set shiftwidth=4
@@ -85,6 +86,13 @@ set nobomb
 set fileformats+=mac
 set backup
 set backupdir=~/.vim/tmp/backup
+" Auto-create backup and undo directories if they don't exist
+if !isdirectory(expand('~/.vim/tmp/backup'))
+    call mkdir(expand('~/.vim/tmp/backup'), 'p')
+endif
+if has('persistent_undo') && !isdirectory(expand('~/.vim/tmp/undo'))
+    call mkdir(expand('~/.vim/tmp/undo'), 'p')
+endif
 set autoread
 
 " 20 command line editing
@@ -124,7 +132,8 @@ map <silent> <leader>ss :
 
 " Jump to the last cursor position in file if possible.
 autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+    \ if line("'\"") >= 1 && line("'\"") <= line("$")
+    \    && &ft !~# 'commit\|gitrebase\|xxd' && !&diff |
     \     exe "normal! g`\"" |
     \ endif
 
@@ -156,9 +165,6 @@ call plug#end()
 " Plugin settings
 
 " Lightline
-let g:lightline = {
-    \ 'colorscheme': 'nord',
-    \ }
 
 " Undotree
 nnoremap <silent> <leader>u :UndotreeToggle<CR>
@@ -171,7 +177,4 @@ nmap <silent> <leader>ak :ALEPreviousWrap<cr>
 
 " Local customizations
 
-let g:nord_italic = 1
-let g:nord_italic_comments = 1
-let g:nord_underline = 1
-colorscheme nord
+colorscheme dim-ansi

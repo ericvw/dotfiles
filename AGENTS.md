@@ -56,11 +56,11 @@ Example:
 - dircolors - Color scheme for ls/directory listings
 - fish - Interactive shell (primary shell)
 - git - Version control configuration with aliases and platform-specific includes
-- neovim - Primary editor with LSP, tree-sitter, and plugin setup
+- neovim - Primary editor with LSP, tree-sitter, and native plugin management
 - opencode - OpenCode AI agent configuration
 - quilt - Debian patch management tool configuration
 - tmux - Terminal multiplexer
-- vim - Vim editor configuration (.vimrc, ftplugin)
+- vim - Lean fallback editor when Neovim is unavailable
 
 **Platform-specific packages**:
 - macOS: kitty (terminal emulator with theme support), linearmouse (mouse configuration), macos (macOS-specific settings)
@@ -74,6 +74,8 @@ Examples:
 - ❌ Duplicating Homebrew initialization across base and platform-specific fish configs
 
 ## Key Configuration Patterns
+
+**General principle**: Prefer EditorConfig (`.editorconfig`) for cross-editor settings like indentation, charset, and whitespace. Use editor-specific ftplugin files only for settings that EditorConfig cannot handle.
 
 ### Git Configuration
 
@@ -96,6 +98,23 @@ Modular Lua structure in `neovim/.config/nvim/`:
 Key plugins auto-update tree-sitter parsers via PackChanged hook when nvim-treesitter is installed/updated.
 
 Platform-specific logic in `lua/config/platform.lua`.
+
+### Vim Configuration
+
+Philosophy: Vim serves as a **lean, reliable fallback** when Neovim is unavailable.
+
+Configuration principles:
+- **Backport essential features** from Neovim (fuzzy completion, enhanced cursor restoration, auto-create directories)
+- **Use simple defaults** - avoid complex plugin configurations (e.g., no custom theme settings for lightline)
+- **Prefer EditorConfig** for language-specific settings over ftplugin files
+- **Remove unused language configs** - don't maintain ftplugin files for languages not actively developed
+- **Auto-create directories** - backup/undo directories created at runtime instead of tracking empty directories via Stow
+- **Custom colorscheme** - Uses `dim-ansi` (Nord theme is no longer maintained)
+
+Structure:
+- `.vimrc` - Single file configuration with vim-plug for plugin management
+- `ftplugin/` - Minimal filetype settings (gitcommit, gitconfig, mail only)
+- `colors/` - Custom color schemes
 
 ### Fish Shell Configuration
 
