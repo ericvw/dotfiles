@@ -20,7 +20,7 @@ Global instructions for AI coding agents across all projects and providers.
 **Format rules**:
 - **Subject**: Clear, concise (maximum 72 characters including any prefix)
 - **Body lines**: Greedy word-wrap to maximize each line up to 72 characters
-  - Use `fmt -w 72` for greedy wrapping
+  - Use `fmt -w 72 -g 72` for greedy wrapping
   - Pack as many complete words as possible per line before breaking
   - Break at word boundaries, not mid-word
 - **Imperative mood**: "Add feature" not "Added feature"
@@ -57,7 +57,9 @@ Remove deprecated YCM configurations in favor of built-in LSP.
 1. Run `git log --oneline -20` to understand the project's commit message conventions
 2. Check for type/scope prefix patterns in recent commits (e.g., some projects use `neovim:`, `docs:`, etc.)
 3. Draft a commit message matching the project's style
-4. Present the message to the user for review before committing
+4. Verify body wrapping: run `fmt -w 72 -g 72` on the body and confirm the
+   output matches the draft exactly
+5. Present the message to the user for review before committing
 
 **Example** (no prefix - use when project history doesn't show prefix pattern):
 ```
