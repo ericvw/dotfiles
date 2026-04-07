@@ -12,16 +12,23 @@ TARGET_DIR="${TARGET_DIR:-$HOME}"
 DRY_RUN=false
 VERBOSE=false
 RESTOW=true   # restow = re-link (recommended). Set false to only stow new.
+EXTRA_PACKAGES=()
 
 usage() {
     cat <<EOF
 Usage: ./install.sh [options]
 
 Options:
-  --dry-run        Show stow actions without applying
-  --verbose        Verbose stow output
-  --no-restow      Use stow (not --restow)
-  -h, --help       Show help
+  --dry-run            Show stow actions without applying
+  --verbose            Verbose stow output
+  --no-restow          Use stow (not --restow)
+  --package <name>     Also stow <name> (repeatable)
+  -h, --help           Show help
+
+Packages installed by default:
+  Common:  bash bat dircolors fish git neovim tmux vim
+  macOS:   kitty linearmouse macos
+  WSL:     wsl
 
 Env overrides:
   TARGET_DIR=/path/to/target   (default: \$HOME)
@@ -33,6 +40,9 @@ while [[ $# -gt 0 ]]; do
         --dry-run) DRY_RUN=true; shift ;;
         --verbose) VERBOSE=true; shift ;;
         --no-restow) RESTOW=false; shift ;;
+        --package)
+            [[ $# -gt 1 ]] || { echo "--package requires an argument"; usage; exit 1; }
+            EXTRA_PACKAGES+=("$2"); shift 2 ;;
         -h|--help) usage; exit 0 ;;
         *) echo "Unknown arg: $1"; usage; exit 1 ;;
     esac
@@ -97,6 +107,10 @@ packages_for_platform() {
         wsl)   pkgs+=("${WSL_PACKAGES[@]}") ;;
         *) warn "Unknown PLATFORM '$PLATFORM' - using COMMON only." ;;
     esac
+
+    if [[ "${#EXTRA_PACKAGES[@]}" -gt 0 ]]; then
+        pkgs+=("${EXTRA_PACKAGES[@]}")
+    fi
 
     # Filter to only directories that exist to avoid stow errors.
     local -a existing=()
