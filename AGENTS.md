@@ -158,7 +158,7 @@ secure credential storage appropriate to each platform.
 - **Scope**: Package name (neovim, fish, git, vim, opencode, etc.) or AGENTS.md for changes to this file - REQUIRED
 - **Subject**: Clear, concise imperative description (max 72 chars including scope prefix)
 - **Body lines**: Greedy word-wrap to maximize each line up to 72 characters
-  - Use `fmt -w 72` for greedy wrapping
+  - Use `fmt -w 72 -g 72` for greedy wrapping
   - Pack as many complete words as possible per line before breaking
   - Break at word boundaries, not mid-word
 - **Imperative mood**: "Add feature" not "Added feature"
@@ -167,7 +167,9 @@ secure credential storage appropriate to each platform.
 
 **Before committing**:
 1. Draft a commit message following the format above
-2. Present the message to the user for review before committing
+2. Verify body wrapping: run `fmt -w 72 -g 72` on the body and confirm the
+   output matches the draft exactly
+3. Present the message to the user for review before committing
 
 **Git workflow best practices**:
 - Never skip git hooks (`--no-verify`) unless explicitly requested
