@@ -6,6 +6,27 @@ set -euo pipefail
 # Configuration {{{
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="${TARGET_DIR:-$HOME}"
+
+COMMON_PACKAGES=(
+    bash
+    bat
+    dircolors
+    fish
+    git
+    neovim
+    tmux
+    vim
+)
+
+MACOS_PACKAGES=(
+    kitty
+    linearmouse
+    macos
+)
+
+WSL_PACKAGES=(
+    wsl
+)
 # }}}
 
 # Command-line parsing {{{
@@ -26,9 +47,9 @@ Options:
   -h, --help           Show help
 
 Packages installed by default:
-  Common:  bash bat dircolors fish git neovim tmux vim
-  macOS:   kitty linearmouse macos
-  WSL:     wsl
+  Common:  ${COMMON_PACKAGES[*]}
+  macOS:   ${MACOS_PACKAGES[*]}
+  WSL:     ${WSL_PACKAGES[*]}
 
 Env overrides:
   TARGET_DIR=/path/to/target   (default: \$HOME)
@@ -77,27 +98,6 @@ fi
 # }}}
 
 # Dotfile package selection {{{
-COMMON_PACKAGES=(
-    bash
-    bat
-    dircolors
-    fish
-    git
-    neovim
-    tmux
-    vim
-)
-
-MACOS_PACKAGES=(
-    kitty
-    linearmouse
-    macos
-)
-
-WSL_PACKAGES=(
-    wsl
-)
-
 packages_for_platform() {
     local -a pkgs=()
     pkgs+=("${COMMON_PACKAGES[@]}")
