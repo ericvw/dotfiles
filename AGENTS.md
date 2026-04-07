@@ -133,28 +133,41 @@ Structure:
 
 **Commit message format**:
 ```
-[optional type/scope prefix: ]<subject line (max 72 characters)>
+<scope>: <subject>
 
 [optional body, each line max 72 characters]
 ```
 
+**Examples**:
+```
+opencode: Encourage thoughtful recommendations from AI agents
+
+AGENTS.md: Document Vim as lean fallback and EditorConfig preference
+
+neovim: Remove Go ftplugin
+
+vim: Backport Neovim features for simple fallback
+
+git: Add platform-specific credential helper configuration
+
+Configures osxkeychain for macOS and manager-core for WSL to enable
+secure credential storage appropriate to each platform.
+```
+
 **Format rules**:
-- **Subject**: Clear, concise (maximum 72 characters including any prefix)
+- **Scope**: Package name (neovim, fish, git, vim, opencode, etc.) or AGENTS.md for changes to this file - REQUIRED
+- **Subject**: Clear, concise imperative description (max 72 chars including scope prefix)
 - **Body lines**: Greedy word-wrap to maximize each line up to 72 characters
   - Use `fmt -w 72` for greedy wrapping
   - Pack as many complete words as possible per line before breaking
   - Break at word boundaries, not mid-word
 - **Imperative mood**: "Add feature" not "Added feature"
 - **Blank line**: Separate subject from body
-- **Prefixes**: Only use if the project history shows a consistent pattern (infer from `git log`)
-  - Don't add generic conventional commit prefixes unless the project already uses them
 - **No AI trailers**: Do not add Co-Authored-By or similar trailers crediting AI agents
 
 **Before committing**:
-1. Run `git log --oneline -20` to understand the project's commit message conventions
-2. Check for type/scope prefix patterns in recent commits
-3. Draft a commit message matching the project's style
-4. Present the message to the user for review before committing
+1. Draft a commit message following the format above
+2. Present the message to the user for review before committing
 
 **Git workflow best practices**:
 - Never skip git hooks (`--no-verify`) unless explicitly requested
