@@ -46,8 +46,7 @@ export VISUAL="$EDITOR"
 #: Misc {{{
 
 # Setup coloring scheme for `ls`.
-if command dircolors &> /dev/null; then
-    # Use colors as specified in ~/.dir_colors.
+if command -v dircolors &>/dev/null && [[ -f ~/.dir_colors ]]; then
     eval "$(dircolors -b ~/.dir_colors)"
 fi
 
