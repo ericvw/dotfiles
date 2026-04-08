@@ -30,8 +30,12 @@ fi
 
 #: Exports {{{
 
-# Set editor to `vim`.
-export EDITOR='vim'
+# Prefer nvim when available.
+if command -v nvim &>/dev/null; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
 export VISUAL="$EDITOR"
 
 #: }}}
