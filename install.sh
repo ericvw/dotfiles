@@ -92,7 +92,6 @@ if is_macos; then
 elif is_wsl; then
     PLATFORM="wsl"
 else
-    warn "Unknown platform. This script targets macOS and WSL (Ubuntu/Debian)."
     PLATFORM="linux"
 fi
 # }}}
@@ -105,7 +104,7 @@ packages_for_platform() {
     case "$PLATFORM" in
         macos) pkgs+=("${MACOS_PACKAGES[@]}") ;;
         wsl)   pkgs+=("${WSL_PACKAGES[@]}") ;;
-        *) warn "Unknown PLATFORM '$PLATFORM' - using COMMON only." ;;
+        linux) ;;
     esac
 
     if [[ "${#EXTRA_PACKAGES[@]}" -gt 0 ]]; then
