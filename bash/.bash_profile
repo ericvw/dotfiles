@@ -30,6 +30,9 @@ fi
 
 #: Exports {{{
 
+PATH="$HOME/.local/bin:$PATH"
+export PATH
+
 # Prefer nvim when available.
 if command -v nvim &>/dev/null; then
     export EDITOR='nvim'
