@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>kanagawa-wave</string>
+    <key>settings</key>
+    <array>
+        <dict>
+            <key>settings</key>
+            <dict>
+                <!-- sumiInk3 -->
+                <key>background</key>
+                <string>#1F1F28</string>
+                <!-- fujiWhite -->
+                <key>foreground</key>
+                <string>#DCD7BA</string>
+                <!-- fujiWhite -->
+                <key>caret</key>
+                <string>#DCD7BA</string>
+                <!-- sumiInk6 -->
+                <key>invisibles</key>
+                <string>#54546D</string>
+                <!-- sumiInk4 -->
+                <key>lineHighlight</key>
+                <string>#2A2A37</string>
+                <!-- waveBlue2 -->
+                <key>selection</key>
+                <string>#2D4F67</string>
+                <!-- waveBlue1 -->
+                <key>selectionBorder</key>
+                <string>#223249</string>
+            </dict>
+        </dict>
+
+        <!-- Comments -->
+        <dict>
+            <key>name</key>
+            <string>Comment</string>
+            <key>scope</key>
+            <string>comment, punctuation.definition.comment</string>
+            <key>settings</key>
+            <dict>
+                <!-- fujiGray -->
+                <key>foreground</key>
+                <string>#727169</string>
+                <key>fontStyle</key>
+                <string>italic</string>
+            </dict>
+        </dict>
+
+        <!-- Strings -->
+        <dict>
+            <key>name</key>
+            <string>String</string>
+            <key>scope</key>
+            <string>string</string>
+            <key>settings</key>
+            <dict>
+                <!-- springGreen -->
+                <key>foreground</key>
+                <string>#98BB6C</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>String: Escape Sequence</string>
+            <key>scope</key>
+            <string>constant.character.escape</string>
+            <key>settings</key>
+            <dict>
+                <!-- springBlue -->
+                <key>foreground</key>
+                <string>#7FB4CA</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Regular Expression</string>
+            <key>scope</key>
+            <string>string.regexp</string>
+            <key>settings</key>
+            <dict>
+                <!-- springBlue -->
+                <key>foreground</key>
+                <string>#7FB4CA</string>
+            </dict>
+        </dict>
+
+        <!-- Numbers -->
+        <dict>
+            <key>name</key>
+            <string>Number</string>
+            <key>scope</key>
+            <string>constant.numeric</string>
+            <key>settings</key>
+            <dict>
+                <!-- sakuraPink -->
+                <key>foreground</key>
+                <string>#D27E99</string>
+            </dict>
+        </dict>
+
+        <!-- Constants -->
+        <dict>
+            <key>name</key>
+            <string>Built-in Constant</string>
+            <key>scope</key>
+            <string>constant.language</string>
+            <key>settings</key>
+            <dict>
+                <!-- surimiOrange -->
+                <key>foreground</key>
+                <string>#FFA066</string>
+                <key>fontStyle</key>
+                <string>bold</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Other Constant</string>
+            <key>scope</key>
+            <string>constant.other, constant.character</string>
+            <key>settings</key>
+            <dict>
+                <!-- surimiOrange -->
+                <key>foreground</key>
+                <string>#FFA066</string>
+            </dict>
+        </dict>
+
+        <!-- Variables -->
+        <dict>
+            <key>name</key>
+            <string>Variable</string>
+            <key>scope</key>
+            <string>variable</string>
+            <key>settings</key>
+            <dict>
+                <!-- carpYellow -->
+                <key>foreground</key>
+                <string>#E6C384</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Language Variable</string>
+            <key>scope</key>
+            <string>variable.language</string>
+            <key>settings</key>
+            <dict>
+                <!-- peachRed -->
+                <key>foreground</key>
+                <string>#FF5D62</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Function Parameter</string>
+            <key>scope</key>
+            <string>variable.parameter</string>
+            <key>settings</key>
+            <dict>
+                <!-- carpYellow -->
+                <key>foreground</key>
+                <string>#E6C384</string>
+            </dict>
+        </dict>
+
+        <!-- Keywords -->
+        <dict>
+            <key>name</key>
+            <string>Keyword</string>
+            <key>scope</key>
+            <string>keyword</string>
+            <key>settings</key>
+            <dict>
+                <!-- oniViolet -->
+                <key>foreground</key>
+                <string>#957FB8</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Keyword: Operator</string>
+            <key>scope</key>
+            <string>keyword.operator</string>
+            <key>settings</key>
+            <dict>
+                <!-- boatYellow2 -->
+                <key>foreground</key>
+                <string>#C0A36E</string>
+            </dict>
+        </dict>
+
+        <!-- Storage -->
+        <dict>
+            <key>name</key>
+            <string>Storage</string>
+            <key>scope</key>
+            <string>storage</string>
+            <key>settings</key>
+            <dict>
+                <!-- oniViolet -->
+                <key>foreground</key>
+                <string>#957FB8</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Storage Type</string>
+            <key>scope</key>
+            <string>storage.type</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveAqua2 -->
+                <key>foreground</key>
+                <string>#7AA89F</string>
+            </dict>
+        </dict>
+
+        <!-- Functions -->
+        <dict>
+            <key>name</key>
+            <string>Function Name</string>
+            <key>scope</key>
+            <string>entity.name.function</string>
+            <key>settings</key>
+            <dict>
+                <!-- crystalBlue -->
+                <key>foreground</key>
+                <string>#7E9CD8</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Support Function</string>
+            <key>scope</key>
+            <string>support.function</string>
+            <key>settings</key>
+            <dict>
+                <!-- springBlue -->
+                <key>foreground</key>
+                <string>#7FB4CA</string>
+            </dict>
+        </dict>
+
+        <!-- Types and Classes -->
+        <dict>
+            <key>name</key>
+            <string>Type Name</string>
+            <key>scope</key>
+            <string>entity.name.type, entity.name.class, entity.name.namespace, entity.name.struct</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveAqua2 -->
+                <key>foreground</key>
+                <string>#7AA89F</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Inherited Class</string>
+            <key>scope</key>
+            <string>entity.other.inherited-class</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveAqua2 -->
+                <key>foreground</key>
+                <string>#7AA89F</string>
+                <key>fontStyle</key>
+                <string>italic</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Support Type and Class</string>
+            <key>scope</key>
+            <string>support.type, support.class</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveAqua2 -->
+                <key>foreground</key>
+                <string>#7AA89F</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Support Constant</string>
+            <key>scope</key>
+            <string>support.constant</string>
+            <key>settings</key>
+            <dict>
+                <!-- surimiOrange -->
+                <key>foreground</key>
+                <string>#FFA066</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Support Variable</string>
+            <key>scope</key>
+            <string>support.other.variable</string>
+            <key>settings</key>
+            <dict>
+                <!-- carpYellow -->
+                <key>foreground</key>
+                <string>#E6C384</string>
+            </dict>
+        </dict>
+
+        <!-- Tags (HTML/XML) -->
+        <dict>
+            <key>name</key>
+            <string>Tag Name</string>
+            <key>scope</key>
+            <string>entity.name.tag</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveRed -->
+                <key>foreground</key>
+                <string>#E46876</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Tag Attribute</string>
+            <key>scope</key>
+            <string>entity.other.attribute-name</string>
+            <key>settings</key>
+            <dict>
+                <!-- carpYellow -->
+                <key>foreground</key>
+                <string>#E6C384</string>
+            </dict>
+        </dict>
+
+        <!-- Preprocessor -->
+        <dict>
+            <key>name</key>
+            <string>Preprocessor</string>
+            <key>scope</key>
+            <string>meta.preprocessor, keyword.control.import, keyword.other.import, keyword.control.include</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveRed -->
+                <key>foreground</key>
+                <string>#E46876</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Preprocessor Value</string>
+            <key>scope</key>
+            <string>meta.preprocessor.string</string>
+            <key>settings</key>
+            <dict>
+                <!-- springGreen -->
+                <key>foreground</key>
+                <string>#98BB6C</string>
+            </dict>
+        </dict>
+
+        <!-- Punctuation -->
+        <dict>
+            <key>name</key>
+            <string>Punctuation</string>
+            <key>scope</key>
+            <string>punctuation</string>
+            <key>settings</key>
+            <dict>
+                <!-- springViolet2 -->
+                <key>foreground</key>
+                <string>#9CABCA</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Punctuation: Definition</string>
+            <key>scope</key>
+            <string>punctuation.definition.string</string>
+            <key>settings</key>
+            <dict>
+                <!-- springGreen -->
+                <key>foreground</key>
+                <string>#98BB6C</string>
+            </dict>
+        </dict>
+
+        <!-- Markup (Markdown, etc.) -->
+        <dict>
+            <key>name</key>
+            <string>Markup: Heading</string>
+            <key>scope</key>
+            <string>markup.heading, entity.name.section</string>
+            <key>settings</key>
+            <dict>
+                <!-- crystalBlue -->
+                <key>foreground</key>
+                <string>#7E9CD8</string>
+                <key>fontStyle</key>
+                <string>bold</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Bold</string>
+            <key>scope</key>
+            <string>markup.bold</string>
+            <key>settings</key>
+            <dict>
+                <!-- oldWhite -->
+                <key>foreground</key>
+                <string>#C8C093</string>
+                <key>fontStyle</key>
+                <string>bold</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Italic</string>
+            <key>scope</key>
+            <string>markup.italic</string>
+            <key>settings</key>
+            <dict>
+                <!-- oldWhite -->
+                <key>foreground</key>
+                <string>#C8C093</string>
+                <key>fontStyle</key>
+                <string>italic</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Inline Code</string>
+            <key>scope</key>
+            <string>markup.raw.inline, markup.inline.raw</string>
+            <key>settings</key>
+            <dict>
+                <!-- springGreen -->
+                <key>foreground</key>
+                <string>#98BB6C</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Code Block</string>
+            <key>scope</key>
+            <string>markup.raw.block</string>
+            <key>settings</key>
+            <dict>
+                <!-- springGreen -->
+                <key>foreground</key>
+                <string>#98BB6C</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Quote</string>
+            <key>scope</key>
+            <string>markup.quote</string>
+            <key>settings</key>
+            <dict>
+                <!-- fujiGray -->
+                <key>foreground</key>
+                <string>#727169</string>
+                <key>fontStyle</key>
+                <string>italic</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: Link</string>
+            <key>scope</key>
+            <string>markup.underline.link, string.other.link</string>
+            <key>settings</key>
+            <dict>
+                <!-- springBlue -->
+                <key>foreground</key>
+                <string>#7FB4CA</string>
+                <key>fontStyle</key>
+                <string>underline</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Markup: List</string>
+            <key>scope</key>
+            <string>punctuation.definition.list_item</string>
+            <key>settings</key>
+            <dict>
+                <!-- waveRed -->
+                <key>foreground</key>
+                <string>#E46876</string>
+            </dict>
+        </dict>
+
+        <!-- Diff -->
+        <dict>
+            <key>name</key>
+            <string>Diff: Inserted</string>
+            <key>scope</key>
+            <string>markup.inserted</string>
+            <key>settings</key>
+            <dict>
+                <!-- autumnGreen -->
+                <key>foreground</key>
+                <string>#76946A</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Diff: Deleted</string>
+            <key>scope</key>
+            <string>markup.deleted</string>
+            <key>settings</key>
+            <dict>
+                <!-- autumnRed -->
+                <key>foreground</key>
+                <string>#C34043</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Diff: Changed</string>
+            <key>scope</key>
+            <string>markup.changed</string>
+            <key>settings</key>
+            <dict>
+                <!-- autumnYellow -->
+                <key>foreground</key>
+                <string>#DCA561</string>
+            </dict>
+        </dict>
+
+        <!-- Invalid -->
+        <dict>
+            <key>name</key>
+            <string>Invalid</string>
+            <key>scope</key>
+            <string>invalid, invalid.illegal</string>
+            <key>settings</key>
+            <dict>
+                <!-- samuraiRed -->
+                <key>foreground</key>
+                <string>#E82424</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Invalid: Deprecated</string>
+            <key>scope</key>
+            <string>invalid.deprecated</string>
+            <key>settings</key>
+            <dict>
+                <!-- roninYellow -->
+                <key>foreground</key>
+                <string>#FF9E3B</string>
+            </dict>
+        </dict>
+    </array>
+    <key>uuid</key>
+    <string>7a2f4e91-3c8b-4d56-a012-9f8e3b2c7d14</string>
+</dict>
+</plist>

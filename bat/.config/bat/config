@@ -1,2 +1,4 @@
 # Kitty supports rendering italic text.
 --italic-text=always
+
+--theme="kanagawa-wave"
