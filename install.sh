@@ -184,7 +184,25 @@ main() {
     stow "${STOW_ARGS[@]}" "${PKGS[@]}"
 
     log "Dotfiles installed via stow."
+
+    post_install "${PKGS[@]}"
 }
+
+# Post-install tasks {{{
+post_install() {
+    local -a pkgs=("$@")
+
+    # bat caches themes and syntaxes in a binary; rebuild after stowing.
+    if printf '%s\n' "${pkgs[@]}" | grep -qx 'bat' && have bat; then
+        if $DRY_RUN; then
+            log "Would run: bat cache --build"
+        else
+            log "Rebuilding bat cache..."
+            bat cache --build
+        fi
+    fi
+}
+# }}}
 
 main
 # }}}
