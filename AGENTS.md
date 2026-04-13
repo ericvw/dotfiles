@@ -53,6 +53,7 @@ Example:
 **Common packages** (always installed):
 - bash - Bash shell configuration (.bashrc, .bash_profile, .inputrc)
 - bat - Cat clone with syntax highlighting
+- claude - Claude Code settings and custom status line script
 - dircolors - Color scheme for ls/directory listings
 - fish - Interactive shell (primary shell)
 - git - Version control configuration with aliases and platform-specific includes
@@ -76,6 +77,24 @@ Examples:
 ## Key Configuration Patterns
 
 **General principle**: Prefer EditorConfig (`.editorconfig`) for cross-editor settings like indentation, charset, and whitespace. Use editor-specific ftplugin files only for settings that EditorConfig cannot handle.
+
+### Claude Code Configuration
+
+- `claude/.claude/settings.json` - Claude Code settings (attribution, status line command)
+- `claude/.claude/statusline.sh` - Custom two-line status line script
+
+The status line displays two lines of context:
+- **Line 1** (workspace): vim mode indicator, current directory, git worktree,
+  branch, ahead/behind upstream, staged/unstaged/untracked/deleted file counts,
+  line insertions/deletions vs HEAD
+- **Line 2** (session): model name, session name, cost with lines added/removed,
+  context window percentage (color-coded: waveAqua1 < 60%, roninYellow ≥ 60%,
+  samuraiRed ≥ 80% — thresholds account for the ~33k autocompact buffer),
+  cumulative session token count (compact k/M format)
+
+Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
+the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
+(modified), autumnRed (deleted), springViolet1 (untracked).
 
 ### Git Configuration
 
