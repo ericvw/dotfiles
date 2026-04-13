@@ -32,11 +32,11 @@ WSL_PACKAGES=(
 # Command-line parsing {{{
 DRY_RUN=false
 VERBOSE=false
-RESTOW=true   # restow = re-link (recommended). Set false to only stow new.
+RESTOW=true # restow = re-link (recommended). Set false to only stow new.
 EXTRA_PACKAGES=()
 
 usage() {
-    cat <<EOF
+    cat << EOF
 Usage: ./install.sh [options]
 
 Options:
@@ -58,30 +58,52 @@ EOF
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --dry-run) DRY_RUN=true; shift ;;
-        --verbose) VERBOSE=true; shift ;;
-        --no-restow) RESTOW=false; shift ;;
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --verbose)
+            VERBOSE=true
+            shift
+            ;;
+        --no-restow)
+            RESTOW=false
+            shift
+            ;;
         --package)
-            [[ $# -gt 1 ]] || { echo "--package requires an argument"; usage; exit 1; }
-            EXTRA_PACKAGES+=("$2"); shift 2 ;;
-        -h|--help) usage; exit 0 ;;
-        *) echo "Unknown arg: $1"; usage; exit 1 ;;
+            [[ $# -gt 1 ]] || {
+                echo "--package requires an argument"
+                usage
+                exit 1
+            }
+            EXTRA_PACKAGES+=("$2")
+            shift 2
+            ;;
+        -h | --help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown arg: $1"
+            usage
+            exit 1
+            ;;
     esac
 done
 # }}}
 
 # Helpers {{{
-log()  { printf "\033[1;34m==>\033[0m %s\n" "$*" >&2; }
+log() { printf "\033[1;34m==>\033[0m %s\n" "$*" >&2; }
 warn() { printf "\033[1;33m!!\033[0m %s\n" "$*" >&2; }
-err()  { printf "\033[1;31mxx\033[0m %s\n" "$*" >&2; }
+err() { printf "\033[1;31mxx\033[0m %s\n" "$*" >&2; }
 
-have() { command -v "$1" >/dev/null 2>&1; }
+have() { command -v "$1" > /dev/null 2>&1; }
 
 is_macos() { [[ "$(uname -s)" == "Darwin" ]]; }
 
 is_wsl() {
     # Works for WSL1/WSL2
-    grep -qiE "(microsoft|wsl)" /proc/version 2>/dev/null
+    grep -qiE "(microsoft|wsl)" /proc/version 2> /dev/null
 }
 # }}}
 
@@ -103,7 +125,7 @@ packages_for_platform() {
 
     case "$PLATFORM" in
         macos) pkgs+=("${MACOS_PACKAGES[@]}") ;;
-        wsl)   pkgs+=("${WSL_PACKAGES[@]}") ;;
+        wsl) pkgs+=("${WSL_PACKAGES[@]}") ;;
         linux) ;;
     esac
 

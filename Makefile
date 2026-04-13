@@ -20,6 +20,11 @@ format: format-brew-formulae
 format-brew-formulae:
 	sort -o brew-formulae.txt brew-formulae.txt
 
+.PHONY: format-shell
+format: format-shell
+format-shell:
+	shfmt -w $(shell_scripts)
+
 .PHONY: lint-shell
 lint: lint-shell
 lint-shell:
