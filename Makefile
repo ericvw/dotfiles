@@ -5,16 +5,17 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
+shell_scripts := $(shell find . -name '*.sh')
+
 .PHONY: format
-format: format-lua
+.PHONY: lint
 
 .PHONY: format-lua
+format: format-lua
 format-lua:
 	stylua -a .
 
-.PHONY: lint
-lint: lint-shell
-
 .PHONY: lint-shell
+lint: lint-shell
 lint-shell:
-	shellcheck *.sh
+	shellcheck $(shell_scripts)
