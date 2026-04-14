@@ -24,8 +24,8 @@ The install script auto-detects platform (macOS/WSL) and stows appropriate packa
 ## Development Commands
 
 ```bash
-# Format Lua files (for Neovim config)
-make format        # or make format-lua
+# Format files (Lua, brew-formulae.txt)
+make format        # or make format-lua, make format-brew-formulae
 
 # Lint shell scripts
 make lint          # or make lint-shell
@@ -194,4 +194,4 @@ Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
 After modifying configs:
 
 1. **Shell scripts**: `make lint` (runs shellcheck on `*.sh`)
-2. **Lua files**: `make format` (runs stylua)
+2. **Lua files, brew-formulae.txt**: `make format` (runs stylua, sort)

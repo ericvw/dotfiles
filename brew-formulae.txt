@@ -5,8 +5,8 @@ coreutils
 curl
 findutils
 fish
-git
 gh
+git
 gnu-sed
 keychain
 make
