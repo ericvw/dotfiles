@@ -15,6 +15,11 @@ format: format-lua
 format-lua:
 	stylua -a .
 
+.PHONY: format-brew-formulae
+format: format-brew-formulae
+format-brew-formulae:
+	sort -o brew-formulae.txt brew-formulae.txt
+
 .PHONY: lint-shell
 lint: lint-shell
 lint-shell:
