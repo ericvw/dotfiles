@@ -63,7 +63,8 @@ end
 # manpager {{{
 # Use `bat` as the man pager for colorized man pages, if available.
 if command -q bat
-    set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+    set -gx MANROFFOPT -c
+    set -gx MANPAGER "sh -c 'col -bx | bat -p -lman'"
 end
 # }}}
 
