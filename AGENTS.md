@@ -29,6 +29,9 @@ make format        # or make format-lua, make format-brew-formulae
 
 # Lint shell scripts
 make lint          # or make lint-shell
+
+# Run tests
+make test          # or make test-bats
 ```
 
 **Code conventions**:
@@ -102,6 +105,12 @@ the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
 - Platform-specific config included via `[include] path = platform`
 - Platform files: `macos/.config/git/platform`, `wsl/.config/git/platform`
 - Work-specific config: `[includeIf "gitdir:~/work/"] path = work`
+- `core.hooksPath = ~/.config/git/hooks` applies hooks globally to all repos
+- `git/.config/git/hooks/commit-msg` - Thin wrapper invoking `format-commit-msg.sh`
+- `git/.config/git/hooks/format-commit-msg.sh` - Validates and formats commit messages:
+  rejects empty subjects, subjects over 72 characters, uncapitalized subjects, and
+  missing blank lines between subject and body; wraps body lines greedily at 72
+  characters using `fmt -w 72 -g 72`
 
 ### Neovim Configuration
 
@@ -186,9 +195,11 @@ secure credential storage appropriate to each platform.
 
 **Before committing**:
 1. Draft a commit message following the format above
-2. Verify body wrapping: run `fmt -w 72 -g 72` on the body and confirm the
-   output matches the draft exactly
-3. Present the message to the user for review before committing
+2. Present the message to the user for review before committing
+
+Body wrapping and subject validation are enforced automatically by the
+`commit-msg` hook, which runs on every commit regardless of how it is
+invoked.
 
 **Git workflow best practices**:
 - Never skip git hooks (`--no-verify`) unless explicitly requested
@@ -214,3 +225,4 @@ After modifying configs:
 
 1. **Shell scripts**: `make lint` (runs shellcheck on `*.sh`)
 2. **Lua files, brew-formulae.txt**: `make format` (runs stylua, sort)
+3. **commit-msg formatter**: `make test` (runs bats tests in `tests/`)
