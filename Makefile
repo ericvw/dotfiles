@@ -9,6 +9,7 @@ shell_scripts := $(shell find . -name '*.sh')
 
 .PHONY: format
 .PHONY: lint
+.PHONY: test
 
 .PHONY: format-lua
 format: format-lua
@@ -29,3 +30,8 @@ format-shell:
 lint: lint-shell
 lint-shell:
 	shellcheck $(shell_scripts)
+
+.PHONY: test-bats
+test: test-bats
+test-bats:
+	bats tests/

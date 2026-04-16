@@ -27,6 +27,8 @@
 [core]
 	# Warn on unsafe or irreversable conversions.
 	safecrlf = warn
+	# Run commit-msg hook for all repos without per-repo hook setup.
+	hooksPath = ~/.config/git/hooks
 [diff]
 	# Don't show as modified if submodules have untracked files
 	ignoreSubmodules = untracked
