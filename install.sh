@@ -11,6 +11,7 @@ COMMON_PACKAGES=(
     bash
     bat
     dircolors
+    editorconfig
     fish
     git
     neovim
