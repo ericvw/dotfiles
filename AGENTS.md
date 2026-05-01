@@ -83,7 +83,7 @@ Examples:
 
 ### Claude Code Configuration
 
-- `claude/.claude/settings.json` - Claude Code settings (attribution, status line command)
+- `claude/.claude/settings.json` - Claude Code settings (attribution, theme, editor mode, status line command)
 - `claude/.claude/statusline.sh` - Custom two-line status line script
 
 The status line displays two lines of context:
