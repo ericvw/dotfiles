@@ -67,6 +67,9 @@ Example:
 - tmux - Terminal multiplexer
 - vim - Lean fallback editor when Neovim is unavailable
 
+**Optional packages**:
+- gemini - Gemini CLI settings and instructions
+
 **Platform-specific packages**:
 - macOS: kitty (terminal emulator with theme support), linearmouse (mouse configuration), macos (macOS-specific settings)
 - WSL: wsl (WSL-specific configuration)
@@ -99,6 +102,12 @@ The status line displays two lines of context:
 Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
 the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
 (modified), autumnRed (deleted), springViolet1 (untracked).
+
+### Gemini CLI Configuration
+
+- `GEMINI.md` - Root-level instructions that import `AGENTS.md` to guide the Gemini agent
+- `gemini/.gemini/settings.json` - Gemini CLI settings (theme, editor mode)
+- `gemini/.gemini/GEMINI.md` - Package-level instructions importing `AGENTS.md`
 
 ### Git Configuration
 

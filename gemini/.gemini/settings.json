@@ -1,0 +1,14 @@
+{
+  "general": {
+    "enableNotifications": true,
+    "vimMode": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "ui": {
+    "theme": "Default"
+  }
+}
