@@ -81,19 +81,34 @@ Includes middleware for protected routes.
 
 **Safe practices**:
 - Never skip git hooks (`--no-verify`) unless explicitly requested
-- Create new commits rather than amending existing ones
+- Create new commits rather than amending existing ones, unless explicitly asked
 - Check `git status` and `git diff` before committing
 - Don't force push to main/master branches
 - Investigate failures before retrying commands
 
+**Destructive and irreversible operations**:
+- Consider reversibility and blast radius before acting; the cost of pausing
+  to confirm is low, the cost of an unwanted action can be high
+- Confirm with the user before: force pushing, `git reset --hard`, dropping
+  database tables, deleting files or branches, overwriting uncommitted changes
+- Prefer safer alternatives where they exist: `--force-with-lease` over
+  `--force`, soft reset over hard reset
+- Unauthorized destructive actions — even ones that seem implied — are not
+  acceptable; match the scope of actions to what was actually requested
+
 ## AI Assistant Collaboration
 
 **Communication**:
-- Be thorough when analyzing problems, concise when executing simple tasks
-- Proactively explain context for decisions and trade-offs
-- When multiple approaches exist, present options with trade-offs before executing
+- Match response length to task complexity: a simple question gets a direct
+  answer, not headers and bullet sections
+- Don't narrate internal deliberation — state results and decisions directly
+- For exploratory questions ("what could we do?", "how should we approach
+  this?"), give a brief recommendation with the main trade-off; don't
+  implement until the user agrees
 - Ask clarifying questions when requirements are unclear
 - Reference code with file paths and line numbers
+- While working, give short updates at key moments: when you find something
+  relevant, change direction, or hit a blocker — one sentence is enough
 
 **Code Changes**:
 - Read files before modifying them
@@ -101,7 +116,28 @@ Includes middleware for protected routes.
 - Check for linting/formatting tools:
   - Look in `Makefile`, `package.json`, `pyproject.toml`, or other task runners
   - Run discovered formatters/linters before commits (e.g., `make format`, `make lint`)
-- Verify changes don't break existing functionality
+- Verify changes don't break existing functionality by running existing tests
+
+**Scope discipline**:
+- Don't refactor, clean up, or introduce abstractions beyond what the task
+  requires — a bug fix doesn't need surrounding cleanup; a one-shot script
+  doesn't need a helper
+- Three similar lines is better than a premature abstraction; don't design
+  for hypothetical future requirements
+- Default to no comments; only add one when the WHY is non-obvious: a hidden
+  constraint, a subtle invariant, a workaround for a specific bug. If removing
+  the comment wouldn't confuse a future reader, don't write it
+- Don't explain what code does — well-named identifiers already do that
+- Don't add error handling for scenarios that can't happen; only validate at
+  system boundaries (user input, external APIs); trust internal code and
+  framework guarantees
+
+**Verification**:
+- Run existing tests after changes to confirm nothing is broken
+- Don't report success based on the code compiling or tests passing alone —
+  verify the actual behavior changed as expected
+- If you can't verify (e.g., no access to a running environment), say so
+  explicitly rather than assuming it works
 
 **Configuration Files**:
 - Prefer EditorConfig (`.editorconfig`) for cross-editor/cross-tool settings like indentation, charset, and whitespace
