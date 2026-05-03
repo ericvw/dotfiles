@@ -54,6 +54,7 @@ Example:
 ### Common vs Platform-Specific Packages
 
 **Common packages** (always installed):
+- agents - Universal AI agent instructions (AGENTS.md)
 - bash - Bash shell configuration (.bashrc, .bash_profile, .inputrc)
 - bat - Cat clone with syntax highlighting
 - claude - Claude Code settings and custom status line script
@@ -61,7 +62,7 @@ Example:
 - fish - Interactive shell (primary shell)
 - git - Version control configuration with aliases and platform-specific includes
 - neovim - Primary editor with LSP, tree-sitter, and native plugin management
-- opencode - OpenCode AI agent configuration
+- opencode - OpenCode AI agent TUI configuration
 - quilt - Debian patch management tool configuration
 - tmux - Terminal multiplexer
 - vim - Lean fallback editor when Neovim is unavailable

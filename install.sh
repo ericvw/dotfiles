@@ -8,6 +8,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="${TARGET_DIR:-$HOME}"
 
 COMMON_PACKAGES=(
+    agents
     bash
     bat
     dircolors
