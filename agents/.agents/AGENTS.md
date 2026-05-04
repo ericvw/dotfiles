@@ -145,9 +145,9 @@ Includes middleware for protected routes.
 - Check for existing EditorConfig before adding language-specific editor configurations
 
 **AI Agent Config Files**:
-- When creating project-level AI agent config, put the actual content in
-  `AGENTS.md` and have `CLAUDE.md` contain only `@AGENTS.md`
-- The heading inside `AGENTS.md` should be `# AGENTS.md`, not `# CLAUDE.md`
+- When creating project-level AI agent configuration, always put the actual content in `AGENTS.md`
+- Any tool-specific files (e.g., `CLAUDE.md`, `GEMINI.md`) should only contain a reference/include pointing to `@AGENTS.md` (or the equivalent syntax for that tool)
+- The heading inside `AGENTS.md` should be `# AGENTS.md`, not tool-specific like `# CLAUDE.md` or `# GEMINI.md`
 
 **Decision Making**:
 - When multiple valid approaches exist, present options with trade-offs and recommend the best approach
