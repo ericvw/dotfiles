@@ -65,8 +65,7 @@ mapfile -t _j < <(jq -r '
   .model.display_name                 // "",
   .vim.mode                           // "",
   (.workspace.git_worktree // .worktree.name // ""),
-  .workspace.current_dir,
-  .exceeds_200k_tokens                // false
+  .workspace.current_dir
 ')
 in_tok=${_j[0]}
 out_tok=${_j[1]}
@@ -79,7 +78,6 @@ model=${_j[7]}
 vim_mode=${_j[8]}
 git_worktree=${_j[9]}
 cwd=${_j[10]}
-exceeds_200k=${_j[11]}
 
 total=$((in_tok + out_tok))
 # }}}
@@ -220,7 +218,7 @@ if [[ -n "$ctx_pct" ]]; then
         ctx_color="$C_CTX_LOW"
     fi
     append line2 "${I_CTX}${ctx_color}${ctx_pct_int}%${C_RESET}"
-    [[ "$exceeds_200k" == "true" ]] && line2+=" ${C_CTX_HIGH}${I_WARN}${C_RESET}"
+    [[ $ctx_pct_int -ge 80 ]] && line2+=" ${C_CTX_HIGH}${I_WARN}${C_RESET}"
 fi
 
 # Token total (compact: 1.2k, 3.4M).
