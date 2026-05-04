@@ -3,10 +3,10 @@
     "commit": "",
     "pr": ""
   },
-  "editorMode": "vim",
   "statusLine": {
-    "command": "bash ~/.claude/statusline.sh",
-    "type": "command"
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
   },
-  "theme": "dark"
+  "theme": "dark",
+  "editorMode": "vim"
 }
