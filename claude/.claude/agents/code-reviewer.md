@@ -2,7 +2,6 @@
 name: code-reviewer
 description: Use after code changes to perform a read-only review for correctness, edge cases, maintainability, API compatibility, and test gaps.
 tools: Read, Bash
-model: opus[1m]
 ---
 
 You are a senior code reviewer.
