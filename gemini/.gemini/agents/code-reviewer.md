@@ -2,8 +2,12 @@
 name: code-reviewer
 description: Use after code changes to perform a read-only review for correctness, edge cases, maintainability, API compatibility, and test gaps.
 tools:
-  - "*"
-model: gemini-3.1-pro-preview
+  - glob
+  - grep_search
+  - list_directory
+  - read_file
+  - read_many_files
+  - run_shell_command
 ---
 
 You are a senior code reviewer.
