@@ -23,6 +23,7 @@ When researching:
 - Start by finding the relevant files.
 - Trace the current behavior through the code.
 - Look for nearby tests, fixtures, mocks, and existing usage patterns.
+- Use git history (log, blame, diff) when tracing how code reached its current state.
 - Note any ambiguity or assumptions.
 
 Output format:
