@@ -164,20 +164,21 @@ Structure:
 - Platform detection for Homebrew paths (`/opt/homebrew` vs `/home/linuxbrew/.linuxbrew`)
 - Tool initialization: pyenv, fnm (Fast Node Manager), dircolors, keychain
 
-### Commit Guidelines
+### Commit Conventions
 
-**Principles**:
-- **Atomic commits**: One logical change per commit
-- **Separate features**: Don't bundle unrelated changes
-- **Follow project norms**: Infer commit message style from `git log` history
-- **User review**: Always propose commit messages for review before committing
+This project requires a scope prefix on every commit — the global
+guidelines make prefixes optional, but here they are mandatory.
 
-**Commit message format**:
+**Format**:
 ```
 <scope>: <subject>
 
 [optional body, each line max 72 characters]
 ```
+
+**Scope**: Stow package name for changes within a package (neovim,
+fish, git, vim, opencode, etc.) or filename for root-level files
+(AGENTS.md, Makefile, install.sh, etc.).
 
 **Examples**:
 ```
@@ -187,39 +188,14 @@ AGENTS.md: Document Vim as lean fallback and EditorConfig preference
 
 neovim: Remove Go ftplugin
 
-vim: Backport Neovim features for simple fallback
-
 git: Add platform-specific credential helper configuration
 
 Configures osxkeychain for macOS and manager-core for WSL to enable
 secure credential storage appropriate to each platform.
 ```
 
-**Format rules**:
-- **Scope**: Package name (neovim, fish, git, vim, opencode, etc.) or AGENTS.md for changes to this file - REQUIRED
-- **Subject**: Clear, concise imperative description (max 72 chars including scope prefix)
-- **Body lines**: Greedy word-wrap to maximize each line up to 72 characters
-  - Use `fmt -w 72 -g 72` for greedy wrapping
-  - Pack as many complete words as possible per line before breaking
-  - Break at word boundaries, not mid-word
-- **Imperative mood**: "Add feature" not "Added feature"
-- **Blank line**: Separate subject from body
-- **No AI trailers**: Do not add Co-Authored-By or similar trailers crediting AI agents
-
-**Before committing**:
-1. Draft a commit message following the format above
-2. Present the message to the user for review before committing
-
 Body wrapping and subject validation are enforced automatically by the
-`commit-msg` hook, which runs on every commit regardless of how it is
-invoked.
-
-**Git workflow best practices**:
-- Never skip git hooks (`--no-verify`) unless explicitly requested
-- Create new commits rather than amending existing ones
-- Check `git status` and `git diff` before committing
-- Don't force push to main/master branches
-- Investigate failures before retrying commands
+`commit-msg` hook.
 
 ## Dependencies
 
