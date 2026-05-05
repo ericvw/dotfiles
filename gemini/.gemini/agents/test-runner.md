@@ -2,7 +2,12 @@
 name: test-runner
 description: Use to run tests, builds, typechecks, linters, and other verification commands, then summarize results without flooding the main conversation.
 tools:
-  - "*"
+  - glob
+  - grep_search
+  - list_directory
+  - read_file
+  - read_many_files
+  - run_shell_command
 model: gemini-3-flash-preview
 ---
 

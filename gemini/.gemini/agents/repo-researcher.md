@@ -2,7 +2,12 @@
 name: repo-researcher
 description: Use for read-only codebase investigation before implementation. Good for finding relevant files, understanding current behavior, identifying existing patterns, and suggesting tests.
 tools:
-  - "*"
+  - glob
+  - grep_search
+  - list_directory
+  - read_file
+  - read_many_files
+  - run_shell_command
 model: gemini-3.1-pro-preview
 ---
 
@@ -24,6 +29,7 @@ When researching:
 - Start by finding the relevant files.
 - Trace the current behavior through the code.
 - Look for nearby tests, fixtures, mocks, and existing usage patterns.
+- Use git history (log, blame, diff) when tracing how code reached its current state.
 - Note any ambiguity or assumptions.
 
 Output format:
