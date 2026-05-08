@@ -3,22 +3,22 @@
 
 # Colors {{{
 # Terminal 16-color fallbacks (inherits terminal palette).
+C_VIM_N='\e[1;31m'      # bold red      — normal mode
+C_VIM_I='\e[1;32m'      # bold green    — insert mode
+C_VIM_V='\e[1;35m'      # bold magenta  — visual mode
+C_DIM='\e[90m'          # bright black  — labels
 C_DIR='\e[34m'          # blue          — directory
 C_BRANCH='\e[35m'       # magenta       — git branch
 C_GIT_ADDED='\e[32m'    # green         — git staged/added
 C_GIT_MODIFIED='\e[33m' # yellow        — git modified
 C_GIT_DELETED='\e[31m'  # red           — git deleted
-C_SESSION='\e[36m'      # cyan          — session name
-C_MODEL='\e[33m'        # yellow        — model
-C_DEFAULT='\e[37m'      # white         — default foreground
-C_DIM='\e[90m'          # bright black  — labels
 C_UNTRACKED='\e[35m'    # magenta       — untracked files
-C_VIM_N='\e[1;31m'      # bold red      — normal mode
-C_VIM_I='\e[1;32m'      # bold green    — insert mode
-C_VIM_V='\e[1;35m'      # bold magenta  — visual mode
+C_MODEL='\e[33m'        # yellow        — model
+C_SESSION='\e[36m'      # cyan          — session name
 C_CTX_LOW='\e[36m'      # cyan          — ctx < 60%
 C_CTX_MED='\e[33m'      # yellow        — ctx >= 60%
 C_CTX_HIGH='\e[31m'     # red           — ctx >= 80%
+C_DEFAULT='\e[37m'      # white         — default foreground
 C_RESET='\e[0m'
 
 # Override with 24-bit theme if available.
@@ -34,52 +34,52 @@ I_DIR='📁 '
 I_WORKTREE='🌲 '
 I_BRANCH='🌿 '
 I_MODEL='🤖 '
-I_SESSION='📛 '
-I_COST='💰'
+I_SESSION='🏷️ '
 I_CTX='🧠 '
-I_TOK='🪙 '
+I_COMPACT='♻️'
 I_WARN='⚠️'
+I_COST='💰'
+I_DURATION='⏱️ '
 if [[ "${STATUSLINE_EMOJIS:-1}" == "0" ]]; then
     I_DIR=''
     I_WORKTREE='wt: '
     I_BRANCH='br: '
     I_MODEL=''
     I_SESSION=''
-    I_COST=''
     I_CTX='ctx '
-    I_TOK='tok '
+    I_COMPACT='cmp'
     I_WARN='!'
+    I_COST=''
+    I_DURATION='dur '
 fi
 # }}}
 
 # Input {{{
 # Extract all values in a single jq call.
 mapfile -t _j < <(jq -r '
-  .context_window.total_input_tokens  // 0,
-  .context_window.total_output_tokens // 0,
-  .context_window.used_percentage     // "",
-  .cost.total_cost_usd                // "",
-  .cost.total_lines_added             // "",
-  .cost.total_lines_removed           // "",
-  .session_name                       // "",
-  .model.display_name                 // "",
-  .vim.mode                           // "",
+  .vim.mode                       // "",
+  .workspace.current_dir,
   (.workspace.git_worktree // .worktree.name // ""),
-  .workspace.current_dir
+  .model.display_name             // "",
+  .session_name                   // "",
+  .context_window.used_percentage // "",
+  (.exceeds_200k_tokens // false),
+  .cost.total_cost_usd            // "",
+  .cost.total_lines_added         // "",
+  .cost.total_lines_removed       // "",
+  (.cost.total_duration_ms        // 0)
 ')
-in_tok=${_j[0]}
-out_tok=${_j[1]}
-ctx_pct=${_j[2]}
-cost=${_j[3]}
-lines_added=${_j[4]}
-lines_removed=${_j[5]}
-session_name=${_j[6]}
-model=${_j[7]}
-vim_mode=${_j[8]}
-git_worktree=${_j[9]}
-cwd=${_j[10]}
-
-total=$((in_tok + out_tok))
+vim_mode=${_j[0]}
+cwd=${_j[1]}
+git_worktree=${_j[2]}
+model=${_j[3]}
+session_name=${_j[4]}
+ctx_pct=${_j[5]}
+exceeds_200k=${_j[6]}
+cost=${_j[7]}
+lines_added=${_j[8]}
+lines_removed=${_j[9]}
+duration_ms=${_j[10]}
 # }}}
 
 # Helpers {{{
@@ -154,10 +154,9 @@ if [[ -n "$git_dir" ]]; then
     [[ -n "$branch" ]] && append line1 "${I_BRANCH}${C_BRANCH}${branch}${C_RESET}"
 
     # Ahead/behind upstream.
-    ahead=$(git -C "$cwd" rev-list --count '@{u}..HEAD' 2> /dev/null || true)
-    behind=$(git -C "$cwd" rev-list --count 'HEAD..@{u}' 2> /dev/null || true)
-    [[ -n "$ahead" && "$ahead" -gt 0 ]] && line1+=" ${C_GIT_ADDED}⇡${ahead}${C_RESET}"
-    [[ -n "$behind" && "$behind" -gt 0 ]] && line1+=" ${C_GIT_DELETED}⇣${behind}${C_RESET}"
+    read -r behind ahead < <(git -C "$cwd" rev-list --left-right --count '@{u}...HEAD' 2> /dev/null || true)
+    [[ "${ahead:-0}" -gt 0 ]] && line1+=" ${C_GIT_ADDED}⇡${ahead}${C_RESET}"
+    [[ "${behind:-0}" -gt 0 ]] && line1+=" ${C_GIT_DELETED}⇣${behind}${C_RESET}"
 
     # File status counts.
     staged=0
@@ -174,17 +173,34 @@ if [[ -n "$git_dir" ]]; then
         [[ "$xy" == "??" ]] && ((untracked++))
     done < <(git -C "$cwd" status --porcelain 2> /dev/null)
 
-    [[ $staged -gt 0 ]] && append line1 "${C_GIT_ADDED}+${staged}${C_RESET}"
-    [[ $unstaged -gt 0 ]] && append line1 "${C_GIT_MODIFIED}~${unstaged}${C_RESET}"
-    [[ $untracked -gt 0 ]] && append line1 "${C_UNTRACKED}?${untracked}${C_RESET}"
-    [[ $deleted -gt 0 ]] && append line1 "${C_GIT_DELETED}-${deleted}${C_RESET}"
+    status_str=""
+    [[ $staged -gt 0 ]] && status_str+="${C_GIT_ADDED}+${staged}${C_RESET}"
+    [[ $unstaged -gt 0 ]] && {
+        [[ -n "$status_str" ]] && status_str+=" "
+        status_str+="${C_GIT_MODIFIED}~${unstaged}${C_RESET}"
+    }
+    [[ $untracked -gt 0 ]] && {
+        [[ -n "$status_str" ]] && status_str+=" "
+        status_str+="${C_UNTRACKED}?${untracked}${C_RESET}"
+    }
+    [[ $deleted -gt 0 ]] && {
+        [[ -n "$status_str" ]] && status_str+=" "
+        status_str+="${C_GIT_DELETED}-${deleted}${C_RESET}"
+    }
+    [[ -n "$status_str" ]] && append line1 "$status_str"
 
     # Line counts from working tree vs HEAD.
-    shortstat=$(git -C "$cwd" diff HEAD --shortstat 2> /dev/null)
-    lines_ins=$(printf '%s' "$shortstat" | grep -oP '\d+(?= insertion)' || true)
-    lines_del=$(printf '%s' "$shortstat" | grep -oP '\d+(?= deletion)' || true)
-    [[ -n "$lines_ins" && "$lines_ins" -gt 0 ]] && append line1 "${C_GIT_ADDED}↑${lines_ins}${C_RESET}"
-    [[ -n "$lines_del" && "$lines_del" -gt 0 ]] && append line1 "${C_GIT_DELETED}↓${lines_del}${C_RESET}"
+    read -r lines_ins lines_del < <(
+        git -C "$cwd" diff HEAD --shortstat 2> /dev/null |
+            awk '{for(i=1;i<=NF;i++){if($i~/^insertion/)ins=$(i-1);if($i~/^deletion/)del=$(i-1)}}END{print ins+0,del+0}'
+    )
+    lines_str=""
+    [[ "$lines_ins" -gt 0 ]] && lines_str+="${C_GIT_ADDED}↑${lines_ins}${C_RESET}"
+    [[ "$lines_del" -gt 0 ]] && {
+        [[ -n "$lines_str" ]] && lines_str+=" "
+        lines_str+="${C_GIT_DELETED}↓${lines_del}${C_RESET}"
+    }
+    [[ -n "$lines_str" ]] && append line1 "$lines_str"
 fi
 # }}}
 
@@ -198,15 +214,6 @@ fi
 # Session name (only when set).
 [[ -n "$session_name" ]] && append line2 "${I_SESSION}${C_SESSION}${session_name}${C_RESET}"
 
-# Cost and lines changed.
-if [[ -n "$cost" || -n "$lines_added" || -n "$lines_removed" ]]; then
-    cost_str="${I_COST}"
-    [[ -n "$cost" ]] && cost_str+="${cost_str:+ }${C_DEFAULT}$(printf '$%.2f' "$cost")${C_RESET}"
-    [[ -n "$lines_added" && "$lines_added" != "0" ]] && cost_str+=" ${C_GIT_ADDED}+${lines_added}${C_RESET}"
-    [[ -n "$lines_removed" && "$lines_removed" != "0" ]] && cost_str+=" ${C_GIT_DELETED}-${lines_removed}${C_RESET}"
-    append line2 "$cost_str"
-fi
-
 # Context window (thresholds account for the ~33k autocompact buffer).
 if [[ -n "$ctx_pct" ]]; then
     ctx_pct_int=$(printf '%.0f' "$ctx_pct")
@@ -218,18 +225,38 @@ if [[ -n "$ctx_pct" ]]; then
         ctx_color="$C_CTX_LOW"
     fi
     append line2 "${I_CTX}${ctx_color}${ctx_pct_int}%${C_RESET}"
-    [[ $ctx_pct_int -ge 80 ]] && line2+=" ${C_CTX_HIGH}${I_WARN}${C_RESET}"
 fi
 
-# Token total (compact: 1.2k, 3.4M).
-if [[ $total -ge 1000000 ]]; then
-    total_fmt=$(awk "BEGIN { printf \"%.1fM\", $total/1000000 }")
-elif [[ $total -ge 1000 ]]; then
-    total_fmt=$(awk "BEGIN { printf \"%.1fk\", $total/1000 }")
-else
-    total_fmt="${total}"
+# Context health alerts (trailing flags).
+[[ "$exceeds_200k" == "true" ]] && line2+=" ${C_CTX_MED}${I_COMPACT}${C_RESET}"
+[[ ${ctx_pct_int:-0} -ge 80 ]] && line2+=" ${C_CTX_HIGH}${I_WARN}${C_RESET}"
+
+# Cost and cumulative lines changed.
+if [[ -n "$cost" || -n "$lines_added" || -n "$lines_removed" ]]; then
+    cost_str="${I_COST}"
+    if [[ -n "$cost" ]]; then
+        printf -v _cost_fmt '$%.2f' "$cost"
+        cost_str+="${cost_str:+ }${C_DEFAULT}${_cost_fmt}${C_RESET}"
+    fi
+    [[ -n "$lines_added" && "$lines_added" != "0" ]] && cost_str+=" ${C_GIT_ADDED}+${lines_added}${C_RESET}"
+    [[ -n "$lines_removed" && "$lines_removed" != "0" ]] && cost_str+=" ${C_GIT_DELETED}-${lines_removed}${C_RESET}"
+    append line2 "$cost_str"
 fi
-append line2 "${I_TOK}${C_DEFAULT}${total_fmt}${C_RESET}"
+
+# Duration (wall-clock).
+if [[ "$duration_ms" -gt 0 ]]; then
+    duration_sec=$((duration_ms / 1000))
+    if [[ $duration_sec -ge 3600 ]]; then
+        h=$((duration_sec / 3600))
+        m=$(((duration_sec % 3600) / 60))
+        duration_fmt="${h}h${m}m"
+    elif [[ $duration_sec -ge 60 ]]; then
+        duration_fmt="$((duration_sec / 60))m"
+    else
+        duration_fmt="${duration_sec}s"
+    fi
+    append line2 "${I_DURATION}${C_DEFAULT}${duration_fmt}${C_RESET}"
+fi
 # }}}
 
 printf '%b\n' "${C_DEFAULT}${line1}${C_RESET}"
