@@ -8,6 +8,7 @@
     "command": "bash ~/.claude/statusline.sh",
     "hideVimModeIndicator": true
   },
+  "tui": "fullscreen",
   "theme": "dark",
   "editorMode": "vim"
 }
