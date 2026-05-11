@@ -96,7 +96,7 @@ teardown() {
 
 # }}}
 
-# Body: formatting {{{
+# Body: pass-through {{{
 
 @test "subject only passes and file is unchanged" {
     printf 'scope: Fix the bug\n' > "$tmp_msg"
@@ -113,6 +113,18 @@ teardown() {
     [ "$status" -eq 0 ]
     [ "$(cat "$tmp_msg")" = "$original" ]
 }
+
+@test "already wrapped body is unchanged" {
+    printf 'scope: Fix the bug\n\nShort body.\n' > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+# }}}
+
+# Body: paragraph wrapping {{{
 
 @test "body is wrapped" {
     # "seventy-two" is the last word that fits within 72 chars (65 total);
@@ -150,22 +162,9 @@ teardown() {
     [ "$(cat "$tmp_msg")" = "$original" ]
 }
 
-@test "already wrapped body is unchanged" {
-    printf 'scope: Fix the bug\n\nShort body.\n' > "$tmp_msg"
-    original=$(cat "$tmp_msg")
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(cat "$tmp_msg")" = "$original" ]
-}
+# }}}
 
-@test "trailing git comment block is preserved verbatim" {
-    printf 'scope: Fix the bug\n\nBody text.\n# ------------------------ >8 ------------------------\n# Comment line.\n' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    grep -q '^# Comment line\.$' "$tmp_msg"
-    grep -q '^# ---' "$tmp_msg"
-}
+# Body: list items {{{
 
 @test "list items are not joined into a single paragraph" {
     printf 'scope: Fix the bug\n\n%s\n%s\n' \
@@ -176,6 +175,16 @@ teardown() {
     [ "$status" -eq 0 ]
     [ "$(sed -n '3p' "$tmp_msg")" = "- First item" ]
     [ "$(sed -n '4p' "$tmp_msg")" = "- Second item" ]
+}
+
+@test "short list items are unchanged" {
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '- Short item' \
+        > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
 }
 
 @test "long list item wraps with hanging indent" {
@@ -200,6 +209,17 @@ teardown() {
     [[ "$(sed -n '4p' "$tmp_msg")" == "  "* ]]
 }
 
+@test "list item continuation that fits is reflowed onto one line" {
+    printf 'scope: Fix the bug\n\n%s\n%s\n' \
+        '- Short item' \
+        '  continuation' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "- Short item continuation" ]
+    [ "$(wc -l < "$tmp_msg")" -eq 3 ]
+}
+
 @test "numbered list item wraps with correct indent" {
     # "seventy-two" is the last word fitting in 69 chars (text width for "1. ")
     printf 'scope: Fix the bug\n\n%s\n' \
@@ -209,30 +229,6 @@ teardown() {
     [ "$status" -eq 0 ]
     [ "$(sed -n '3p' "$tmp_msg")" = "1. This is a very long list item that definitely exceeds seventy-two" ]
     [[ "$(sed -n '4p' "$tmp_msg")" == "   "* ]]
-}
-
-@test "mixed paragraph and list are formatted independently" {
-    printf 'scope: Fix the bug\n\n%s\n\n%s\n%s\n' \
-        'This paragraph introduces the changes made below.' \
-        '- First item' \
-        '- Second item' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "This paragraph introduces the changes made below." ]
-    [ -z "$(sed -n '4p' "$tmp_msg")" ]
-    [ "$(sed -n '5p' "$tmp_msg")" = "- First item" ]
-    [ "$(sed -n '6p' "$tmp_msg")" = "- Second item" ]
-}
-
-@test "short list items are unchanged" {
-    printf 'scope: Fix the bug\n\n%s\n' \
-        '- Short item' \
-        > "$tmp_msg"
-    original=$(cat "$tmp_msg")
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(cat "$tmp_msg")" = "$original" ]
 }
 
 @test "asterisk list marker is recognized and items are not joined" {
@@ -269,17 +265,6 @@ teardown() {
     [ "$(sed -n '5p' "$tmp_msg")" = "- Second item" ]
 }
 
-@test "list item continuation that fits is reflowed onto one line" {
-    printf 'scope: Fix the bug\n\n%s\n%s\n' \
-        '- Short item' \
-        '  continuation' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "- Short item continuation" ]
-    [ "$(wc -l < "$tmp_msg")" -eq 3 ]
-}
-
 @test "list item followed by paragraph without blank line" {
     printf 'scope: Fix the bug\n\n%s\n%s\n' \
         '- List item' \
@@ -289,6 +274,37 @@ teardown() {
     [ "$status" -eq 0 ]
     [ "$(sed -n '3p' "$tmp_msg")" = "- List item" ]
     [ "$(sed -n '4p' "$tmp_msg")" = "Paragraph text." ]
+}
+
+# }}}
+
+# Body: mixed content {{{
+
+@test "mixed paragraph and list are formatted independently" {
+    printf 'scope: Fix the bug\n\n%s\n\n%s\n%s\n' \
+        'This paragraph introduces the changes made below.' \
+        '- First item' \
+        '- Second item' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "This paragraph introduces the changes made below." ]
+    [ -z "$(sed -n '4p' "$tmp_msg")" ]
+    [ "$(sed -n '5p' "$tmp_msg")" = "- First item" ]
+    [ "$(sed -n '6p' "$tmp_msg")" = "- Second item" ]
+}
+
+# }}}
+
+# Body: git comments {{{
+
+@test "trailing git comment block is preserved verbatim" {
+    printf 'scope: Fix the bug\n\nBody text.\n# ------------------------ >8 ------------------------\n# Comment line.\n' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    grep -q '^# Comment line\.$' "$tmp_msg"
+    grep -q '^# ---' "$tmp_msg"
 }
 
 # }}}
