@@ -97,7 +97,7 @@ The status line displays two lines of context:
   line insertions/deletions vs HEAD
 - **Line 2** (session): model name, session name, cost with lines added/removed,
   context window percentage (color-coded: waveAqua1 < 60%, roninYellow ≥ 60%,
-  samuraiRed ≥ 80% — thresholds account for the ~33k autocompact buffer) with
+  samuraiRed ≥ 80% - thresholds account for the ~33k autocompact buffer) with
   a warning icon (⚠️) at ≥ 80%, cumulative session token count (compact k/M
   format)
 
@@ -166,7 +166,7 @@ Structure:
 
 ### Commit Conventions
 
-This project requires a scope prefix on every commit — the global
+This project requires a scope prefix on every commit - the global
 guidelines make prefixes optional, but here they are mandatory.
 
 **Format**:
