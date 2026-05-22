@@ -5,8 +5,8 @@ Global instructions for AI coding agents across all projects and providers.
 ## Commit Guidelines
 
 **Principles**:
-- **Atomic commits**: One logical change per commit — don't mix unrelated changes even if made in the same session
-- Focus on the **why** and context in commit messages, not the what — the diff shows the what
+- **Atomic commits**: One logical change per commit - don't mix unrelated changes even if made in the same session
+- Focus on the **why** and context in commit messages, not the what - the diff shows the what
 - Avoid redundant bullet lists of file changes; explain relationships and reasons for decisions instead
 
 **Commit message format**:
@@ -23,7 +23,7 @@ Global instructions for AI coding agents across all projects and providers.
 - Only use type/scope prefixes if project history shows a consistent pattern (infer from `git log`)
 - No AI trailers (Co-Authored-By, etc.)
 
-**Anti-pattern** — listing what changed:
+**Anti-pattern** - listing what changed:
 ```
 Update configuration
 
@@ -32,7 +32,7 @@ Changes:
 - Updated file B
 ```
 
-**Better** — explaining why:
+**Better** - explaining why:
 ```
 Update configuration to use maintained dependencies
 
@@ -51,29 +51,30 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Don't force push to main/master
 - Confirm with user before destructive operations: force push, `git reset --hard`, deleting files or branches, overwriting uncommitted changes
 - Prefer safer alternatives: `--force-with-lease` over `--force`, soft reset over hard reset
-- Investigate failures before retrying — diagnose root causes, don't bypass safety mechanisms
+- Investigate failures before retrying - diagnose root causes, don't bypass safety mechanisms
 - Match action scope to what was actually requested
 
 ## AI Assistant Collaboration
 
 **Communication**:
 - Match response length to task complexity: a simple question gets a direct answer, not headers and bullet sections
-- Don't narrate internal deliberation — state results and decisions directly
+- Don't narrate internal deliberation - state results and decisions directly
 - For exploratory questions ("what could we do?", "how should we approach this?"), give a brief recommendation with the main trade-off; don't implement until the user agrees
 - Reference code with file paths and line numbers
-- While working, give short updates at key moments — one sentence is enough
+- While working, give short updates at key moments - one sentence is enough
+- Use plain ASCII in generated text: prefer spaced hyphens ( - ) over em dashes, straight quotes over curly quotes
 
 **Code changes**:
 - Check for linting/formatting tools (Makefile, package.json, pyproject.toml) and run them before commits
 - Verify changes don't break existing functionality by running existing tests
-- Don't report success based on compilation or tests passing alone — verify the actual behavior changed as expected; if you can't verify (e.g., no access to a running environment), say so explicitly
+- Don't report success based on compilation or tests passing alone - verify the actual behavior changed as expected; if you can't verify (e.g., no access to a running environment), say so explicitly
 - Prefer actively maintained dependencies over abandoned ones; document reasons for changes in commit messages
 
 **Scope discipline**:
-- Don't refactor, clean up, or introduce abstractions beyond what the task requires — a bug fix doesn't need surrounding cleanup
+- Don't refactor, clean up, or introduce abstractions beyond what the task requires - a bug fix doesn't need surrounding cleanup
 - Three similar lines is better than a premature abstraction; don't design for hypothetical future requirements
 - Default to no comments; only add one when the WHY is non-obvious: a hidden constraint, a subtle invariant, a workaround for a specific bug
-- Don't explain what code does — well-named identifiers already do that
+- Don't explain what code does - well-named identifiers already do that
 - Don't add error handling for scenarios that can't happen; only validate at system boundaries (user input, external APIs)
 
 **Configuration files**:
