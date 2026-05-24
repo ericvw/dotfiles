@@ -1,0 +1,18 @@
+{
+  "altScreenMode": "always",
+  "colorScheme": "dark",
+  "enableTelemetry": false,
+  "notifications": true,
+  "permissions": {
+    "allow": [
+      "command(find)",
+      "command(git diff)",
+      "command(git log)",
+      "command(git status)",
+      "command(grep)",
+      "command(ls)",
+      "command(which)"
+    ]
+  },
+  "showFeedbackSurvey": false
+}

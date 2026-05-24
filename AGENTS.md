@@ -66,8 +66,8 @@ Example:
 - vim - Lean fallback editor when Neovim is unavailable
 
 **Optional packages**:
+- antigravity - Antigravity CLI settings and instructions
 - claude - Claude Code settings and custom status line script
-- gemini - Gemini CLI settings and instructions
 - opencode - OpenCode AI agent TUI configuration
 - quilt - Debian patch management tool configuration
 
@@ -105,11 +105,11 @@ Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
 the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
 (modified), autumnRed (deleted), springViolet1 (untracked).
 
-### Gemini CLI Configuration
+### Antigravity CLI Configuration
 
-- `GEMINI.md` - Root-level instructions that import `AGENTS.md` to guide the Gemini agent
-- `gemini/.gemini/settings.json` - Gemini CLI settings (theme, editor mode)
-- `gemini/.gemini/GEMINI.md` - Package-level instructions importing `AGENTS.md`
+- `antigravity/.gemini/GEMINI.md` - Global context redirect importing `AGENTS.md` to guide the Antigravity agent
+- `antigravity/.gemini/antigravity-cli/settings.json` - Antigravity CLI settings (theme, alt screen, telemetry)
+- `antigravity/.gemini/antigravity-cli/keybindings.json` - Antigravity CLI keybindings
 
 ### Git Configuration
 
