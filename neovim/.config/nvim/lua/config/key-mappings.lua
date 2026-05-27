@@ -11,7 +11,7 @@ vim.keymap.set("n", "<leader>sc", function()
 end)
 
 -- Strip whitespace.
-vim.keymap.set("", "<leader>ss", function()
+vim.keymap.set("n", "<leader>ss", function()
     local cursor_position = vim.fn.getpos(".")
     local old_query = vim.fn.getreg("/")
     -- TODO: Port this to Lua :substitute API if and when it exists.

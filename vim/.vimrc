@@ -123,7 +123,7 @@ function! <SID>SynStack()
 endfunc
 
 " Strip whitespace.
-map <silent> <leader>ss :
+nnoremap <silent> <leader>ss :
     \ let save_cursor = getpos(".") <Bar>
     \ let old_query = getreg('/') <Bar>
     \ %s/\s\+$//e <Bar>
