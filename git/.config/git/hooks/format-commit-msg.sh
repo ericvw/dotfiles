@@ -6,6 +6,53 @@ set -euo pipefail
 WIDTH=72
 # }}}
 
+# Format Body Helper {{{
+format_body() {
+    local chunk_type=
+    local -a chunk_lines=()
+
+    flush_chunk() {
+        [ ${#chunk_lines[@]} -eq 0 ] && return
+        case "$chunk_type" in
+            blank)
+                printf '\n'
+                ;;
+            list)
+                printf '%s\n' "${chunk_lines[@]}" |
+                    fmt -t -w "$WIDTH" -g "$WIDTH"
+                ;;
+            para)
+                printf '%s\n' "${chunk_lines[@]}" | fmt -w "$WIDTH" -g "$WIDTH"
+                ;;
+        esac
+        chunk_type=
+        chunk_lines=()
+    }
+
+    local line
+    while IFS= read -r line || [ -n "$line" ]; do
+        if [ -z "$line" ]; then
+            flush_chunk
+            chunk_type=blank
+            chunk_lines=("")
+            flush_chunk
+        elif [[ "$line" =~ ^([[:space:]]*[-*+][[:space:]]) ]] ||
+            [[ "$line" =~ ^([[:space:]]*[0-9]+\.[[:space:]]) ]]; then
+            flush_chunk
+            chunk_type=list
+            chunk_lines=("$line")
+        elif [[ "$line" =~ ^[[:space:]]{2} ]] && [ "$chunk_type" = list ]; then
+            chunk_lines+=("$line")
+        else
+            [ "$chunk_type" != para ] && flush_chunk && chunk_type=para
+            chunk_lines+=("$line")
+        fi
+    done
+    flush_chunk
+    unset -f flush_chunk
+}
+# }}}
+
 # Validate {{{
 msgfile="$1"
 have_line2=false
@@ -41,6 +88,7 @@ fi
 
 # Format {{{
 tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
 
 {
     printf '%s\n' "$subject"
@@ -56,7 +104,7 @@ tmpfile=$(mktemp)
         trailer=$(printf '%s\n' "$body" | awk '/^#/{found=1} found{print}')
 
         if [ -n "$non_comment" ]; then
-            printf '%s\n' "$non_comment" | fmt -w $WIDTH -g $WIDTH
+            printf '%s\n' "$non_comment" | format_body
         fi
 
         if [ -n "$trailer" ]; then
