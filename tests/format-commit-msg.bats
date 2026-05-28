@@ -151,6 +151,20 @@ teardown() {
     [ -z "$(sed -n '4p' "$tmp_msg")" ]
 }
 
+@test "body paragraph uses greedy wrapping" {
+    # fmt optimal-fit breaks after "invariants," leaving "and" on the next
+    # line (67+67 chars). Greedy wrapping fits "and" on line 1 (71+71 chars).
+    printf 'scope: Fix the bug\n\n%s\n' \
+        'Introduce AGENTS.md to define project-specific context, invariants, and directory structure. This assists AI coding agents by directing them to the primary network specification document for VLAN/IPAM and STP configurations.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "Introduce AGENTS.md to define project-specific context, invariants, and" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "directory structure. This assists AI coding agents by directing them to" ]
+    [ "$(sed -n '5p' "$tmp_msg")" = "the primary network specification document for VLAN/IPAM and STP" ]
+    [ "$(sed -n '6p' "$tmp_msg")" = "configurations." ]
+}
+
 @test "blank line between body paragraphs is preserved" {
     printf 'scope: Fix the bug\n\n%s\n\n%s\n' \
         'First paragraph.' \

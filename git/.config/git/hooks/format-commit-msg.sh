@@ -12,14 +12,26 @@ format_body() {
     local list_prefix=
     local -a chunk_lines=()
 
+    greedy_wrap() {
+        awk -v w="$1" '
+        { for (i = 1; i <= NF; i++) {
+            if (l == "")                         { l = $i }
+            else if (length(l)+1+length($i)<=w)  { l = l " " $i }
+            else                                 { print l; l = $i }
+        } }
+        END { if (l != "") print l }
+        '
+    }
+
     flush_chunk() {
         [ ${#chunk_lines[@]} -eq 0 ] && return
+        local text i
         case "$chunk_type" in
             blank)
                 printf '\n'
                 ;;
             list)
-                local prefix_len=${#list_prefix} text i trimmed
+                local prefix_len=${#list_prefix} trimmed
                 text="${chunk_lines[0]:$prefix_len}"
                 for (( i=1; i<${#chunk_lines[@]}; i++ )); do
                     trimmed="${chunk_lines[$i]#"${chunk_lines[$i]%%[! ]*}"}"
@@ -36,10 +48,14 @@ format_body() {
                     else
                         printf '%s%s\n' "$indent" "$fmtline"
                     fi
-                done < <(printf '%s\n' "$text" | fmt -w "$text_width" -g "$text_width")
+                done < <(printf '%s\n' "$text" | greedy_wrap "$text_width")
                 ;;
             para)
-                printf '%s\n' "${chunk_lines[@]}" | fmt -w "$WIDTH" -g "$WIDTH"
+                text="${chunk_lines[0]}"
+                for (( i=1; i<${#chunk_lines[@]}; i++ )); do
+                    text+=" ${chunk_lines[$i]}"
+                done
+                printf '%s\n' "$text" | greedy_wrap "$WIDTH"
                 ;;
         esac
         chunk_type=
@@ -68,7 +84,7 @@ format_body() {
         fi
     done
     flush_chunk
-    unset -f flush_chunk
+    unset -f flush_chunk greedy_wrap
 }
 # }}}
 
