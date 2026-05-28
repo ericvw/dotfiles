@@ -128,7 +128,7 @@ nnoremap <silent> <leader>ss :
     \ let old_query = getreg('/') <Bar>
     \ %s/\s\+$//e <Bar>
     \ call setpos('.', save_cursor) <Bar>
-    \ call setpos('/', old_query) <CR>
+    \ call setreg('/', old_query) <CR>
 
 " Jump to the last cursor position in file if possible.
 autocmd BufReadPost *
