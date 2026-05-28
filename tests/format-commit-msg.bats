@@ -177,60 +177,6 @@ teardown() {
     [ "$(sed -n '4p' "$tmp_msg")" = "- Second item" ]
 }
 
-@test "short list items are unchanged" {
-    printf 'scope: Fix the bug\n\n%s\n' \
-        '- Short item' \
-        > "$tmp_msg"
-    original=$(cat "$tmp_msg")
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(cat "$tmp_msg")" = "$original" ]
-}
-
-@test "long list item wraps with hanging indent" {
-    # "seventy-two" is the last word fitting in 70 chars (text width for "- ")
-    printf 'scope: Fix the bug\n\n%s\n' \
-        '- This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "- This is a very long list item that definitely exceeds seventy-two" ]
-    [[ "$(sed -n '4p' "$tmp_msg")" == "  "* ]]
-}
-
-@test "list item with continuation lines is re-wrapped" {
-    printf 'scope: Fix the bug\n\n%s\n%s\n' \
-        '- This is a very long list item that definitely exceeds seventy-two' \
-        '  characters and needs wrapping.' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "- This is a very long list item that definitely exceeds seventy-two" ]
-    [[ "$(sed -n '4p' "$tmp_msg")" == "  "* ]]
-}
-
-@test "list item continuation that fits is reflowed onto one line" {
-    printf 'scope: Fix the bug\n\n%s\n%s\n' \
-        '- Short item' \
-        '  continuation' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "- Short item continuation" ]
-    [ "$(wc -l < "$tmp_msg")" -eq 3 ]
-}
-
-@test "numbered list item wraps with correct indent" {
-    # "seventy-two" is the last word fitting in 69 chars (text width for "1. ")
-    printf 'scope: Fix the bug\n\n%s\n' \
-        '1. This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
-        > "$tmp_msg"
-    run "$formatter" "$tmp_msg"
-    [ "$status" -eq 0 ]
-    [ "$(sed -n '3p' "$tmp_msg")" = "1. This is a very long list item that definitely exceeds seventy-two" ]
-    [[ "$(sed -n '4p' "$tmp_msg")" == "   "* ]]
-}
-
 @test "asterisk list marker is recognized and items are not joined" {
     printf 'scope: Fix the bug\n\n%s\n%s\n' \
         '* First item' \
@@ -251,6 +197,90 @@ teardown() {
     [ "$status" -eq 0 ]
     [ "$(sed -n '3p' "$tmp_msg")" = "+ First item" ]
     [ "$(sed -n '4p' "$tmp_msg")" = "+ Second item" ]
+}
+
+@test "short list items are unchanged" {
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '- Short item' \
+        > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+@test "long list item wraps with hanging indent" {
+    # "seventy-two" is the last word fitting in 70 chars (text width for "- ")
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '- This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "- This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "  characters and needs wrapping." ]
+}
+
+@test "long asterisk list item wraps with hanging indent" {
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '* This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "* This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "  characters and needs wrapping." ]
+}
+
+@test "long plus list item wraps with hanging indent" {
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '+ This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "+ This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "  characters and needs wrapping." ]
+}
+
+@test "numbered list item wraps with correct indent" {
+    # "seventy-two" is the last word fitting in 69 chars (text width for "1. ")
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '1. This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "1. This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "   characters and needs wrapping." ]
+}
+
+@test "multi-digit numbered list item wraps with correct indent" {
+    printf 'scope: Fix the bug\n\n%s\n' \
+        '10. This is a very long list item that definitely exceeds seventy-two characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "10. This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "    characters and needs wrapping." ]
+}
+
+@test "list item with continuation lines is re-wrapped" {
+    printf 'scope: Fix the bug\n\n%s\n%s\n' \
+        '- This is a very long list item that definitely exceeds seventy-two' \
+        '  characters and needs wrapping.' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "- This is a very long list item that definitely exceeds seventy-two" ]
+    [ "$(sed -n '4p' "$tmp_msg")" = "  characters and needs wrapping." ]
+}
+
+@test "list item continuation that fits is reflowed onto one line" {
+    printf 'scope: Fix the bug\n\n%s\n%s\n' \
+        '- Short item' \
+        '  continuation' \
+        > "$tmp_msg"
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(sed -n '3p' "$tmp_msg")" = "- Short item continuation" ]
+    [ "$(wc -l < "$tmp_msg")" -eq 3 ]
 }
 
 @test "blank line between list items is preserved" {
