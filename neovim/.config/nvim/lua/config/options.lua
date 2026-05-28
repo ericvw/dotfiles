@@ -7,7 +7,6 @@ vim.opt.smartcase = true
 
 -- 4 displaying text
 vim.opt.scrolloff = 1
-vim.opt.lazyredraw = true
 vim.opt.list = true
 vim.opt.listchars = {
     tab = "» ",
