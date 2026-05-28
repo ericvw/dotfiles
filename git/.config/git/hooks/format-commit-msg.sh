@@ -9,23 +9,57 @@ WIDTH=72
 # Format Body Helper {{{
 format_body() {
     local chunk_type=
+    local list_prefix=
     local -a chunk_lines=()
+
+    greedy_wrap() {
+        awk -v w="$1" '
+        { for (i = 1; i <= NF; i++) {
+            if (l == "")                         { l = $i }
+            else if (length(l)+1+length($i)<=w)  { l = l " " $i }
+            else                                 { print l; l = $i }
+        } }
+        END { if (l != "") print l }
+        '
+    }
 
     flush_chunk() {
         [ ${#chunk_lines[@]} -eq 0 ] && return
+        local text i
         case "$chunk_type" in
             blank)
                 printf '\n'
                 ;;
             list)
-                printf '%s\n' "${chunk_lines[@]}" |
-                    fmt -t -w "$WIDTH" -g "$WIDTH"
+                local prefix_len=${#list_prefix} trimmed
+                text="${chunk_lines[0]:$prefix_len}"
+                for (( i=1; i<${#chunk_lines[@]}; i++ )); do
+                    trimmed="${chunk_lines[$i]#"${chunk_lines[$i]%%[! ]*}"}"
+                    text+=" $trimmed"
+                done
+                local text_width=$((WIDTH - prefix_len))
+                local indent
+                indent=$(printf '%*s' "$prefix_len" '')
+                local first=true fmtline
+                while IFS= read -r fmtline; do
+                    if $first; then
+                        printf '%s%s\n' "$list_prefix" "$fmtline"
+                        first=false
+                    else
+                        printf '%s%s\n' "$indent" "$fmtline"
+                    fi
+                done < <(printf '%s\n' "$text" | greedy_wrap "$text_width")
                 ;;
             para)
-                printf '%s\n' "${chunk_lines[@]}" | fmt -w "$WIDTH" -g "$WIDTH"
+                text="${chunk_lines[0]}"
+                for (( i=1; i<${#chunk_lines[@]}; i++ )); do
+                    text+=" ${chunk_lines[$i]}"
+                done
+                printf '%s\n' "$text" | greedy_wrap "$WIDTH"
                 ;;
         esac
         chunk_type=
+        list_prefix=
         chunk_lines=()
     }
 
@@ -40,6 +74,7 @@ format_body() {
             [[ "$line" =~ ^([[:space:]]*[0-9]+\.[[:space:]]) ]]; then
             flush_chunk
             chunk_type=list
+            list_prefix="${BASH_REMATCH[1]}"
             chunk_lines=("$line")
         elif [[ "$line" =~ ^[[:space:]]{2} ]] && [ "$chunk_type" = list ]; then
             chunk_lines+=("$line")
@@ -49,7 +84,7 @@ format_body() {
         fi
     done
     flush_chunk
-    unset -f flush_chunk
+    unset -f flush_chunk greedy_wrap
 }
 # }}}
 
