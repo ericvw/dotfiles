@@ -21,6 +21,42 @@ teardown() {
 
 # }}}
 
+# Subject: auto-squash bypass {{{
+
+@test "fixup commit exits 0 and message is unchanged" {
+    printf 'fixup! Original subject\n' > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+@test "squash commit exits 0 and message is unchanged" {
+    printf 'squash! Original subject\n' > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+@test "amend commit exits 0 and message is unchanged" {
+    printf 'amend! Original subject\n' > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+@test "fixup commit with body exits 0 and message is unchanged" {
+    printf 'fixup! Original subject\n\nBody text.\n' > "$tmp_msg"
+    original=$(cat "$tmp_msg")
+    run "$formatter" "$tmp_msg"
+    [ "$status" -eq 0 ]
+    [ "$(cat "$tmp_msg")" = "$original" ]
+}
+
+# }}}
+
 # Subject: length {{{
 
 @test "subject at exactly 72 characters passes" {

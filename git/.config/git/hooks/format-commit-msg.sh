@@ -33,7 +33,7 @@ format_body() {
             list)
                 local prefix_len=${#list_prefix} trimmed
                 text="${chunk_lines[0]:$prefix_len}"
-                for (( i=1; i<${#chunk_lines[@]}; i++ )); do
+                for ((i = 1; i < ${#chunk_lines[@]}; i++)); do
                     trimmed="${chunk_lines[$i]#"${chunk_lines[$i]%%[! ]*}"}"
                     text+=" $trimmed"
                 done
@@ -52,7 +52,7 @@ format_body() {
                 ;;
             para)
                 text="${chunk_lines[0]}"
-                for (( i=1; i<${#chunk_lines[@]}; i++ )); do
+                for ((i = 1; i < ${#chunk_lines[@]}; i++)); do
                     text+=" ${chunk_lines[$i]}"
                 done
                 printf '%s\n' "$text" | greedy_wrap "$WIDTH"
@@ -100,6 +100,11 @@ if [ -z "$subject" ]; then
     printf '[commit-msg] subject is required\n' >&2
     exit 1
 fi
+
+# Auto-squash commits are transient; skip all processing.
+case "$subject" in
+    'fixup! '* | 'squash! '* | 'amend! '*) exit 0 ;;
+esac
 
 if [ "${#subject}" -gt "$WIDTH" ]; then
     printf '[commit-msg] subject exceeds %d characters: %d\n' \
