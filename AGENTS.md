@@ -68,7 +68,6 @@ Example:
 **Optional packages**:
 - antigravity - Antigravity CLI settings and instructions
 - claude - Claude Code settings and custom status line script
-- opencode - OpenCode AI agent TUI configuration
 - quilt - Debian patch management tool configuration
 
 **Platform-specific packages**:
@@ -177,13 +176,11 @@ guidelines make prefixes optional, but here they are mandatory.
 ```
 
 **Scope**: Stow package name for changes within a package (neovim,
-fish, git, vim, opencode, etc.) or filename for root-level files
+fish, git, vim, etc.) or filename for root-level files
 (AGENTS.md, Makefile, install.sh, etc.).
 
 **Examples**:
 ```
-opencode: Encourage thoughtful recommendations from AI agents
-
 AGENTS.md: Document Vim as lean fallback and EditorConfig preference
 
 neovim: Remove Go ftplugin
