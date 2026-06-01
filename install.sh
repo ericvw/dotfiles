@@ -74,7 +74,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --package)
             [[ $# -gt 1 ]] || {
-                echo "--package requires an argument"
+                echo "--package requires an argument" >&2
                 usage
                 exit 1
             }
@@ -86,7 +86,7 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         *)
-            echo "Unknown arg: $1"
+            echo "Unknown arg: $1" >&2
             usage
             exit 1
             ;;
@@ -157,7 +157,7 @@ build_stow_args() {
     # Prefer deterministic behavior.
     STOW_ARGS+=(--no-folding)
 
-    if $VERBOSE; then
+    if $VERBOSE || $DRY_RUN; then
         STOW_ARGS+=(-v)
     fi
 
@@ -185,8 +185,9 @@ main() {
     fi
 
     local -a PKGS=()
+    local pkg
     while IFS= read -r pkg; do
-        PKGS+=("$pkg")
+        [[ -n "$pkg" ]] && PKGS+=("$pkg")
     done < <(packages_for_platform)
 
     if [[ "${#PKGS[@]}" -eq 0 ]]; then
@@ -195,8 +196,9 @@ main() {
     fi
 
     log "Will stow packages:"
+    local p
     for p in "${PKGS[@]}"; do
-        printf '  - %s\n' "$p"
+        printf '  - %s\n' "$p" >&2
     done
 
     local -a STOW_ARGS=()
@@ -207,9 +209,13 @@ main() {
     log "Running: ${cmd% }"
     stow "${STOW_ARGS[@]}" "${PKGS[@]}"
 
-    log "Dotfiles installed via stow."
-
     post_install "${PKGS[@]}"
+
+    if $DRY_RUN; then
+        log "Dry run complete; no changes applied."
+    else
+        log "Dotfiles installed via stow."
+    fi
 }
 
 # Post-install tasks {{{
