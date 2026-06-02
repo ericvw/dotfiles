@@ -16,10 +16,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 -- }}}
 
 -- UI {{{
-vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" })
+vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" }, { confirm = false })
 vim.cmd.colorscheme("kanagawa")
 
-vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" })
+vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
 require("lualine").setup({
     options = {
         icons_enabled = false,
@@ -29,7 +29,7 @@ require("lualine").setup({
 -- }}}
 
 -- Editor {{{
-vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
+vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" }, { confirm = false })
 require("gitsigns").setup({})
 
 vim.cmd.packadd("nvim.undotree")
@@ -38,7 +38,7 @@ vim.keymap.set("n", "<leader>u", vim.cmd.Undotree)
 vim.pack.add({
     "https://github.com/nvim-lua/plenary.nvim",
     { src = "https://github.com/nvim-telescope/telescope.nvim", version = "v0.2.2" },
-})
+}, { confirm = false })
 local builtin = require("telescope.builtin")
 vim.keymap.set({ "n", "i" }, "<leader>ff", builtin.find_files)
 vim.keymap.set({ "n", "i" }, "<leader>fg", builtin.git_files)
@@ -57,24 +57,24 @@ require("telescope").setup({
 vim.pack.add({
     "https://github.com/tpope/vim-repeat",
     "https://github.com/tpope/vim-surround",
-})
+}, { confirm = false })
 -- }}}
 
 -- Filetype / Language Support {{{
 vim.pack.add({
     "https://github.com/ericvw/vim-nim",
     "https://github.com/fladson/vim-kitty",
-})
+}, { confirm = false })
 -- }}}
 
 -- Tree-sitter {{{
-vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
+vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
 -- }}}
 
 -- LSP {{{
-vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" }, { confirm = false })
 
-vim.pack.add({ "https://github.com/ray-x/lsp_signature.nvim" })
+vim.pack.add({ "https://github.com/ray-x/lsp_signature.nvim" }, { confirm = false })
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
@@ -88,7 +88,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- }}}
 
 -- Linting {{{
-vim.pack.add({ "https://github.com/mfussenegger/nvim-lint" })
+vim.pack.add({ "https://github.com/mfussenegger/nvim-lint" }, { confirm = false })
 local lint = require("lint")
 lint.linters_by_ft = {
     python = {
