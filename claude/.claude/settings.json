@@ -6,7 +6,9 @@
   "permissions": {
     "allow": [
       "Bash(basename *)",
+      "Bash(bash *)",
       "Bash(cat *)",
+      "Bash(cd *)",
       "Bash(command *)",
       "Bash(cut *)",
       "Bash(date *)",
@@ -26,7 +28,9 @@
       "Bash(make test*)",
       "Bash(man *)",
       "Bash(printf *)",
+      "Bash(readlink *)",
       "Bash(realpath *)",
+      "Bash(sed *)",
       "Bash(shellcheck *)",
       "Bash(sort *)",
       "Bash(stat *)",
@@ -35,7 +39,8 @@
       "Bash(type *)",
       "Bash(uniq *)",
       "Bash(wc *)",
-      "Bash(which *)"
+      "Bash(which *)",
+      "Bash(xargs *)"
     ]
   },
   "model": "opusplan",
