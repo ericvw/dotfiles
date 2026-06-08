@@ -14,7 +14,6 @@ C_GIT_MODIFIED='\e[33m' # yellow        — git modified
 C_GIT_DELETED='\e[31m'  # red           — git deleted
 C_UNTRACKED='\e[35m'    # magenta       — untracked files
 C_MODEL='\e[33m'        # yellow        — model
-C_SESSION='\e[36m'      # cyan          — session name
 C_CTX_LOW='\e[36m'      # cyan          — ctx < 60%
 C_CTX_MED='\e[33m'      # yellow        — ctx >= 60%
 C_CTX_HIGH='\e[31m'     # red           — ctx >= 80%
@@ -34,7 +33,6 @@ I_DIR='📁 '
 I_WORKTREE='🌲 '
 I_BRANCH='🌿 '
 I_MODEL='🤖 '
-I_SESSION='🏷️ '
 I_CTX='🧠 '
 I_COMPACT='♻️'
 I_WARN='⚠️'
@@ -45,7 +43,6 @@ if [[ "${STATUSLINE_EMOJIS:-1}" == "0" ]]; then
     I_WORKTREE='wt: '
     I_BRANCH='br: '
     I_MODEL=''
-    I_SESSION=''
     I_CTX='ctx '
     I_COMPACT='cmp'
     I_WARN='!'
@@ -61,7 +58,6 @@ mapfile -t _j < <(jq -r '
   .workspace.current_dir,
   (.workspace.git_worktree // .worktree.name // ""),
   .model.display_name             // "",
-  .session_name                   // "",
   .context_window.used_percentage // "",
   (.exceeds_200k_tokens // false),
   .cost.total_cost_usd            // "",
@@ -73,13 +69,12 @@ vim_mode=${_j[0]}
 cwd=${_j[1]}
 git_worktree=${_j[2]}
 model=${_j[3]}
-session_name=${_j[4]}
-ctx_pct=${_j[5]}
-exceeds_200k=${_j[6]}
-cost=${_j[7]}
-lines_added=${_j[8]}
-lines_removed=${_j[9]}
-duration_ms=${_j[10]}
+ctx_pct=${_j[4]}
+exceeds_200k=${_j[5]}
+cost=${_j[6]}
+lines_added=${_j[7]}
+lines_removed=${_j[8]}
+duration_ms=${_j[9]}
 # }}}
 
 # Helpers {{{
@@ -210,9 +205,6 @@ line2=""
 if [[ -n "$model" ]]; then
     line2+="${I_MODEL}${C_MODEL}${model}${C_RESET}"
 fi
-
-# Session name (only when set).
-[[ -n "$session_name" ]] && append line2 "${I_SESSION}${C_SESSION}${session_name}${C_RESET}"
 
 # Context window (thresholds account for the ~33k autocompact buffer).
 if [[ -n "$ctx_pct" ]]; then

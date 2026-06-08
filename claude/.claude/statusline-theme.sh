@@ -15,7 +15,6 @@ C_GIT_MODIFIED='\e[38;2;220;165;97m' # #dca561 autumnYellow      — git modifie
 C_GIT_DELETED='\e[38;2;195;64;67m'   # #c34043 autumnRed         — git deleted
 C_UNTRACKED='\e[38;2;147;138;169m'   # #938aa9 springViolet1     — untracked files
 C_MODEL='\e[38;2;230;195;132m'       # #e6c384 carpYellow        — model
-C_SESSION='\e[38;2;127;180;202m'     # #7fb4ca springBlue        — session name
 C_CTX_LOW='\e[38;2;106;149;137m'     # #6a9589 waveAqua1         — ctx low
 C_CTX_MED='\e[38;2;255;158;59m'      # #ff9e3b roninYellow       — ctx medium
 C_CTX_HIGH='\e[38;2;232;36;36m'      # #e82424 samuraiRed        — ctx high
