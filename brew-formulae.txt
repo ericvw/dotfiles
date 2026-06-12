@@ -12,10 +12,9 @@ jq
 keychain
 make
 neovim
-pyenv
-pyenv-virtualenv
 python
 shellcheck
 stow
 tree-sitter-cli
+uv
 vim

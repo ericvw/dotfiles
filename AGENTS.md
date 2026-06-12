@@ -161,7 +161,7 @@ Structure:
 - Main config: `fish/.config/fish/config.fish`
 - Organized with vim foldmarkers for sections
 - Platform detection for Homebrew paths (`/opt/homebrew` vs `/home/linuxbrew/.linuxbrew`)
-- Tool initialization: pyenv, fnm (Fast Node Manager), dircolors, keychain
+- Tool initialization: uv, fnm (Fast Node Manager), dircolors, keychain
 
 ### Commit Conventions
 
@@ -202,7 +202,7 @@ Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
 - `shellcheck` - Shell script linting
 - `neovim` - Primary editor
 - `fish` - Interactive shell
-- `pyenv`, `pyenv-virtualenv` - Python version management
+- `uv` - Python version and project management
 - Development tools: bat, gh, tree-sitter-cli
 
 ## Testing Changes

@@ -82,21 +82,9 @@ set -gx PIP_REQUIRE_VIRTUALENV true
 set -gx PIP_DISABLE_PIP_VERSION_CHECK true
 # }}}
 
-# pyenv {{{
-if test -d $HOME/.pyenv
-    set -gx PYENV_ROOT $HOME/.pyenv
-end
-
-if test -d "$PYENV_ROOT"
-    fish_add_path -P -m $PYENV_ROOT/bin
-end
-
-if command -q pyenv
-    pyenv init - | source
-end
-
-if command -q pyenv-virtualenv-init
-    pyenv virtualenv-init - | source
+# uv {{{
+if command -q uv
+    uv generate-shell-completion fish | source
 end
 # }}}
 
