@@ -43,7 +43,7 @@
       "Bash(xargs *)"
     ]
   },
-  "model": "opusplan",
+  "model": "claude-opus-5",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
