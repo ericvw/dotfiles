@@ -69,7 +69,6 @@ Example:
 - vim - Lean fallback editor when Neovim is unavailable
 
 **Optional packages**:
-- antigravity - Antigravity CLI settings and instructions
 - claude - Claude Code settings and custom status line script
 - quilt - Debian patch management tool configuration
 
@@ -125,12 +124,6 @@ token count.
 Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
 the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
 (modified), autumnRed (deleted), springViolet1 (untracked).
-
-### Antigravity CLI Configuration
-
-- `antigravity/.gemini/GEMINI.md` - Global context redirect importing `AGENTS.md` to guide the Antigravity agent
-- `antigravity/.gemini/antigravity-cli/settings.json` - Antigravity CLI settings (theme, alt screen, telemetry)
-- `antigravity/.gemini/antigravity-cli/keybindings.json` - Antigravity CLI keybindings
 
 ### Git Configuration
 
