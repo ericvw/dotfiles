@@ -94,11 +94,13 @@ The status line displays two lines of context:
 - **Line 1** (workspace): vim mode indicator, current directory, git worktree,
   branch, ahead/behind upstream, staged/unstaged/untracked/deleted file counts,
   line insertions/deletions vs HEAD
-- **Line 2** (session): model name, cost with lines added/removed,
-  context window percentage (color-coded: waveAqua1 < 60%, roninYellow ≥ 60%,
-  samuraiRed ≥ 80% - thresholds account for the ~33k autocompact buffer) with
-  a warning icon (⚠️) at ≥ 80%, cumulative session token count (compact k/M
-  format)
+- **Line 2** (session): model name, context window as `84k/200k` (tokens in
+  context over window size, compact k/M format, color-coded on absolute
+  tokens: waveAqua1 < 100k, roninYellow ≥ 100k, samuraiRed ≥ 200k), cost
+  with lines added/removed, wall-clock duration
+
+The context segment is hidden until the first API response populates the
+token count.
 
 Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
 the palette's designated diff colors: autumnGreen (staged/added), autumnYellow

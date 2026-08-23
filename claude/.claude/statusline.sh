@@ -14,9 +14,9 @@ C_GIT_MODIFIED='\e[33m' # yellow        — git modified
 C_GIT_DELETED='\e[31m'  # red           — git deleted
 C_UNTRACKED='\e[35m'    # magenta       — untracked files
 C_MODEL='\e[33m'        # yellow        — model
-C_CTX_LOW='\e[36m'      # cyan          — ctx < 60%
-C_CTX_MED='\e[33m'      # yellow        — ctx >= 60%
-C_CTX_HIGH='\e[31m'     # red           — ctx >= 80%
+C_CTX_LOW='\e[36m'      # cyan          — ctx low
+C_CTX_MED='\e[33m'      # yellow        — ctx medium
+C_CTX_HIGH='\e[31m'     # red           — ctx high
 C_DEFAULT='\e[37m'      # white         — default foreground
 C_RESET='\e[0m'
 
@@ -27,6 +27,16 @@ if [[ -f "${BASH_SOURCE[0]%/*}/statusline-theme.sh" ]]; then
 fi
 # }}}
 
+# Thresholds {{{
+# Absolute tokens, not a fraction of the window. Every request re-sends the
+# whole conversation, so the token count is what the next request costs -
+# picking a larger window makes that cost affordable, not smaller. 200k is
+# the window on models without extended context, so passing it means the
+# session has outgrown what a default configuration could hold at all.
+CTX_MED_TOKENS=100000
+CTX_HIGH_TOKENS=200000
+# }}}
+
 # Emojis {{{
 # Set STATUSLINE_EMOJIS=0 to disable.
 I_DIR='📁 '
@@ -34,8 +44,6 @@ I_WORKTREE='🌲 '
 I_BRANCH='🌿 '
 I_MODEL='🤖 '
 I_CTX='🧠 '
-I_COMPACT='♻️'
-I_WARN='⚠️'
 I_COST='💰'
 I_DURATION='⏱️ '
 if [[ "${STATUSLINE_EMOJIS:-1}" == "0" ]]; then
@@ -44,8 +52,6 @@ if [[ "${STATUSLINE_EMOJIS:-1}" == "0" ]]; then
     I_BRANCH='br: '
     I_MODEL=''
     I_CTX='ctx '
-    I_COMPACT='cmp'
-    I_WARN='!'
     I_COST=''
     I_DURATION='dur '
 fi
@@ -58,8 +64,8 @@ mapfile -t _j < <(jq -r '
   .workspace.current_dir,
   (.workspace.git_worktree // .worktree.name // ""),
   .model.display_name             // "",
-  .context_window.used_percentage // "",
-  (.exceeds_200k_tokens // false),
+  (.context_window.total_input_tokens  // 0),
+  (.context_window.context_window_size // 0),
   .cost.total_cost_usd            // "",
   .cost.total_lines_added         // "",
   .cost.total_lines_removed       // "",
@@ -69,8 +75,8 @@ vim_mode=${_j[0]}
 cwd=${_j[1]}
 git_worktree=${_j[2]}
 model=${_j[3]}
-ctx_pct=${_j[4]}
-exceeds_200k=${_j[5]}
+ctx_tokens=${_j[4]}
+ctx_window=${_j[5]}
 cost=${_j[6]}
 lines_added=${_j[7]}
 lines_removed=${_j[8]}
@@ -109,6 +115,23 @@ compact_path() {
         fi
     done
     printf '%s' "$result"
+}
+
+# Abbreviate a token count: 84321 → 84k, 1000000 → 1M, 1500000 → 1.5M.
+format_tokens() {
+    local n=$1
+    if ((n >= 1000000)); then
+        local whole=$((n / 1000000)) frac=$(((n % 1000000) / 100000))
+        if ((frac > 0)); then
+            printf '%d.%dM' "$whole" "$frac"
+        else
+            printf '%dM' "$whole"
+        fi
+    elif ((n >= 1000)); then
+        printf '%dk' $((n / 1000))
+    else
+        printf '%d' "$n"
+    fi
 }
 # }}}
 
@@ -206,22 +229,19 @@ if [[ -n "$model" ]]; then
     line2+="${I_MODEL}${C_MODEL}${model}${C_RESET}"
 fi
 
-# Context window (thresholds account for the ~33k autocompact buffer).
-if [[ -n "$ctx_pct" ]]; then
-    ctx_pct_int=$(printf '%.0f' "$ctx_pct")
-    if [[ $ctx_pct_int -ge 80 ]]; then
+# Context window. Zero until the first API response of the session.
+if [[ "$ctx_tokens" -gt 0 ]]; then
+    if [[ "$ctx_tokens" -ge "$CTX_HIGH_TOKENS" ]]; then
         ctx_color="$C_CTX_HIGH"
-    elif [[ $ctx_pct_int -ge 60 ]]; then
+    elif [[ "$ctx_tokens" -ge "$CTX_MED_TOKENS" ]]; then
         ctx_color="$C_CTX_MED"
     else
         ctx_color="$C_CTX_LOW"
     fi
-    append line2 "${I_CTX}${ctx_color}${ctx_pct_int}%${C_RESET}"
+    ctx_str="${I_CTX}${ctx_color}$(format_tokens "$ctx_tokens")${C_RESET}"
+    [[ "$ctx_window" -gt 0 ]] && ctx_str+="/$(format_tokens "$ctx_window")"
+    append line2 "$ctx_str"
 fi
-
-# Context health alerts (trailing flags).
-[[ "$exceeds_200k" == "true" ]] && line2+=" ${C_CTX_MED}${I_COMPACT}${C_RESET}"
-[[ ${ctx_pct_int:-0} -ge 80 ]] && line2+=" ${C_CTX_HIGH}${I_WARN}${C_RESET}"
 
 # Cost and cumulative lines changed.
 if [[ -n "$cost" || -n "$lines_added" || -n "$lines_removed" ]]; then
