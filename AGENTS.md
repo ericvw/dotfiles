@@ -91,7 +91,7 @@ Examples:
 
 - `claude/.claude/CLAUDE.md` - Global context redirect importing `AGENTS.md` to guide Claude Code
 - `claude/.claude/settings.json` - Claude Code settings (model, attribution, theme, editor mode, status line command)
-- `claude/.claude/agents/` - Custom subagent definition (test-runner)
+- `claude/.claude/agents/` - Custom subagent definitions (code-reviewer, test-runner)
 - `claude/.claude/skills/` - Custom skills (handoff)
 - `claude/.claude/statusline.sh` - Custom two-line status line script
 - `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
@@ -103,11 +103,17 @@ file is not ignored it offers to add `/HANDOFF.md` to the repository's
 `info/exclude`, doing so only on confirmation; it never touches
 `.gitignore`.
 
-`test-runner` is the only custom subagent: it keeps verbose verification
-output out of the main context and runs on `haiku`. Code review and
-codebase exploration are left to the built-in `/security-review` and
-`/simplify` skills, the native code-review flow, and the `Explore` and
-`Plan` agents; do not add custom agents that duplicate them.
+Both custom subagents exist for context isolation rather than
+capability. `code-reviewer` runs a review in its own context window and
+returns only severity-ranked findings; its prompt is tuned for a low
+false-positive rate, requiring a concrete failure path for every finding
+and treating zero findings as a valid result. `test-runner` keeps
+verbose verification output out of the main context and runs on `haiku`.
+
+Codebase exploration stays with the built-in `Explore` and `Plan`
+agents, and `/security-review` and `/simplify` remain the built-in
+skills for their respective jobs; do not add custom agents that
+duplicate them.
 
 The status line displays two lines of context:
 - **Line 1** (workspace): vim mode indicator, current directory, git worktree,
