@@ -90,8 +90,16 @@ Examples:
 - `claude/.claude/CLAUDE.md` - Global context redirect importing `AGENTS.md` to guide Claude Code
 - `claude/.claude/settings.json` - Claude Code settings (model, attribution, theme, editor mode, status line command)
 - `claude/.claude/agents/` - Custom subagent definitions (code-reviewer, repo-researcher, test-runner)
+- `claude/.claude/skills/` - Custom skills (handoff)
 - `claude/.claude/statusline.sh` - Custom two-line status line script
 - `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
+
+The `handoff` skill (also `/handoff`) writes the session's durable state
+to `HANDOFF.md` at the repository root so work can continue after
+`/clear`. It declines to overwrite a tracked `HANDOFF.md`, and when the
+file is not ignored it offers to add `/HANDOFF.md` to the repository's
+`info/exclude`, doing so only on confirmation; it never touches
+`.gitignore`.
 
 The status line displays two lines of context:
 - **Line 1** (workspace): vim mode indicator, current directory, git worktree,
