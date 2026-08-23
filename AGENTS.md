@@ -13,19 +13,22 @@ Personal dotfiles repository using GNU Stow for symlink management. Supports mac
 bash ./install.sh
 
 # Options:
-# --dry-run       Show stow actions without applying
-# --verbose       Verbose stow output
-# --no-restow     Use stow (not --restow)
+# --dry-run           Show stow actions without applying
+# --verbose           Verbose stow output
+# --no-restow         Use stow (not --restow)
+# --package <name>    Also stow <name> (repeatable)
 # TARGET_DIR=/custom/path ./install.sh  # Custom target directory
 ```
 
-The install script auto-detects platform (macOS/WSL) and stows appropriate packages.
+The install script auto-detects platform (macOS/WSL) and stows appropriate
+packages. After stowing, it rebuilds the `bat` theme/syntax cache if the
+`bat` package was installed and `bat` is on `PATH`.
 
 ## Development Commands
 
 ```bash
-# Format files (Lua, brew-formulae.txt)
-make format        # or make format-lua, make format-brew-formulae
+# Format files (Lua, shell scripts, brew-formulae.txt)
+make format        # or make format-lua, make format-shell, make format-brew-formulae
 
 # Lint shell scripts
 make lint          # or make lint-shell
@@ -149,7 +152,8 @@ Uses Neovim's built-in package manager (`vim.pack.add()`).
 
 Modular Lua structure in `neovim/.config/nvim/`:
 - `init.lua` - Entry point that requires modules
-- `lua/config/` - Core configuration (options, keymaps, autocmds, plugins, LSP, diagnostics, platform)
+- `lua/config/` - Core configuration: `options.lua`, `key-mappings.lua`,
+  `auto-commands.lua`, `lsp.lua`, `diagnostic.lua`, `platform.lua`
 - `lua/config/plugins.lua` - Plugin specifications loaded via `vim.pack.add()` (UI, editor, filetype support, tree-sitter, LSP, linting)
 - `ftplugin/` - Filetype-specific settings
 - `colors/` - Color scheme files
@@ -181,6 +185,10 @@ Structure:
 - Organized with vim foldmarkers for sections
 - Platform detection for Homebrew paths (`/opt/homebrew` vs `/home/linuxbrew/.linuxbrew`)
 - Tool initialization: uv, fnm (Fast Node Manager), dircolors, keychain
+- `conf.d/00-platform.fish` - sets a `$PLATFORM` variable (`macos`, `wsl`,
+  or `linux`) for use by other configs, including work-specific dotfiles
+- `conf.d/kanagawa.fish` - Kanagawa color scheme for fish's own syntax
+  highlighting
 
 ### Commit Conventions
 
@@ -219,6 +227,8 @@ Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
 - `stow` - Required for installation
 - `stylua` - Lua formatting
 - `shellcheck` - Shell script linting
+- `shfmt` - Shell script formatting (used by `make format-shell`, not yet
+  listed in `brew-formulae.txt`)
 - `neovim` - Primary editor
 - `fish` - Interactive shell
 - `uv` - Python version and project management
@@ -228,6 +238,7 @@ Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
 
 After modifying configs:
 
-1. **Shell scripts**: `make lint` (runs shellcheck on `*.sh`)
+1. **Shell scripts**: `make lint` (runs shellcheck on `*.sh`) and
+   `make format-shell` (runs shfmt on `*.sh`)
 2. **Lua files, brew-formulae.txt**: `make format` (runs stylua, sort)
 3. **commit-msg formatter**: `make test` (runs bats tests in `tests/`)
