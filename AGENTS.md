@@ -97,11 +97,8 @@ Examples:
 - `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
 
 The `handoff` skill (also `/handoff`) writes the session's durable state
-to `HANDOFF.md` at the repository root so work can continue after
-`/clear`. It declines to overwrite a tracked `HANDOFF.md`, and when the
-file is not ignored it offers to add `/HANDOFF.md` to the repository's
-`info/exclude`, doing so only on confirmation; it never touches
-`.gitignore`.
+to `HANDOFF.md` in the current directory so work can continue after
+`/clear`.
 
 Both custom subagents exist for context isolation rather than
 capability. `code-reviewer` runs a review in its own context window and

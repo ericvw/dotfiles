@@ -4,26 +4,14 @@ description: Write durable session state to HANDOFF.md so work can continue afte
 argument-hint: What the next session will focus on
 ---
 
-Write `HANDOFF.md` at the repository root, capturing what a fresh session
-needs to continue this work after `/clear`.
+Write `HANDOFF.md` in the current directory, capturing what a fresh
+session needs to continue this work after `/clear`.
 
 ## Steps
 
-1. Resolve the root with `git rev-parse --show-toplevel`. If that fails,
-   this is not a repository: use the current directory and skip to step 4.
-2. If `git ls-files --error-unmatch :/HANDOFF.md` succeeds the file is
-   tracked - say so and do not write; overwriting committed content is not
-   the intent.
-3. If `git check-ignore -q <root>/HANDOFF.md` exits 1, the file is not
-   ignored and `git add -A` would stage it. Say so, and offer to append
-   `/HANDOFF.md` to `<dir>/info/exclude`, where `<dir>` is `git rev-parse
-   --path-format=absolute --git-common-dir` - the common dir because a
-   linked worktree's own gitdir has none, absolute because the default is
-   relative to your shell, not to the root. Append only if the user
-   confirms; never `.gitignore`, which is tracked and shared.
-4. Write `<root>/HANDOFF.md` using the sections below. Replace any
-   existing one, carrying forward whatever is still true.
-5. Print the resume line: `@HANDOFF.md continue this work`.
+1. Write `HANDOFF.md` using the sections below. Replace any existing
+   one, carrying forward whatever is still true.
+2. Print the resume line: `@HANDOFF.md continue this work`.
 
 ## Content rules
 
