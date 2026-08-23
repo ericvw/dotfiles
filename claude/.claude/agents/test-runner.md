@@ -1,7 +1,7 @@
 ---
 name: test-runner
 description: Use to run tests, builds, typechecks, linters, and other verification commands, then summarize results without flooding the main conversation.
-tools: Read, Bash
+tools: Read, Glob, Grep, Bash
 model: haiku
 ---
 

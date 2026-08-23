@@ -89,7 +89,7 @@ Examples:
 
 - `claude/.claude/CLAUDE.md` - Global context redirect importing `AGENTS.md` to guide Claude Code
 - `claude/.claude/settings.json` - Claude Code settings (model, attribution, theme, editor mode, status line command)
-- `claude/.claude/agents/` - Custom subagent definitions (code-reviewer, repo-researcher, test-runner)
+- `claude/.claude/agents/` - Custom subagent definition (test-runner)
 - `claude/.claude/skills/` - Custom skills (handoff)
 - `claude/.claude/statusline.sh` - Custom two-line status line script
 - `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
@@ -100,6 +100,12 @@ to `HANDOFF.md` at the repository root so work can continue after
 file is not ignored it offers to add `/HANDOFF.md` to the repository's
 `info/exclude`, doing so only on confirmation; it never touches
 `.gitignore`.
+
+`test-runner` is the only custom subagent: it keeps verbose verification
+output out of the main context and runs on `haiku`. Code review and
+codebase exploration are left to the built-in `/security-review` and
+`/simplify` skills, the native code-review flow, and the `Explore` and
+`Plan` agents; do not add custom agents that duplicate them.
 
 The status line displays two lines of context:
 - **Line 1** (workspace): vim mode indicator, current directory, git worktree,
