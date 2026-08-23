@@ -87,8 +87,11 @@ Examples:
 
 ### Claude Code Configuration
 
-- `claude/.claude/settings.json` - Claude Code settings (attribution, theme, editor mode, status line command)
+- `claude/.claude/CLAUDE.md` - Global context redirect importing `AGENTS.md` to guide Claude Code
+- `claude/.claude/settings.json` - Claude Code settings (model, attribution, theme, editor mode, status line command)
+- `claude/.claude/agents/` - Custom subagent definitions (code-reviewer, repo-researcher, test-runner)
 - `claude/.claude/statusline.sh` - Custom two-line status line script
+- `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
 
 The status line displays two lines of context:
 - **Line 1** (workspace): vim mode indicator, current directory, git worktree,
