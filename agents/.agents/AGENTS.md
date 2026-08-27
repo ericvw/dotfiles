@@ -2,6 +2,21 @@
 
 Global instructions for AI coding agents across all projects and providers.
 
+## Writing Style
+
+Applies to all generated prose: chat responses, docs, commit message bodies, PR descriptions, code comments.
+
+**Banned constructions** - the clearest tells of machine-written prose:
+- Antithesis: "it's not X, it's Y", "not just X, but Y", "less X, more Y". Say what something is, affirmatively; don't set up an opposite to knock down
+- Balanced aphorism: two short parallel clauses where the second mirrors or inverts the first ("The tech works; the timing doesn't"). Make them separate plain statements
+- Verbless fragments and bare imperatives inside narrative paragraphs. Give the sentence a subject and a verb; checklists and task bullets are exempt
+
+**Mechanics**:
+- Put the actor in the subject and the action in the verb: "the router queues the request", not "queuing of the request occurs in the router"
+- Cut clauses whose only job is to announce structure ("the sections below cover..."); headings already do that
+- Don't reach for rule-of-three lists or a closing summary line by reflex
+- Use plain ASCII: prefer spaced hyphens ( - ) over em dashes, straight quotes over curly quotes
+
 ## Commit Guidelines
 
 **Principles**:
@@ -48,7 +63,6 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Reference code with file paths and line numbers
 - Before the first tool call, say in one sentence what you're about to do. While working, give a brief update only when you find something important or change direction
 - When finishing, lead with the outcome - the first sentence answers "what happened" or "what did you find", with supporting detail after it
-- Use plain ASCII in generated text: prefer spaced hyphens ( - ) over em dashes, straight quotes over curly quotes
 - Correct an earlier statement only when the error changes the user's decisions; fix silent slips silently
 
 **Written documents**:
