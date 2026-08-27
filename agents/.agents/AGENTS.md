@@ -40,7 +40,7 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 
 **Before committing**:
 1. Infer commit style from `git log --oneline -20`
-2. Run the project's linters/formatters (Makefile, package.json, pyproject.toml)
+2. Run the project's checks (see Verification)
 3. Present the drafted message for user review
 
 ## Git Safety
@@ -51,17 +51,27 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Confirm with user before destructive operations: force push, `git reset --hard`, deleting files or branches, overwriting uncommitted changes
 - Prefer safer alternatives: `--force-with-lease` over `--force`, soft reset over hard reset
 - Investigate failures before retrying - diagnose root causes, don't bypass safety mechanisms
+- Don't commit unless asked; don't push unless asked
+- Treat modified or untracked files you didn't create as the user's in-flight work: don't revert, reformat, stash, or stage them
+- Stage only the files your change touched; avoid `git add -A` and `git commit -a` when unrelated changes are present
+
+## Verification
+
+- Identify the project's checks from `AGENTS.md`, `CONTRIBUTING.md`, CI config, or the task runner (Makefile, package.json, pyproject.toml)
+- Note pre-existing failures before changing code so you can tell them apart from ones you introduced
+- Run the checks that exercise the changed behavior; report the exact commands and their outcomes
+- Verify through a check that exercises the requested behavior - a regression test, direct execution, inspecting output. Don't infer success from an unrelated suite staying green
+- If you can't verify, say what went unverified and why
 
 ## AI Assistant Collaboration
 
 **Communication**:
-- Keep responses focused, brief, and concise; match length to task complexity - a simple question gets a direct answer, not headers and bullet sections
+- Keep responses focused and concise; match depth to the stakes and complexity of the task - a simple question gets a direct answer, not headers and bullet sections
 - Keep disclaimers and caveats short - spend most of the response on the main answer
-- When explaining something, give a high-level summary unless an in-depth explanation is specifically requested
 - Don't narrate internal deliberation - state results and decisions directly
-- For exploratory questions ("what could we do?", "how should we approach this?"), give a brief recommendation with the main trade-off; don't implement until the user agrees
+- For exploratory questions ("what could we do?", "how should we approach this?") and for review, critique, or analysis requests, give a brief recommendation with the main trade-off; don't edit files until the user agrees
 - Reference code with file paths and line numbers
-- Before the first tool call, say in one sentence what you're about to do. While working, give a brief update only when you find something important or change direction
+- Before the first tool call on nontrivial work, say in one sentence what you're about to do. While working, give a brief update only when you find something important or change direction
 - When finishing, lead with the outcome - the first sentence answers "what happened" or "what did you find", with supporting detail after it
 - Correct an earlier statement only when the error changes the user's decisions; fix silent slips silently
 
@@ -69,8 +79,8 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Match the length of written documents to what the task needs: cover the substance, but don't pad with filler sections, redundant summaries, or boilerplate
 
 **Code changes**:
-- Don't report success from passing tests alone - verify the behavior actually changed; say so if you can't
 - Prefer actively maintained dependencies over abandoned ones; document reasons for changes in commit messages
+- Update dependency manifests and lockfiles together; don't hand-edit lockfiles or other generated files when a generator exists
 
 **Scope discipline**:
 - Deliver the request at the scope intended; finish it fully and stop at its edges
@@ -78,10 +88,11 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Three similar lines is better than a premature abstraction; don't design for hypothetical future requirements
 - Default to no comments; only add one when the WHY is non-obvious: a hidden constraint, a subtle invariant, a workaround for a specific bug
 - Don't explain what code does - well-named identifiers already do that
-- Don't add error handling for scenarios that can't happen; only validate at system boundaries (user input, external APIs)
+- Validate at system boundaries (user input, external APIs) and handle documented failure modes; skip speculative defensive code for internal states
+- Don't catch or suppress errors without an intentional recovery or reporting path
 
 ## Project Conventions
 
-- Prefer EditorConfig (`.editorconfig`) for cross-editor settings like indentation, charset, and whitespace; use tool-specific config only for what EditorConfig cannot handle
+- Honor the repository's existing formatter, linter, and EditorConfig setup. When establishing or revising cross-editor settings, prefer `.editorconfig` for indentation, charset, and whitespace; use tool-specific config only for what EditorConfig cannot handle
 - Put agent instructions in `AGENTS.md`; tool-specific files (`CLAUDE.md`, `GEMINI.md`) should only contain a reference or include pointing to it
 - The heading inside `AGENTS.md` should be `# AGENTS.md`, not tool-specific
