@@ -9,9 +9,13 @@ session needs to continue this work after `/clear`.
 
 ## Steps
 
-1. Write `HANDOFF.md` using the sections below. Replace any existing
+1. If the working tree holds work this session finished, commit it
+   before writing the handoff, following the project's commit
+   guidelines. Leave genuinely in-progress edits uncommitted and
+   describe them under `State`.
+2. Write `HANDOFF.md` using the sections below. Replace any existing
    one, carrying forward whatever is still true.
-2. Print the resume line: `@HANDOFF.md continue this work`.
+3. Print the resume line: `@HANDOFF.md continue this work`.
 
 ## Content rules
 
@@ -21,6 +25,8 @@ session needs to continue this work after `/clear`.
 - Reference artifacts by path, symbol, or SHA - not line numbers, which
   rot on the next edit. Never paste file contents, diffs, or command
   output.
+- Record commits by short SHA and subject so the next session can read
+  the range with `git log`.
 - Under `Verify`, list only commands this session actually ran and their
   last result - not the project's test command, which the next session can
   find itself.
@@ -38,7 +44,8 @@ One paragraph. Why this work exists.
 
 ## State
 - Branch: <name>, tree <clean|dirty>
-- Done: ...
+- Committed this session: <sha> <subject>, ...
+- Uncommitted: <what is in the tree and why it is not committed>
 - In progress: ...
 - Next: ...
 
