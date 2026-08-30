@@ -38,10 +38,16 @@ Update configuration to use maintained dependencies
 Replace Nord theme with dim-ansi since Nord is no longer maintained.
 ```
 
+**Committing during multi-step work**:
+- When the user approves a plan or you are working through a multi-item todo list, commit at each milestone instead of accumulating every change for one commit at the end
+- A milestone is a change that stands on its own: the tree builds, the checks covering it pass, and reverting that one commit would not break what came before. If the subject needs "part 1 of 3", the boundary is in the wrong place
+- Approving a plan authorizes the commits that plan implies. State each commit message in your response as you make it; do not block waiting for approval of each one
+- Outside an approved plan or todo list, the default holds: don't commit unless asked
+
 **Before committing**:
 1. Infer commit style from `git log --oneline -20`
 2. Run the project's checks (see Verification)
-3. Present the drafted message for user review
+3. Present the drafted message for user review, unless this is a milestone commit under an approved plan - then state the message in your response as you commit
 
 ## Git Safety
 
@@ -51,7 +57,7 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Confirm with user before destructive operations: force push, `git reset --hard`, deleting files or branches, overwriting uncommitted changes
 - Prefer safer alternatives: `--force-with-lease` over `--force`, soft reset over hard reset
 - Investigate failures before retrying - diagnose root causes, don't bypass safety mechanisms
-- Don't commit unless asked; don't push unless asked
+- Don't commit unless asked, except at milestones of an approved plan (see Commit Guidelines); don't push unless asked
 - Treat modified or untracked files you didn't create as the user's in-flight work: don't revert, reformat, stash, or stage them
 - Stage only the files your change touched; avoid `git add -A` and `git commit -a` when unrelated changes are present
 
