@@ -74,7 +74,7 @@ Example:
 
 **Platform-specific packages**:
 - macOS: kitty (terminal emulator with theme support), linearmouse (mouse configuration), macos (macOS-specific settings)
-- WSL: wsl (WSL-specific configuration)
+- WSL: wsl (WSL-specific configuration, including the `gpg-brew` helper)
 
 **Important architectural principle**: Base packages handle cross-platform logic internally via runtime detection. Platform-specific packages (`macos/`, `wsl/`) should ONLY contain configuration that cannot be handled cross-platform.
 
@@ -185,6 +185,21 @@ Structure:
   or `linux`) for use by other configs, including work-specific dotfiles
 - `conf.d/kanagawa.fish` - Kanagawa color scheme for fish's own syntax
   highlighting
+
+### WSL Configuration
+
+- `wsl/.local/bin/gpg-brew` - Homebrew `gpg` on WSL is typically newer than
+  Ubuntu's systemd-socket-activated `gpg-agent`/`keyboxd`, which produces
+  "server is older than us" warnings on every fresh spawn. `gpgconf --kill
+  all` alone doesn't fix this, since the next connection re-activates the
+  distro daemons.
+- `gpg-brew status` reports daemon ownership (Homebrew vs. distro) and the
+  state of the managed systemd user sockets; `gpg-brew setup` masks Ubuntu's
+  GnuPG systemd user sockets so Homebrew GnuPG spawns and owns its own
+  matching daemons; `gpg-brew restore` unmasks them and hands socket
+  activation back to Ubuntu. All three are idempotent and require no `sudo`.
+- WSL-specific; does not configure GnuPG as an SSH agent - this repo's SSH
+  agent is `keychain` (see Fish Shell Configuration above).
 
 ### Commit Conventions
 
