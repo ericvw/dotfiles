@@ -8,6 +8,7 @@ fish
 gh
 git
 gnu-sed
+gnupg
 jq
 keychain
 make
