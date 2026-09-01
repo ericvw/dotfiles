@@ -5,7 +5,8 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
-shell_scripts := $(shell find . -name '*.sh')
+shell_scripts := $(shell find . -type f -name '*.sh')
+shell_scripts += $(shell find . -type f -path '*/.local/bin/*')
 
 .PHONY: format
 .PHONY: lint

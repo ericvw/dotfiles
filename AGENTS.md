@@ -234,7 +234,8 @@ Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
 
 After modifying configs:
 
-1. **Shell scripts**: `make lint` (runs shellcheck on `*.sh`) and
-   `make format-shell` (runs shfmt on `*.sh`)
+1. **Shell scripts**: `make lint` (runs shellcheck) and `make format-shell`
+   (runs shfmt) - both cover `*.sh` files and executables stowed under a
+   package's `.local/bin/`
 2. **Lua files, brew-formulae.txt**: `make format` (runs stylua, sort)
 3. **commit-msg formatter**: `make test` (runs bats tests in `tests/`)
