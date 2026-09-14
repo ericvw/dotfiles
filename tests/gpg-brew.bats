@@ -36,6 +36,9 @@ setup() {
     ps_output="$tmp/ps_output"
     : > "$ps_output"
 
+    proc_root="$tmp/proc"
+    mkdir -p "$proc_root"
+
     systemctl_unavailable_flag="$tmp/systemctl_unavailable"
 
     brew_prefix="$tmp/brew"
@@ -130,15 +133,24 @@ EOF
     safe_dir="$tmp/safe"
     mkdir -p "$safe_dir"
     local tool src
-    for tool in bash grep awk; do
+    for tool in bash grep awk readlink; do
         src=$(command -v "$tool") || continue
         ln -s "$src" "$safe_dir/$tool"
     done
 
     export PATH="$stub_dir:$PATH"
     export GPG_BREW_PROC_VERSION="$proc_version"
+    export GPG_BREW_PROC_ROOT="$proc_root"
     export GNUPGHOME="$gnupg_home"
     export HOMEBREW_PREFIX="$brew_prefix"
+}
+
+# Stages a daemon for daemon_report(): a ps row plus a /proc/<pid>/exe
+# symlink pointing at its real executable.
+stage_daemon() {  # pid, exe target, full argv
+    printf '%s %s\n' "$1" "$3" >> "$ps_output"
+    mkdir -p "$proc_root/$1"
+    ln -s "$2" "$proc_root/$1/exe"
 }
 
 teardown() {
@@ -405,6 +417,35 @@ teardown() {
     [[ "$output" =~ "  111      unknown   /opt/custom/bin/gpg-agent --supervised" ]]
     [[ "$output" =~ "indeterminate: one or more running GnuPG daemons have unknown ownership." ]]
     [[ ! "$output" =~ "homebrew-owned" ]]
+}
+
+@test "status resolves a bare argv[0] to homebrew via /proc/<pid>/exe" {
+    set_all_socket_states masked
+    stage_daemon 111 "$brew_prefix/Cellar/gnupg/2.5.21/bin/gpg-agent" "gpg-agent --daemon"
+    stage_daemon 222 "$brew_prefix/Cellar/gnupg/2.5.21/libexec/keyboxd" "keyboxd --daemon"
+    run "$script" status
+    [ "$status" -eq 0 ]
+    [[ "$output" =~ "  111      homebrew  gpg-agent --daemon" ]]
+    [[ "$output" =~ "  222      homebrew  keyboxd --daemon" ]]
+    [[ "$output" =~ "homebrew-owned" ]]
+}
+
+@test "status resolves a bare argv[0] to distro via /proc/<pid>/exe" {
+    set_all_socket_states masked
+    stage_daemon 111 "/usr/bin/gpg-agent" "gpg-agent --daemon"
+    run "$script" status
+    [ "$status" -eq 0 ]
+    [[ "$output" =~ "  111      distro    gpg-agent --daemon" ]]
+    [[ "$output" =~ "inconsistent" ]]
+}
+
+@test "status trusts /proc/<pid>/exe over a distro-looking argv[0]" {
+    set_all_socket_states masked
+    stage_daemon 111 "$brew_prefix/Cellar/gnupg/2.5.21/bin/gpg-agent" "/usr/bin/gpg-agent --daemon"
+    run "$script" status
+    [ "$status" -eq 0 ]
+    [[ "$output" =~ "  111      homebrew  /usr/bin/gpg-agent --daemon" ]]
+    [[ "$output" =~ "homebrew-owned" ]]
 }
 
 # }}}

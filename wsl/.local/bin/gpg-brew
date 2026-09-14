@@ -25,6 +25,7 @@ RESTORE_SOCKETS=(
 )
 
 PROC_VERSION="${GPG_BREW_PROC_VERSION:-/proc/version}"
+PROC_ROOT="${GPG_BREW_PROC_ROOT:-/proc}"
 GNUPG_HOME="${GNUPGHOME:-$HOME/.gnupg}"
 
 BREW_PREFIX=
@@ -115,27 +116,36 @@ socket_state() {
     systemctl --user is-enabled "$1" 2> /dev/null || true
 }
 
+# Classify a path as "homebrew", "distro", or "unknown".
+classify_path() {
+    if [[ -n "${BREW_PREFIX:-}" && "$1" == "$BREW_PREFIX"/* ]]; then
+        printf 'homebrew'
+    elif [[ "$1" == /usr/* ]]; then
+        printf 'distro'
+    else
+        printf 'unknown'
+    fi
+}
+
 # Emit "<pid> <owner> <argv>" per running GnuPG daemon. Ownership comes from
-# the executable path, never from a version number.
+# the executable path, never from a version number. `gpg` auto-starts these
+# daemons with a bare argv[0] ("gpg-agent", not a path), so argv alone can't
+# classify them; resolve /proc/<pid>/exe and fall back to argv only when the
+# link can't be read.
 daemon_report() {
-    ps -eo pid=,args= 2> /dev/null | awk -v prefix="${BREW_PREFIX:-}" '
-        {
-            n = split($2, path, "/")
-            name = path[n]
-            if (name != "gpg-agent" && name != "keyboxd" && name != "dirmngr")
-                next
+    local pid args argv0 exe owner
+    while read -r pid args; do
+        argv0=${args%% *}
+        case "${argv0##*/}" in
+            gpg-agent | keyboxd | dirmngr) ;;
+            *) continue ;;
+        esac
 
-            owner = "unknown"
-            if (prefix != "" && index($2, prefix "/") == 1)
-                owner = "homebrew"
-            else if (index($2, "/usr/") == 1)
-                owner = "distro"
+        exe=$(readlink "$PROC_ROOT/$pid/exe" 2> /dev/null) || exe=
+        owner=$(classify_path "${exe:-$argv0}")
 
-            args = $0
-            sub(/^[ \t]*[0-9]+[ \t]+/, "", args)
-            printf "%s %s %s\n", $1, owner, args
-        }
-    ' || true
+        printf '%s %s %s\n' "$pid" "$owner" "$args"
+    done < <(ps -eo pid=,args= 2> /dev/null)
 }
 
 gpg_version() {
