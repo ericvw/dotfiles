@@ -96,6 +96,11 @@ lint.linters_by_ft = {
         "ruff",
     },
 }
+for _, name in ipairs({ "mypy", "ruff" }) do
+    local linter = lint.linters[name]
+    linter.args = vim.list_extend({ "run", "--", linter.cmd }, linter.args)
+    linter.cmd = "uv"
+end
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
     group = vim.api.nvim_create_augroup("lint", { clear = true }),
     callback = function()
