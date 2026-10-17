@@ -17,6 +17,21 @@ Applies to all generated prose: chat responses, docs, commit message bodies, PR 
 - Don't reach for rule-of-three lists or a closing summary line by reflex
 - Use plain ASCII: prefer spaced hyphens ( - ) over em dashes, straight quotes over curly quotes
 
+## Documentation
+
+Each fact has one home; other documents link to it instead of restating it.
+
+- **README.md** is the practical entry point: what the project is, prerequisites, common workflows, and command-level help. Link to ARCHITECTURE.md near the top when one exists. Update it when user-visible behavior changes
+- **ARCHITECTURE.md** holds durable design for an engineer new to the project: boundaries, invariants, ownership, and the reasons behind them. Leave file inventories and command manuals to the README or the task runner
+- **AGENTS.md** holds only what an agent needs beyond those documents: constraints, traps, and checks. Write one line per rule and link to the explaining section when one exists
+- Tool-specific files (`CLAUDE.md`, `GEMINI.md`) contain only a reference or include pointing to `AGENTS.md`, and the heading inside `AGENTS.md` is `# AGENTS.md`, not tool-specific
+- Task-runner doc comments own recipe semantics, component READMEs own component detail, and other repositories own their internals
+
+**Content rules**:
+- Describe implemented behavior as the current contract: no history, target designs, or future plans, and no temporary workarounds presented as design. Delete superseded text
+- When behavior changes, grep the docs for statements it makes stale and fix them in the same change
+- Follow the repository's existing doc layout; don't add a `docs/` hierarchy or ADR infrastructure unless asked
+
 ## Commit Guidelines
 
 **Principles**:
@@ -100,5 +115,3 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 ## Project Conventions
 
 - Honor the repository's existing formatter, linter, and EditorConfig setup. When establishing or revising cross-editor settings, prefer `.editorconfig` for indentation, charset, and whitespace; use tool-specific config only for what EditorConfig cannot handle
-- Put agent instructions in `AGENTS.md`; tool-specific files (`CLAUDE.md`, `GEMINI.md`) should only contain a reference or include pointing to it
-- The heading inside `AGENTS.md` should be `# AGENTS.md`, not tool-specific
