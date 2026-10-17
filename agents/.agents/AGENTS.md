@@ -35,9 +35,10 @@ Each fact has one home; other documents link to it instead of restating it.
 ## Commit Guidelines
 
 **Principles**:
-- **Atomic commits**: One logical change per commit - don't mix unrelated changes even if made in the same session
+- **Atomic commits**: One logical change per commit - don't mix unrelated changes even if made in the same session, and put mechanical formatting changes in their own commit
 - Focus on the **why** and context in commit messages, not the what - the diff shows the what
 - Avoid redundant bullet lists of file changes; explain relationships and reasons for decisions instead
+- Leave out what the diff already shows (names, titles), invariants of the tools involved, and PR logistics
 
 **Format rules**:
 - Subject: imperative mood ("Add feature" not "Added feature"), max 72 characters
@@ -67,7 +68,8 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 ## Git Safety
 
 - Never skip hooks (`--no-verify`) unless explicitly requested
-- Create new commits rather than amending, unless explicitly asked
+- Create new commits rather than amending, unless explicitly asked; a squash or fold request counts as asking
+- "Squash" or "fold" with no target means collapse every commit on the branch since its base into one (ask when the base is unclear); "fold into X" means a fixup commit plus an autosquash rebase. The message describes the final change, not the sequence that produced it. Pushing the result is a force push, so the confirmation rule below applies
 - Don't force push to main/master
 - Confirm with user before destructive operations: force push, `git reset --hard`, deleting files or branches, overwriting uncommitted changes
 - Prefer safer alternatives: `--force-with-lease` over `--force`, soft reset over hard reset
@@ -92,6 +94,7 @@ Replace Nord theme with dim-ansi since Nord is no longer maintained.
 - Don't narrate internal deliberation - state results and decisions directly
 - For exploratory questions ("what could we do?", "how should we approach this?") and for review, critique, or analysis requests, give a brief recommendation with the main trade-off; don't edit files until the user agrees
 - Reference code with file paths and line numbers
+- For decisions or analysis the user will forward, write one self-contained block with labeled questions and options (Q1: A/B)
 - Before the first tool call on nontrivial work, say in one sentence what you're about to do. While working, give a brief update only when you find something important or change direction
 - When finishing, lead with the outcome - the first sentence answers "what happened" or "what did you find", with supporting detail after it
 - Correct an earlier statement only when the error changes the user's decisions; fix silent slips silently
