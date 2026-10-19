@@ -40,7 +40,7 @@ make test          # or make test-bats
 **Code conventions**:
 - The root `.editorconfig` governs this repository's own files: UTF-8
   charset, final newlines, trimmed trailing whitespace, 4-space
-  indentation (tabs for Makefiles). The separate
+  indentation (tabs for Makefiles and Go). The separate
   `editorconfig/.editorconfig` package is unrelated config stowed into
   `$HOME` for other projects; see
   [ARCHITECTURE.md](ARCHITECTURE.md#configuration-ownership-and-composition).

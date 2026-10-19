@@ -11,6 +11,11 @@ trim_trailing_whitespace = true
 [Makefile]
 indent_style = tab
 
+[*.go]
+indent_style = tab
+indent_size = tab
+tab_width = 4
+
 [*.json]
 indent_size = 2
 

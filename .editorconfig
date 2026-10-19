@@ -21,3 +21,8 @@ switch_case_indent = true
 
 [Makefile]
 indent_style = tab
+
+[*.go]
+indent_style = tab
+indent_size = tab
+tab_width = 4
