@@ -1,10 +1,9 @@
 # AGENTS.md
 
-This file provides guidance to AI coding agents when working with code in this repository.
-
-## Repository Overview
-
-Personal dotfiles repository using GNU Stow for symlink management. Supports macOS and WSL (Windows Subsystem for Linux) with platform-aware configuration.
+This file provides guidance to AI coding agents when working with code
+in this repository. Read [ARCHITECTURE.md](ARCHITECTURE.md) first if a
+change affects repository structure, package ownership, platform
+behavior, installation behavior, or any other architectural boundary.
 
 ## Installation
 
@@ -20,9 +19,10 @@ bash ./install.sh
 # TARGET_DIR=/custom/path ./install.sh  # Custom target directory
 ```
 
-The install script auto-detects platform (macOS/WSL) and stows appropriate
-packages. After stowing, it rebuilds the `bat` theme/syntax cache if the
-`bat` package was installed and `bat` is on `PATH`.
+Use `--dry-run` to preview the effect of a change to `install.sh` or
+to a package's file layout before applying it. See `install.sh
+--help` for the full option/package list, and
+[ARCHITECTURE.md](ARCHITECTURE.md) for how package selection works.
 
 ## Development Commands
 
@@ -38,168 +38,47 @@ make test          # or make test-bats
 ```
 
 **Code conventions**:
-- `.editorconfig` enforces:
-  - UTF-8 charset, final newlines, trim trailing whitespace (all files)
-  - 4-space indentation (default, explicitly set for Lua)
-  - Tab indentation (Makefiles only)
-- Shell scripts and Lua files use vim foldmarkers (`# vim: foldmethod=marker` with `{{{`/`}}}` sections)
+- The root `.editorconfig` governs this repository's own files: UTF-8
+  charset, final newlines, trimmed trailing whitespace, 4-space
+  indentation (tabs for Makefiles). The separate
+  `editorconfig/.editorconfig` package is unrelated config stowed into
+  `$HOME` for other projects; see
+  [ARCHITECTURE.md](ARCHITECTURE.md#configuration-ownership-and-composition).
+- Shell scripts and Lua files use vim foldmarkers (`# vim:
+  foldmethod=marker` with `{{{`/`}}}` sections).
 
-## Package Organization
+## Change Guidance
 
-### Stow Package Structure
+See [ARCHITECTURE.md's "Where changes belong"](ARCHITECTURE.md#where-changes-belong)
+table to decide where a change goes. One operational detail that table
+doesn't cover: to add or remove a package from the default platform
+package set, edit the `COMMON_PACKAGES`, `MACOS_PACKAGES`, or
+`WSL_PACKAGES` arrays in `install.sh`; its `--help` output and
+package-skip warning are derived from those arrays, so there's nothing
+else to keep in sync.
 
-Each tool lives in its own directory (e.g., `fish/`, `neovim/`, `git/`). When stowed, files are symlinked to `$HOME` preserving their relative paths.
+Wrap prose in shell scripts, commit messages, and similar hand-wrapped
+text with `fmt -w 72 -g 72` (or match the existing width in the file).
 
-Example:
-- `fish/.config/fish/config.fish` → `~/.config/fish/config.fish`
-- `git/.config/git/config` → `~/.config/git/config`
+## Component Notes
 
-### Common vs Platform-Specific Packages
-
-**Common packages** (always installed):
-- agents - Universal AI agent instructions (AGENTS.md)
-- bash - Bash shell configuration (.bashrc, .bash_profile, .inputrc)
-- bat - Cat clone with syntax highlighting
-- dircolors - Color scheme for ls/directory listings
-- editorconfig - Cross-editor configuration (.editorconfig)
-- fish - Interactive shell (primary shell)
-- git - Version control configuration with aliases and platform-specific includes
-- neovim - Primary editor with LSP, tree-sitter, and native plugin management
-- tmux - Terminal multiplexer
-- vim - Lean fallback editor when Neovim is unavailable
-
-**Optional packages**:
-- claude - Claude Code settings and custom status line script
-- quilt - Debian patch management tool configuration
-
-**Platform-specific packages**:
-- macOS: kitty (terminal emulator with theme support), linearmouse (mouse configuration), macos (macOS-specific settings)
-- WSL: wsl (WSL-specific configuration, including the `gpg-brew` helper)
-
-**Important architectural principle**: Base packages handle cross-platform logic internally via runtime detection. Platform-specific packages (`macos/`, `wsl/`) should ONLY contain configuration that cannot be handled cross-platform.
-
-Examples:
-- ✅ Homebrew path detection in `fish/.config/fish/config.fish` (detects `/opt/homebrew` vs `/home/linuxbrew`)
-- ✅ Git credential helpers in `macos/.config/git/platform` and `wsl/.config/git/platform` (different paths per OS)
-- ❌ Duplicating Homebrew initialization across base and platform-specific fish configs
-
-## Key Configuration Patterns
-
-**General principle**: Prefer EditorConfig (`.editorconfig`) for cross-editor settings like indentation, charset, and whitespace. Use editor-specific ftplugin files only for settings that EditorConfig cannot handle.
-
-### Claude Code Configuration
-
-- `claude/.claude/CLAUDE.md` - Global context redirect importing `AGENTS.md` to guide Claude Code
-- `claude/.claude/settings.json` - Claude Code settings (model, attribution, theme, editor mode, status line command)
-- `claude/.claude/agents/` - Custom subagent definitions (code-reviewer, test-runner)
-- `claude/.claude/skills/` - Custom skills (handoff)
-- `claude/.claude/statusline.sh` - Custom two-line status line script
-- `claude/.claude/statusline-theme.sh` - 24-bit color overrides for the status line
-
-The `handoff` skill (also `/handoff`) writes the session's durable state
-to `HANDOFF.md` in the current directory so work can continue after
-`/clear`.
-
-Both custom subagents exist for context isolation rather than
-capability. `code-reviewer` runs a review in its own context window and
-returns only severity-ranked findings; its prompt is tuned for a low
-false-positive rate, requiring a concrete failure path for every finding
-and treating zero findings as a valid result. `test-runner` keeps
-verbose verification output out of the main context and runs on `haiku`.
-
-Codebase exploration stays with the built-in `Explore` and `Plan`
-agents, and `/security-review` and `/simplify` remain the built-in
-skills for their respective jobs; do not add custom agents that
-duplicate them.
-
-The status line displays two lines of context:
-- **Line 1** (workspace): vim mode indicator, current directory, git worktree,
-  branch, ahead/behind upstream, staged/unstaged/untracked/deleted file counts,
-  line insertions/deletions vs HEAD
-- **Line 2** (session): model name, context window as `84k/200k` (tokens in
-  context over window size, compact k/M format, color-coded on absolute
-  tokens: waveAqua1 < 100k, roninYellow ≥ 100k, samuraiRed ≥ 200k), cost
-  with lines added/removed, wall-clock duration
-
-The context segment is hidden until the first API response populates the
-token count.
-
-Colors use the Kanagawa Wave palette (24-bit ANSI). Git status colors mirror
-the palette's designated diff colors: autumnGreen (staged/added), autumnYellow
-(modified), autumnRed (deleted), springViolet1 (untracked).
-
-### Git Configuration
-
-- Base config: `git/.config/git/config`
-- Platform-specific config included via `[include] path = platform`
-- Platform files: `macos/.config/git/platform`, `wsl/.config/git/platform`
-- Work-specific config: `[includeIf "gitdir:~/work/"] path = work`
-- `core.hooksPath = ~/.config/git/hooks` applies hooks globally to all repos
-- `git/.config/git/hooks/commit-msg` - Thin wrapper invoking `format-commit-msg.sh`
-- `git/.config/git/hooks/format-commit-msg.sh` - Validates and formats commit messages:
-  rejects empty subjects, subjects over 72 characters, uncapitalized subjects, and
-  missing blank lines between subject and non-comment body; git template comments
-  directly after the subject are treated as an empty body (blank separator
-  auto-inserted); wraps body lines greedily at 72 characters using `fmt -w 72 -g 72`
-
-### Neovim Configuration
-
-Uses Neovim's built-in package manager (`vim.pack.add()`).
-
-Modular Lua structure in `neovim/.config/nvim/`:
-- `init.lua` - Entry point that requires modules
-- `lua/config/` - Core configuration: `options.lua`, `key-mappings.lua`,
-  `auto-commands.lua`, `lsp.lua`, `diagnostic.lua`, `platform.lua`
-- `lua/config/plugins.lua` - Plugin specifications loaded via `vim.pack.add()` (UI, editor, filetype support, tree-sitter, LSP, linting)
-- `ftplugin/` - Filetype-specific settings
-- `colors/` - Color scheme files
-
-Key plugins auto-update tree-sitter parsers via PackChanged hook when nvim-treesitter is installed/updated.
-
-Platform-specific logic in `lua/config/platform.lua`.
-
-### Vim Configuration
-
-Philosophy: Vim serves as a **lean, reliable fallback** when Neovim is unavailable.
-
-Configuration principles:
-- **Backport essential features** from Neovim (fuzzy completion, enhanced cursor restoration, auto-create directories)
-- **Use simple defaults** - avoid complex plugin configurations (e.g., no custom theme settings for lightline)
-- **Prefer EditorConfig** for language-specific settings over ftplugin files
-- **Remove unused language configs** - don't maintain ftplugin files for languages not actively developed
-- **Auto-create directories** - backup/undo directories created at runtime instead of tracking empty directories via Stow
-- **Custom colorscheme** - Uses `dim-ansi` (Nord theme is no longer maintained)
-
-Structure:
-- `.vimrc` - Single file configuration with vim-plug for plugin management
-- `ftplugin/` - Minimal filetype settings (gitcommit, gitconfig, mail only)
-- `colors/` - Custom color schemes
-
-### Fish Shell Configuration
-
-- Main config: `fish/.config/fish/config.fish`
-- Organized with vim foldmarkers for sections
-- Platform detection for Homebrew paths (`/opt/homebrew` vs `/home/linuxbrew/.linuxbrew`)
-- Tool initialization: uv, fnm (Fast Node Manager), dircolors, keychain
-- `conf.d/00-platform.fish` - sets a `$PLATFORM` variable (`macos`, `wsl`,
-  or `linux`) for use by other configs, including work-specific dotfiles
-- `conf.d/kanagawa.fish` - Kanagawa color scheme for fish's own syntax
-  highlighting
-
-### WSL Configuration
-
-- `wsl/.local/bin/gpg-brew` - Homebrew `gpg` on WSL is typically newer than
-  Ubuntu's systemd-socket-activated `gpg-agent`/`keyboxd`, which produces
-  "server is older than us" warnings on every fresh spawn. `gpgconf --kill
-  all` alone doesn't fix this, since the next connection re-activates the
-  distro daemons.
-- `gpg-brew status` reports daemon ownership (Homebrew vs. distro) and the
-  state of the managed systemd user sockets; `gpg-brew setup` masks Ubuntu's
-  GnuPG systemd user sockets so Homebrew GnuPG spawns and owns its own
-  matching daemons; `gpg-brew restore` unmasks them and hands socket
-  activation back to Ubuntu. All three are idempotent and require no `sudo`.
-- WSL-specific; does not configure GnuPG as an SSH agent - this repo's SSH
-  agent is `keychain` (see Fish Shell Configuration above).
+- **Git `commit-msg` hook** (`git/.config/git/hooks/`): rules are
+  covered by `tests/format-commit-msg.bats`. Run `make test` after
+  editing `format-commit-msg.sh`.
+- **`wsl/.local/bin/gpg-brew`**: WSL-only. Exists because Homebrew's
+  `gpg`/`gpg-agent`/`keyboxd` on WSL is typically newer than Ubuntu's
+  systemd-socket-activated versions, which otherwise produces "server
+  is older than us" warnings on every fresh spawn; `gpgconf --kill
+  all` alone doesn't fix this since the next connection re-activates
+  the distro daemons. `gpg-brew setup`/`restore`/`status` mask/unmask
+  Ubuntu's GnuPG systemd user sockets so Homebrew's daemons can own
+  them instead; see `gpg-brew --help` for details. It does not
+  configure SSH authentication — this repository's SSH agent is
+  `keychain` (see `fish/.config/fish/config.fish`).
+- **Claude subagents** (`claude/.claude/agents/`): exist for context
+  isolation, not unique capability. Don't add a custom subagent or
+  skill that duplicates the built-in `Explore`/`Plan` agents or the
+  `/security-review`/`/simplify` skills.
 
 ### Commit Conventions
 
@@ -234,16 +113,10 @@ Body wrapping and subject validation are enforced automatically by the
 
 ## Dependencies
 
-Homebrew formulae listed in `brew-formulae.txt`. Key dependencies:
-- `stow` - Required for installation
-- `stylua` - Lua formatting
-- `shellcheck` - Shell script linting
-- `shfmt` - Shell script formatting (used by `make format-shell`, not yet
-  listed in `brew-formulae.txt`)
-- `neovim` - Primary editor
-- `fish` - Interactive shell
-- `uv` - Python version and project management
-- Development tools: bat, gh, tree-sitter-cli
+Homebrew formulae are declared in `brew-formulae.txt` (see
+[ARCHITECTURE.md](ARCHITECTURE.md#configuration-ownership-and-composition)
+for its role). Notably, `shfmt` is required by `make format-shell` but
+is not yet listed there.
 
 ## Testing Changes
 

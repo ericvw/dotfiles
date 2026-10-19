@@ -4,6 +4,9 @@ Eric N. Vander Weele's dotfiles.
 
 Feel free to look around and take what inspires you!
 
+See [ARCHITECTURE.md](ARCHITECTURE.md) for how the repository is
+organized.
+
 ## Installation
 
 1. Clone repository.
