@@ -38,7 +38,6 @@ vim.opt.errorbells = false
 vim.opt.undofile = true
 vim.opt.completeopt = {
     "fuzzy",
-    "menu",
     "menuone",
     "noselect",
     "preview",
