@@ -67,5 +67,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 return "<CR>"
             end, { buffer = args.buf, expr = true })
         end
+
+        if client:supports_method("textDocument/hover") then
+            vim.keymap.set("n", "K", function()
+                -- Pin the float to the text area so it never covers the gutter.
+                local textoff = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+                vim.lsp.buf.hover({
+                    -- One column short of the edge; make_floating_popup_options
+                    -- otherwise flips a full-width float to an E anchor.
+                    max_width = vim.api.nvim_win_get_width(0) - textoff - 1,
+                    offset_x = textoff + 1 - vim.fn.wincol(),
+                })
+            end, { buffer = args.buf })
+        end
     end,
 })
