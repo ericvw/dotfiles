@@ -40,7 +40,6 @@ vim.opt.completeopt = {
     "fuzzy",
     "menuone",
     "noselect",
-    "preview",
 }
 vim.opt.showmatch = true
 

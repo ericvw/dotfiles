@@ -50,6 +50,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     }
                 end,
             })
+
+            vim.keymap.set("i", "<C-Space>", vim.lsp.completion.get, { buffer = args.buf })
+            -- <Down>/<Up> select a candidate without inserting it.
+            vim.keymap.set("i", "<C-j>", function()
+                return vim.fn.pumvisible() == 1 and "<Down>" or "<C-j>"
+            end, { buffer = args.buf, expr = true })
+            vim.keymap.set("i", "<C-k>", function()
+                return vim.fn.pumvisible() == 1 and "<Up>" or "<C-k>"
+            end, { buffer = args.buf, expr = true })
+            -- Accept only an explicitly selected candidate.
+            vim.keymap.set("i", "<CR>", function()
+                if vim.fn.complete_info({ "selected" }).selected ~= -1 then
+                    return "<C-y>"
+                end
+                return "<CR>"
+            end, { buffer = args.buf, expr = true })
         end
     end,
 })
